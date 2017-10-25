@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -59,7 +60,7 @@ void ViewerClass::inputer(){
 		cout<<"<Ввод нового абитуриента>\n\n"<<"Введите ФИО => "; cin>>buf_FIO; //пофиксить
 		cout<<"Введите пол (М/Ж) => "; cin>>buf_sex;
 		cout<<"Введите средний балл (пример 4.7) => "; cin>>buf_score;
-		cout<<"Есть ли приоритет? (true/false) => "; cin>>buf_priority;
+		cout<<"Есть ли приоритет? (0/1) => "; cin>>buf_priority;
 		validator(buf_FIO,buf_sex,buf_priority,buf_score);
 	}  
 	catch(...) { 
@@ -69,9 +70,20 @@ void ViewerClass::inputer(){
 }
 
 void ViewerClass::outer(string FIO, string sex, bool priority, double score){
+	
+	map <string,string> sexformatter;
+	sexformatter["м"]="мужской";
+	sexformatter["М"]="мужской";
+	sexformatter["ж"]="женский";
+	sexformatter["Ж"]="женский";
+
+	map <bool,string> priorityformatter;
+	priorityformatter[true]="есть";
+	priorityformatter[false]="нет";
+
 	cout<<"\n<Личная карточка абитуриента>"; cout<<"\nИмя: "<<FIO;
-	cout<<"\nПол: "<<sex;
-	cout<<"\nПриоритет: "<<priority;
+	cout<<"\nПол: "<<sexformatter[sex];
+	cout<<"\nПриоритет: "<<priorityformatter[priority];
 	cout<<"\nСред. балл: "<<score;
 }
 int main(){
@@ -94,7 +106,7 @@ int main(){
 	        break;
 
 	      case 3:  
-	        cout<<"НЕ РЛИТ";
+	        cout<<"НЕ РОБИТ";
 	        break;
 
 	    }    
