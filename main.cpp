@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <sstream>
+#include <sqlite3.h>
 
 using namespace std;
 
@@ -86,6 +88,34 @@ void ViewerClass::outer(string FIO, string sex, bool priority, double score){
 	cout<<"\nПриоритет: "<<priorityformatter[priority];
 	cout<<"\nСред. балл: "<<score;
 }
+
+class SQLiteClass: public StudentClass{
+	public:
+		int BDInsider(string FIO, string sex, bool priority, double score);
+};
+
+int SQLiteClass::BDInsider(string FIO, string sex, bool priority, double score){
+	
+	sqlite3 *db;
+    char *err_msg = 0;
+	int rc = sqlite3_open("test.db", &db);
+
+	if (rc != SQLITE_OK) {
+        
+        fprintf(stderr, "Не могу открыть базу данных: %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        
+        return 1;
+    }
+
+    ostringstream convert;
+
+    convert << "CREATE TABLE STUDENTS(Name TEXT, sex TEXT, priority INT, score REAL);"<<"INSERT INTO STUDENTS VALUES("<<FIO<<","<<sex<<","<<priority<<","<<score<<");";
+    string *sql = convert.str();
+
+    rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
+};
+
 int main(){
 
 	int k;
