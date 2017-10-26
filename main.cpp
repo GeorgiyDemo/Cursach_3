@@ -1,3 +1,11 @@
+//Добавить:
+// Форма обучения (очная/заочная)
+// Направление (ИБАС/ПКС)
+// № заявления К-32593295
+// Оригинал (да/нет)
+// Форма оплаты (бюджет/Договор)
+// Дата заявления
+
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -12,7 +20,6 @@ class StudentClass{
 	public:
 
 		string FIO;
-		string sex;
 		bool priority;
 		//сред. балл по аттестату
 		double score;
@@ -22,21 +29,22 @@ class StudentClass{
 class ViewerClass: public StudentClass{
 	public:
 		void error();
-		void validator(string buf_FIO, string buf_sex, bool buf_priority, double buf_score);
+		void validator(string buf_FIO, bool buf_priority, double buf_score);
 		void inputer();
-		void outer(string FIO, string sex, bool priority, double score);
+		void outer(string FIO, bool priority, double score);
+		int SQLiteInsider(string FIO, bool priority, double score);
 };
 
-void ViewerClass::validator(string buf_FIO, string buf_sex, bool buf_priority, double buf_score){
+void ViewerClass::validator(string buf_FIO, bool buf_priority, double buf_score){
 	
-	if ((typeid(buf_FIO) == typeid(string))&&(buf_sex=="М"||buf_sex=="м"||buf_sex=="Ж"||buf_sex=="ж")&&(typeid(buf_priority) == typeid(bool))&&(typeid(buf_score) == typeid(double))&&((buf_score>=2.0)&&(buf_score<=5.0))){
+	if ((typeid(buf_FIO) == typeid(string))&&(typeid(buf_priority) == typeid(bool))&&(typeid(buf_score) == typeid(double))&&((buf_score>=2.0)&&(buf_score<=5.0))){
 
 		FIO=buf_FIO;
-		sex=buf_sex;
 		priority=buf_priority;
 		score=buf_score;
 
-		outer(FIO, sex, priority, score);
+		outer(FIO, priority, score);
+		SQLiteInsider(FIO, priority, score);
 	}
 
 	else
@@ -53,17 +61,15 @@ void ViewerClass::error(){
 void ViewerClass::inputer(){
 
 	string buf_FIO;
-	string buf_sex;
 	bool buf_priority;
 	//сред. балл по аттестату
 	double buf_score;
 
 	try { 
 		cout<<"<Ввод нового абитуриента>\n\n"<<"Введите ФИО => "; cin>>buf_FIO; //пофиксить
-		cout<<"Введите пол (М/Ж) => "; cin>>buf_sex;
 		cout<<"Введите средний балл (пример 4.7) => "; cin>>buf_score;
 		cout<<"Есть ли приоритет? (0/1) => "; cin>>buf_priority;
-		validator(buf_FIO,buf_sex,buf_priority,buf_score);
+		validator(buf_FIO,buf_priority,buf_score);
 	}  
 	catch(...) { 
 		error(); 
@@ -71,34 +77,12 @@ void ViewerClass::inputer(){
 
 }
 
-void ViewerClass::outer(string FIO, string sex, bool priority, double score){
-	
-	map <string,string> sexformatter;
-	sexformatter["м"]="мужской";
-	sexformatter["М"]="мужской";
-	sexformatter["ж"]="женский";
-	sexformatter["Ж"]="женский";
-
-	map <bool,string> priorityformatter;
-	priorityformatter[true]="есть";
-	priorityformatter[false]="нет";
-
-	cout<<"\n<Личная карточка абитуриента>"; cout<<"\nИмя: "<<FIO;
-	cout<<"\nПол: "<<sexformatter[sex];
-	cout<<"\nПриоритет: "<<priorityformatter[priority];
-	cout<<"\nСред. балл: "<<score;
-}
-
-class SQLiteClass: public StudentClass{
-	public:
-		int BDInsider(string FIO, string sex, bool priority, double score);
-};
-
-int SQLiteClass::BDInsider(string FIO, string sex, bool priority, double score){
+int ViewerClass::SQLiteInsider(string FIO, bool priority, double score){
 	
 	sqlite3 *db;
     char *err_msg = 0;
-	int rc = sqlite3_open("test.db", &db);
+    ostringstream os;
+	int rc = sqlite3_open("database.db", &db);
 
 	if (rc != SQLITE_OK) {
         
@@ -108,13 +92,25 @@ int SQLiteClass::BDInsider(string FIO, string sex, bool priority, double score){
         return 1;
     }
 
-    ostringstream convert;
-
-    convert << "CREATE TABLE STUDENTS(Name TEXT, sex TEXT, priority INT, score REAL);"<<"INSERT INTO STUDENTS VALUES("<<FIO<<","<<sex<<","<<priority<<","<<score<<");";
-    string *sql = convert.str();
-
+    os << "CREATE TABLE IF NOT EXISTS students (name TEXT, priority INT, score REAL); INSERT INTO students VALUES('"<<FIO<<"',"<<priority<<","<<score<<");";
+    
+    string tmp = os.str();
+	const char* sql = tmp.c_str();
+ 
     rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
+    sqlite3_close(db);
 };
+
+void ViewerClass::outer(string FIO, bool priority, double score){
+
+	map <bool,string> priorityformatter;
+	priorityformatter[true]="есть";
+	priorityformatter[false]="нет";
+
+	cout<<"\n<Личная карточка абитуриента>"; cout<<"\nИмя: "<<FIO;
+	cout<<"\nПриоритет: "<<priorityformatter[priority];
+	cout<<"\nСред. балл: "<<score;
+}
 
 int main(){
 
