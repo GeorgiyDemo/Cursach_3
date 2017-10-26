@@ -1,41 +1,30 @@
-#include <sqlite3.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <iomanip>
+#include <iostream>
 
-int main(void) {
-    
-    sqlite3 *db;
-    char *err_msg = 0;
-    
-    int rc = sqlite3_open("test.db", &db);
-    
-    if (rc != SQLITE_OK) {
-        
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
-        sqlite3_close(db);
-        
-        return 1;
-    }
-    
-    ostringstream os;
-    os << "[" << i << "] idk";
-        cout << os.str() << endl; // replace by `say(...)` in your code
-        os.str(""); // clear the stream for the next iteration
+using namespace std;
 
-    char *sql = "DROP TABLE IF EXISTS Cars; CREATE TABLE Cars(Id INT, Name TEXT, Price INT);" 
-
-    rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
-    
-    if (rc != SQLITE_OK ) {
-        
-        fprintf(stderr, "SQL error: %s\n", err_msg);
-        
-        sqlite3_free(err_msg);        
-        sqlite3_close(db);
-        
-        return 1;
-    } 
-    
-    sqlite3_close(db);
-    
-    return 0;
+char * settime(struct tm *u){
+  char s[40];
+  char *tmp;
+  for (int i = 0; i<40; i++) s[i] = 0;
+  int length = strftime(s, 40, "%d.%m.%Y", u);
+  tmp = (char*)malloc(sizeof(s));
+  strcpy(tmp, s);
+  return(tmp);
 }
+int main(){
+
+  struct tm *u;
+  char *f;
+  const time_t timer = time(NULL);
+  u = localtime(&timer);
+  f = settime(u);
+  cout<<f;
+  return 0;
+
+}
+//Он ссылаться на это поле не может э
