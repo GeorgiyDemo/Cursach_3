@@ -1,10 +1,5 @@
 //Добавить:
-// Форма обучения (очная/заочная)
-// Направление (ИБАС/ПКС)
-// № заявления К-32593295
-// Оригинал (да/нет)
-// Форма оплаты (бюджет/Договор)
-// Дата заявления
+// датуууу
 
 #include <iomanip>
 #include <iostream>
@@ -25,41 +20,43 @@ class StudentClass{
 		double score;
 };
 
-class SQLiteClass: public StudentClass{
-	public:
-		int SQLiteInsider();
-};
-
 class ViewerClass: public StudentClass{
 	public:
 		void error();
-		void validator(string buf_FIO, bool buf_priority, double buf_score);
+		void validator(string buf_FIO, double buf_score, bool buf_priority, string buf_form_sudy, string buf_major, string buf_numbler, bool buf_original, string buf_form_pay);
 		void inputer();
 		void outer();
 		char * settime(struct tm *u);
+		int SQLiteInsider();
 
 };
 
-void ViewerClass::validator(string buf_FIO, bool buf_priority, double buf_score){
+void ViewerClass::validator(string buf_FIO, double buf_score, bool buf_priority, string buf_form_sudy, string buf_major, string buf_numbler, bool buf_original, string buf_form_pay){
 	
 	//SQLiteClass* myParent;
 
-	if ((typeid(buf_FIO) == typeid(string))&&(typeid(buf_priority) == typeid(bool))&&(typeid(buf_score) == typeid(double))&&((buf_score>=2.0)&&(buf_score<=5.0))){
+	//if ((typeid(buf_FIO) == typeid(string))&&(typeid(buf_priority) == typeid(bool))&&(typeid(buf_score) == typeid(double))&&((buf_score>=2.0)&&(buf_score<=5.0))){
 
 		FIO=buf_FIO;
-		priority=buf_priority;
 		score=buf_score;
+		priority=buf_priority;
+		form_sudy=buf_form_sudy;
+		major=buf_major;
+		numbler=buf_numbler;
+		original=buf_original;
+		form_pay=buf_form_pay;
 
 		outer();
 
 		//myParent:
 		//ЧЕ ЧЕ ЧЕ
-		int SQLiteClass::*SQLiteInsider();
+		SQLiteInsider();
 		//SQLiteClass.SQLiteInsider();
-	}
+	//}
 
-	else
-		error();}
+	//else
+	//	error();
+	}
 void ViewerClass::error(){
 	cout<<"\n\n--------------------------------------\n";
 	cout<<"|Проверьте правильность ввода данных!|\n";
@@ -73,6 +70,7 @@ char * ViewerClass::settime(struct tm *u){
   tmp = (char*)malloc(sizeof(s));
   strcpy(tmp, s);
   return(tmp);}
+
 void ViewerClass::inputer(){
 
 	bool buf_original, buf_priority;
@@ -94,19 +92,18 @@ void ViewerClass::inputer(){
 		cout<<"№ заявления => "; cin>>buf_numbler;
 		cout<<"Оригинал (0/1) => "; cin>>buf_original;
 		cout<<"Форма оплаты (бюджет/договор) => " ; cin>>buf_form_pay;
-		//ВЫЗЫВАЕМ НАШУ ДАТУ
-		buf_date=f;
+		//ВЫЗЫВАЕМ НАШУ ДАТУ, но пока без нее хорошо живем
+		//buf_date=f;
 
-		validator(buf_FIO,buf_priority,buf_score);
+		validator(buf_FIO, buf_score, buf_priority, buf_form_sudy, buf_major, buf_numbler, buf_original, buf_form_pay);
 	}  
 	catch(...) { 
 		error(); 
 	}  
 }
 
-int SQLiteClass::SQLiteInsider(){
+int ViewerClass::SQLiteInsider(){
 	
-	cout<<"Я ТУТ И Я ЕЩЕ НЕ МЕРТВЫЙ";
 	sqlite3 *db;
     char *err_msg = 0;
     ostringstream os;
@@ -120,7 +117,8 @@ int SQLiteClass::SQLiteInsider(){
         return 1;
     }
 
-    os << "CREATE TABLE IF NOT EXISTS students (name TEXT, priority INT, score REAL); INSERT INTO students VALUES('"<<FIO<<"',"<<priority<<","<<score<<");";
+    os << "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority INT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT);"; 
+	os << "INSERT INTO students VALUES('"<<FIO<<"',"<<score<<","<<priority<<",'"<<form_sudy<<"','"<<major<<"','"<<numbler<<"','"<<original<<"','"<<form_pay<<"');";
     
     string tmp = os.str();
 	const char* sql = tmp.c_str();

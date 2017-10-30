@@ -317,18 +317,23 @@ namespace DEMKA {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		SQLiteConnection ^db = gcnew SQLiteConnection();
-		try
-		{
-			db->ConnectionString = "Data Source=\"" + fileName + "\"";
-			db->Open();
 
-			db->Close();
-		}
-		finally
-		{
-			delete (IDisposable^)db;
-		}
+
+			SQLiteConnection ^db = gcnew SQLiteConnection();
+			try
+			{
+				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database.bd"; // + "\"";
+				db->Open();
+				MessageBox::Show("ÐÀÁÎÒÀÀÀÞ");
+				db->Close();
+			}
+			finally
+			{
+				delete (IDisposable^)db;
+			}
+
+		
 	}
+	
 };
 }
