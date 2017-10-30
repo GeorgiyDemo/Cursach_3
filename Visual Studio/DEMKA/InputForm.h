@@ -322,9 +322,14 @@ namespace DEMKA {
 			SQLiteConnection ^db = gcnew SQLiteConnection();
 			try
 			{
-				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database.bd"; // + "\"";
+				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db"; // + "\"";
 				db->Open();
 				MessageBox::Show("ÐÀÁÎÒÀÀÀÞ");
+				
+				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+				cmdInsertValue->CommandText = "INSERT INTO students VALUES('ÏÐÎÑÒÎÉ ÊÎÒÈÊ', 3.8, 0, 'î÷íàÿ', 'ÈÁÀÑ', 'Ê-3323235', '1', 'äîãîâîð'); ";
+				cmdInsertValue->ExecuteNonQuery();
+
 				db->Close();
 			}
 			finally
