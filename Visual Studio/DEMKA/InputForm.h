@@ -36,8 +36,10 @@ namespace DEMKA {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::TextBox^  FIOBox;
+	protected:
 
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::GroupBox^  OriginalBox;
 	private: System::Windows::Forms::RadioButton^  OriginalRadioButton2;
@@ -50,12 +52,15 @@ namespace DEMKA {
 
 
 	private: System::Windows::Forms::RadioButton^  PriorityRadioButton1;
-	private: System::Windows::Forms::TextBox^  textBox2;
+	private: System::Windows::Forms::TextBox^  ScoreBox;
+
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::TextBox^  textBox3;
+	private: System::Windows::Forms::TextBox^  MajorBox;
+
 	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::TextBox^  textBox4;
+	private: System::Windows::Forms::TextBox^  NumberBox;
+
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::GroupBox^  StudyformBox;
 	private: System::Windows::Forms::RadioButton^  StudyformRadioButton2;
@@ -77,20 +82,20 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->FIOBox = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->OriginalBox = (gcnew System::Windows::Forms::GroupBox());
-			this->OriginalRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->OriginalRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->OriginalRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->PriorityBox = (gcnew System::Windows::Forms::GroupBox());
-			this->PriorityRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->PriorityRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->PriorityRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->ScoreBox = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->MajorBox = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+			this->NumberBox = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->StudyformBox = (gcnew System::Windows::Forms::GroupBox());
 			this->StudyformRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
@@ -102,12 +107,12 @@ namespace DEMKA {
 			this->StudyformBox->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// textBox1
+			// FIOBox
 			// 
-			this->textBox1->Location = System::Drawing::Point(135, 31);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 1;
+			this->FIOBox->Location = System::Drawing::Point(135, 31);
+			this->FIOBox->Name = L"FIOBox";
+			this->FIOBox->Size = System::Drawing::Size(100, 20);
+			this->FIOBox->TabIndex = 1;
 			// 
 			// label1
 			// 
@@ -129,17 +134,6 @@ namespace DEMKA {
 			this->OriginalBox->TabStop = false;
 			this->OriginalBox->Text = L"Тип аттестата";
 			// 
-			// OriginalRadioButton1
-			// 
-			this->OriginalRadioButton1->AutoSize = true;
-			this->OriginalRadioButton1->Location = System::Drawing::Point(7, 20);
-			this->OriginalRadioButton1->Name = L"OriginalRadioButton1";
-			this->OriginalRadioButton1->Size = System::Drawing::Size(74, 17);
-			this->OriginalRadioButton1->TabIndex = 0;
-			this->OriginalRadioButton1->TabStop = true;
-			this->OriginalRadioButton1->Text = L"Оригинал";
-			this->OriginalRadioButton1->UseVisualStyleBackColor = true;
-			// 
 			// OriginalRadioButton2
 			// 
 			this->OriginalRadioButton2->AutoSize = true;
@@ -150,6 +144,17 @@ namespace DEMKA {
 			this->OriginalRadioButton2->TabStop = true;
 			this->OriginalRadioButton2->Text = L"Копия";
 			this->OriginalRadioButton2->UseVisualStyleBackColor = true;
+			// 
+			// OriginalRadioButton1
+			// 
+			this->OriginalRadioButton1->AutoSize = true;
+			this->OriginalRadioButton1->Location = System::Drawing::Point(7, 20);
+			this->OriginalRadioButton1->Name = L"OriginalRadioButton1";
+			this->OriginalRadioButton1->Size = System::Drawing::Size(74, 17);
+			this->OriginalRadioButton1->TabIndex = 0;
+			this->OriginalRadioButton1->TabStop = true;
+			this->OriginalRadioButton1->Text = L"Оригинал";
+			this->OriginalRadioButton1->UseVisualStyleBackColor = true;
 			// 
 			// PriorityBox
 			// 
@@ -162,17 +167,6 @@ namespace DEMKA {
 			this->PriorityBox->TabStop = false;
 			this->PriorityBox->Text = L"Приоритет";
 			// 
-			// PriorityRadioButton1
-			// 
-			this->PriorityRadioButton1->AutoSize = true;
-			this->PriorityRadioButton1->Location = System::Drawing::Point(7, 20);
-			this->PriorityRadioButton1->Name = L"PriorityRadioButton1";
-			this->PriorityRadioButton1->Size = System::Drawing::Size(49, 17);
-			this->PriorityRadioButton1->TabIndex = 0;
-			this->PriorityRadioButton1->TabStop = true;
-			this->PriorityRadioButton1->Text = L"Есть";
-			this->PriorityRadioButton1->UseVisualStyleBackColor = true;
-			// 
 			// PriorityRadioButton2
 			// 
 			this->PriorityRadioButton2->AutoSize = true;
@@ -184,12 +178,23 @@ namespace DEMKA {
 			this->PriorityRadioButton2->Text = L"Нет";
 			this->PriorityRadioButton2->UseVisualStyleBackColor = true;
 			// 
-			// textBox2
+			// PriorityRadioButton1
 			// 
-			this->textBox2->Location = System::Drawing::Point(135, 59);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
-			this->textBox2->TabIndex = 5;
+			this->PriorityRadioButton1->AutoSize = true;
+			this->PriorityRadioButton1->Location = System::Drawing::Point(7, 20);
+			this->PriorityRadioButton1->Name = L"PriorityRadioButton1";
+			this->PriorityRadioButton1->Size = System::Drawing::Size(49, 17);
+			this->PriorityRadioButton1->TabIndex = 0;
+			this->PriorityRadioButton1->TabStop = true;
+			this->PriorityRadioButton1->Text = L"Есть";
+			this->PriorityRadioButton1->UseVisualStyleBackColor = true;
+			// 
+			// ScoreBox
+			// 
+			this->ScoreBox->Location = System::Drawing::Point(135, 59);
+			this->ScoreBox->Name = L"ScoreBox";
+			this->ScoreBox->Size = System::Drawing::Size(100, 20);
+			this->ScoreBox->TabIndex = 5;
 			// 
 			// label2
 			// 
@@ -209,12 +214,12 @@ namespace DEMKA {
 			this->label3->TabIndex = 8;
 			this->label3->Text = L"Направление:";
 			// 
-			// textBox3
+			// MajorBox
 			// 
-			this->textBox3->Location = System::Drawing::Point(135, 90);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(100, 20);
-			this->textBox3->TabIndex = 7;
+			this->MajorBox->Location = System::Drawing::Point(135, 90);
+			this->MajorBox->Name = L"MajorBox";
+			this->MajorBox->Size = System::Drawing::Size(100, 20);
+			this->MajorBox->TabIndex = 7;
 			// 
 			// label4
 			// 
@@ -225,23 +230,23 @@ namespace DEMKA {
 			this->label4->TabIndex = 10;
 			this->label4->Text = L"№ заявления";
 			// 
-			// textBox4
+			// NumberBox
 			// 
-			this->textBox4->Location = System::Drawing::Point(135, 116);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(100, 20);
-			this->textBox4->TabIndex = 9;
+			this->NumberBox->Location = System::Drawing::Point(135, 116);
+			this->NumberBox->Name = L"NumberBox";
+			this->NumberBox->Size = System::Drawing::Size(100, 20);
+			this->NumberBox->TabIndex = 9;
 			// 
 			// groupBox1
 			// 
 			this->groupBox1->Controls->Add(this->label1);
 			this->groupBox1->Controls->Add(this->label4);
-			this->groupBox1->Controls->Add(this->textBox1);
-			this->groupBox1->Controls->Add(this->textBox4);
-			this->groupBox1->Controls->Add(this->textBox2);
+			this->groupBox1->Controls->Add(this->FIOBox);
+			this->groupBox1->Controls->Add(this->NumberBox);
+			this->groupBox1->Controls->Add(this->ScoreBox);
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
-			this->groupBox1->Controls->Add(this->textBox3);
+			this->groupBox1->Controls->Add(this->MajorBox);
 			this->groupBox1->Location = System::Drawing::Point(85, 52);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(254, 152);
@@ -315,28 +320,36 @@ namespace DEMKA {
 			this->ResumeLayout(false);
 
 		}
+
 #pragma endregion
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-
-
 			SQLiteConnection ^db = gcnew SQLiteConnection();
-			try
-			{
-				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db"; // + "\"";
-				db->Open();
-				MessageBox::Show("РАБОТАААЮ");
-				
-				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-				cmdInsertValue->CommandText = "INSERT INTO students VALUES('ПРОСТОЙ КОТИК', 3.8, 0, 'очная', 'ИБАС', 'К-3323235', '1', 'договор'); ";
-				cmdInsertValue->ExecuteNonQuery();
+			
+				String ^priority_str = "";
+				String ^form_sudy_str = "";
+				String ^original_str = "";
 
-				db->Close();
-			}
-			finally
-			{
-				delete (IDisposable^)db;
-			}
+				try
+				{
+					db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+					db->Open();
 
+					original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
+					priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
+					form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+
+					SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT); INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + ",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + "','" + NumberBox->Text + "','" + original_str + "', 'договор'); ";
+					cmdInsertValue->ExecuteNonQuery();
+
+					db->Close();
+				}
+				finally
+				{
+					delete (IDisposable^)db;
+				}
+			
 		
 	}
 	
