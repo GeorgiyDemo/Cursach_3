@@ -1,4 +1,5 @@
 #include "MainForm.h"
+#include "InputForm.h"
 #include <string>
 
 using namespace System;

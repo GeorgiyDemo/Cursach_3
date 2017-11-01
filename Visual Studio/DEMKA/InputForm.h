@@ -66,6 +66,10 @@ namespace DEMKA {
 	private: System::Windows::Forms::RadioButton^  StudyformRadioButton2;
 	private: System::Windows::Forms::RadioButton^  StudyformRadioButton1;
 	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::GroupBox^  FormPayGroupBox;
+	private: System::Windows::Forms::RadioButton^  FromPayRadioButton2;
+	private: System::Windows::Forms::RadioButton^  FormPayRadioButton1;
+	private: System::Windows::Forms::Button^  MenuButton;
 
 	protected:
 
@@ -101,17 +105,22 @@ namespace DEMKA {
 			this->StudyformRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->StudyformRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->FormPayGroupBox = (gcnew System::Windows::Forms::GroupBox());
+			this->FromPayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->FormPayRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->MenuButton = (gcnew System::Windows::Forms::Button());
 			this->OriginalBox->SuspendLayout();
 			this->PriorityBox->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->StudyformBox->SuspendLayout();
+			this->FormPayGroupBox->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// FIOBox
 			// 
 			this->FIOBox->Location = System::Drawing::Point(135, 31);
 			this->FIOBox->Name = L"FIOBox";
-			this->FIOBox->Size = System::Drawing::Size(100, 20);
+			this->FIOBox->Size = System::Drawing::Size(143, 20);
 			this->FIOBox->TabIndex = 1;
 			// 
 			// label1
@@ -127,7 +136,7 @@ namespace DEMKA {
 			// 
 			this->OriginalBox->Controls->Add(this->OriginalRadioButton2);
 			this->OriginalBox->Controls->Add(this->OriginalRadioButton1);
-			this->OriginalBox->Location = System::Drawing::Point(401, 21);
+			this->OriginalBox->Location = System::Drawing::Point(325, 19);
 			this->OriginalBox->Name = L"OriginalBox";
 			this->OriginalBox->Size = System::Drawing::Size(109, 68);
 			this->OriginalBox->TabIndex = 3;
@@ -160,7 +169,7 @@ namespace DEMKA {
 			// 
 			this->PriorityBox->Controls->Add(this->PriorityRadioButton2);
 			this->PriorityBox->Controls->Add(this->PriorityRadioButton1);
-			this->PriorityBox->Location = System::Drawing::Point(401, 95);
+			this->PriorityBox->Location = System::Drawing::Point(325, 93);
 			this->PriorityBox->Name = L"PriorityBox";
 			this->PriorityBox->Size = System::Drawing::Size(109, 66);
 			this->PriorityBox->TabIndex = 4;
@@ -193,7 +202,7 @@ namespace DEMKA {
 			// 
 			this->ScoreBox->Location = System::Drawing::Point(135, 59);
 			this->ScoreBox->Name = L"ScoreBox";
-			this->ScoreBox->Size = System::Drawing::Size(100, 20);
+			this->ScoreBox->Size = System::Drawing::Size(143, 20);
 			this->ScoreBox->TabIndex = 5;
 			// 
 			// label2
@@ -218,7 +227,7 @@ namespace DEMKA {
 			// 
 			this->MajorBox->Location = System::Drawing::Point(135, 90);
 			this->MajorBox->Name = L"MajorBox";
-			this->MajorBox->Size = System::Drawing::Size(100, 20);
+			this->MajorBox->Size = System::Drawing::Size(143, 20);
 			this->MajorBox->TabIndex = 7;
 			// 
 			// label4
@@ -234,7 +243,7 @@ namespace DEMKA {
 			// 
 			this->NumberBox->Location = System::Drawing::Point(135, 116);
 			this->NumberBox->Name = L"NumberBox";
-			this->NumberBox->Size = System::Drawing::Size(100, 20);
+			this->NumberBox->Size = System::Drawing::Size(143, 20);
 			this->NumberBox->TabIndex = 9;
 			// 
 			// groupBox1
@@ -247,9 +256,9 @@ namespace DEMKA {
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
 			this->groupBox1->Controls->Add(this->MajorBox);
-			this->groupBox1->Location = System::Drawing::Point(85, 52);
+			this->groupBox1->Location = System::Drawing::Point(12, 12);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(254, 152);
+			this->groupBox1->Size = System::Drawing::Size(296, 152);
 			this->groupBox1->TabIndex = 11;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Ввод";
@@ -258,7 +267,7 @@ namespace DEMKA {
 			// 
 			this->StudyformBox->Controls->Add(this->StudyformRadioButton2);
 			this->StudyformBox->Controls->Add(this->StudyformRadioButton1);
-			this->StudyformBox->Location = System::Drawing::Point(401, 167);
+			this->StudyformBox->Location = System::Drawing::Point(440, 21);
 			this->StudyformBox->Name = L"StudyformBox";
 			this->StudyformBox->Size = System::Drawing::Size(109, 66);
 			this->StudyformBox->TabIndex = 5;
@@ -289,26 +298,73 @@ namespace DEMKA {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(401, 253);
+			this->button1->Location = System::Drawing::Point(427, 165);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(109, 37);
+			this->button1->Size = System::Drawing::Size(125, 43);
 			this->button1->TabIndex = 12;
-			this->button1->Text = L"=>";
+			this->button1->Text = L"Заполнить";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &InputForm::button1_Click);
+			// 
+			// FormPayGroupBox
+			// 
+			this->FormPayGroupBox->Controls->Add(this->FromPayRadioButton2);
+			this->FormPayGroupBox->Controls->Add(this->FormPayRadioButton1);
+			this->FormPayGroupBox->Location = System::Drawing::Point(440, 93);
+			this->FormPayGroupBox->Name = L"FormPayGroupBox";
+			this->FormPayGroupBox->Size = System::Drawing::Size(109, 66);
+			this->FormPayGroupBox->TabIndex = 13;
+			this->FormPayGroupBox->TabStop = false;
+			this->FormPayGroupBox->Text = L"Форма оплаты";
+			// 
+			// FromPayRadioButton2
+			// 
+			this->FromPayRadioButton2->AutoSize = true;
+			this->FromPayRadioButton2->Location = System::Drawing::Point(7, 44);
+			this->FromPayRadioButton2->Name = L"FromPayRadioButton2";
+			this->FromPayRadioButton2->Size = System::Drawing::Size(69, 17);
+			this->FromPayRadioButton2->TabIndex = 1;
+			this->FromPayRadioButton2->TabStop = true;
+			this->FromPayRadioButton2->Text = L"Договор";
+			this->FromPayRadioButton2->UseVisualStyleBackColor = true;
+			// 
+			// FormPayRadioButton1
+			// 
+			this->FormPayRadioButton1->AutoSize = true;
+			this->FormPayRadioButton1->Location = System::Drawing::Point(7, 20);
+			this->FormPayRadioButton1->Name = L"FormPayRadioButton1";
+			this->FormPayRadioButton1->Size = System::Drawing::Size(65, 17);
+			this->FormPayRadioButton1->TabIndex = 0;
+			this->FormPayRadioButton1->TabStop = true;
+			this->FormPayRadioButton1->Text = L"Бюджет";
+			this->FormPayRadioButton1->UseVisualStyleBackColor = true;
+			// 
+			// MenuButton
+			// 
+			this->MenuButton->Location = System::Drawing::Point(12, 165);
+			this->MenuButton->Name = L"MenuButton";
+			this->MenuButton->Size = System::Drawing::Size(125, 43);
+			this->MenuButton->TabIndex = 14;
+			this->MenuButton->Text = L"<=";
+			this->MenuButton->UseVisualStyleBackColor = true;
+			this->MenuButton->Click += gcnew System::EventHandler(this, &InputForm::MenuButton_Click);
 			// 
 			// InputForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(536, 302);
+			this->ClientSize = System::Drawing::Size(564, 220);
+			this->Controls->Add(this->MenuButton);
+			this->Controls->Add(this->FormPayGroupBox);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->StudyformBox);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->PriorityBox);
 			this->Controls->Add(this->OriginalBox);
 			this->Name = L"InputForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Прием нового абитуриента";
+			this->Load += gcnew System::EventHandler(this, &InputForm::InputForm_Load);
 			this->OriginalBox->ResumeLayout(false);
 			this->OriginalBox->PerformLayout();
 			this->PriorityBox->ResumeLayout(false);
@@ -317,6 +373,8 @@ namespace DEMKA {
 			this->groupBox1->PerformLayout();
 			this->StudyformBox->ResumeLayout(false);
 			this->StudyformBox->PerformLayout();
+			this->FormPayGroupBox->ResumeLayout(false);
+			this->FormPayGroupBox->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -324,23 +382,26 @@ namespace DEMKA {
 #pragma endregion
 
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+			
+			System::DateTime now = System::DateTime::Now;
+			String^ date_str = now.ToString("d");
+			String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
 			SQLiteConnection ^db = gcnew SQLiteConnection();
 			
-				String ^priority_str = "";
-				String ^form_sudy_str = "";
-				String ^original_str = "";
+			original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
+			priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
+			form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+			form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
 
+			if (MessageBox::Show("Введенные данные действительно верны?", "Подтвердить ввод данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+			{
 				try
 				{
 					db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 					db->Open();
 
-					original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
-					priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
-					form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
-
 					SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT); INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + ",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + "','" + NumberBox->Text + "','" + original_str + "', 'договор'); ";
+					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT); INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + ",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + "','" + NumberBox->Text + "','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
 					cmdInsertValue->ExecuteNonQuery();
 
 					db->Close();
@@ -349,9 +410,22 @@ namespace DEMKA {
 				{
 					delete (IDisposable^)db;
 				}
+			}
 			
 		
 	}
 	
+	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		//ПОФИКСИТЬ как-то
+		/*MainForm^mainfrom_obj = gcnew MainForm();
+		this->Hide();
+		mainfrom_obj->ShowDialog();
+		*/
+	}
+
+	private: System::Void InputForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+	}
+
 };
 }

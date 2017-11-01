@@ -39,6 +39,7 @@ namespace DEMKA {
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Button^  button3;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
+	private: System::Windows::Forms::Button^  ExitButton;
 	protected:
 
 	private:
@@ -58,6 +59,7 @@ namespace DEMKA {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -101,13 +103,25 @@ namespace DEMKA {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Выбор действия:";
 			// 
+			// ExitButton
+			// 
+			this->ExitButton->DialogResult = System::Windows::Forms::DialogResult::Abort;
+			this->ExitButton->Location = System::Drawing::Point(215, 295);
+			this->ExitButton->Name = L"ExitButton";
+			this->ExitButton->Size = System::Drawing::Size(89, 33);
+			this->ExitButton->TabIndex = 5;
+			this->ExitButton->Text = L"button4";
+			this->ExitButton->UseVisualStyleBackColor = true;
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(316, 331);
+			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->groupBox1);
 			this->Name = L"MainForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Главная форма АИС";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->groupBox1->ResumeLayout(false);
@@ -116,12 +130,11 @@ namespace DEMKA {
 		}
 #pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		//this->Hide();
-		DEMKA::InputForm input_obj;
-		input_obj.ShowDialog();
-		this->Show();
+		InputForm^input_obj = gcnew InputForm();
+		this->Hide();
+		input_obj->ShowDialog();
 	}
-private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-}
+	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	}
 };
 }
