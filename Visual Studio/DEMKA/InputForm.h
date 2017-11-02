@@ -70,6 +70,8 @@ namespace DEMKA {
 	private: System::Windows::Forms::RadioButton^  FromPayRadioButton2;
 	private: System::Windows::Forms::RadioButton^  FormPayRadioButton1;
 	private: System::Windows::Forms::Button^  MenuButton;
+	private: System::Windows::Forms::Button^  PrinterButton;
+
 
 	protected:
 
@@ -86,6 +88,7 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(InputForm::typeid));
 			this->FIOBox = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->OriginalBox = (gcnew System::Windows::Forms::GroupBox());
@@ -109,6 +112,7 @@ namespace DEMKA {
 			this->FromPayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->FormPayRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->MenuButton = (gcnew System::Windows::Forms::Button());
+			this->PrinterButton = (gcnew System::Windows::Forms::Button());
 			this->OriginalBox->SuspendLayout();
 			this->PriorityBox->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -136,7 +140,7 @@ namespace DEMKA {
 			// 
 			this->OriginalBox->Controls->Add(this->OriginalRadioButton2);
 			this->OriginalBox->Controls->Add(this->OriginalRadioButton1);
-			this->OriginalBox->Location = System::Drawing::Point(325, 19);
+			this->OriginalBox->Location = System::Drawing::Point(325, 38);
 			this->OriginalBox->Name = L"OriginalBox";
 			this->OriginalBox->Size = System::Drawing::Size(109, 68);
 			this->OriginalBox->TabIndex = 3;
@@ -169,7 +173,7 @@ namespace DEMKA {
 			// 
 			this->PriorityBox->Controls->Add(this->PriorityRadioButton2);
 			this->PriorityBox->Controls->Add(this->PriorityRadioButton1);
-			this->PriorityBox->Location = System::Drawing::Point(325, 93);
+			this->PriorityBox->Location = System::Drawing::Point(325, 112);
 			this->PriorityBox->Name = L"PriorityBox";
 			this->PriorityBox->Size = System::Drawing::Size(109, 66);
 			this->PriorityBox->TabIndex = 4;
@@ -256,7 +260,7 @@ namespace DEMKA {
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
 			this->groupBox1->Controls->Add(this->MajorBox);
-			this->groupBox1->Location = System::Drawing::Point(12, 12);
+			this->groupBox1->Location = System::Drawing::Point(12, 31);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(296, 152);
 			this->groupBox1->TabIndex = 11;
@@ -267,7 +271,7 @@ namespace DEMKA {
 			// 
 			this->StudyformBox->Controls->Add(this->StudyformRadioButton2);
 			this->StudyformBox->Controls->Add(this->StudyformRadioButton1);
-			this->StudyformBox->Location = System::Drawing::Point(440, 21);
+			this->StudyformBox->Location = System::Drawing::Point(440, 40);
 			this->StudyformBox->Name = L"StudyformBox";
 			this->StudyformBox->Size = System::Drawing::Size(109, 66);
 			this->StudyformBox->TabIndex = 5;
@@ -298,11 +302,11 @@ namespace DEMKA {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(427, 165);
+			this->button1->Location = System::Drawing::Point(427, 184);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(125, 43);
 			this->button1->TabIndex = 12;
-			this->button1->Text = L"Заполнить";
+			this->button1->Text = L"=>";
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &InputForm::button1_Click);
 			// 
@@ -310,7 +314,7 @@ namespace DEMKA {
 			// 
 			this->FormPayGroupBox->Controls->Add(this->FromPayRadioButton2);
 			this->FormPayGroupBox->Controls->Add(this->FormPayRadioButton1);
-			this->FormPayGroupBox->Location = System::Drawing::Point(440, 93);
+			this->FormPayGroupBox->Location = System::Drawing::Point(440, 112);
 			this->FormPayGroupBox->Name = L"FormPayGroupBox";
 			this->FormPayGroupBox->Size = System::Drawing::Size(109, 66);
 			this->FormPayGroupBox->TabIndex = 13;
@@ -341,7 +345,7 @@ namespace DEMKA {
 			// 
 			// MenuButton
 			// 
-			this->MenuButton->Location = System::Drawing::Point(12, 165);
+			this->MenuButton->Location = System::Drawing::Point(12, 184);
 			this->MenuButton->Name = L"MenuButton";
 			this->MenuButton->Size = System::Drawing::Size(125, 43);
 			this->MenuButton->TabIndex = 14;
@@ -349,11 +353,22 @@ namespace DEMKA {
 			this->MenuButton->UseVisualStyleBackColor = true;
 			this->MenuButton->Click += gcnew System::EventHandler(this, &InputForm::MenuButton_Click);
 			// 
+			// PrinterButton
+			// 
+			this->PrinterButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PrinterButton.Image")));
+			this->PrinterButton->Location = System::Drawing::Point(516, 4);
+			this->PrinterButton->Name = L"PrinterButton";
+			this->PrinterButton->Size = System::Drawing::Size(32, 30);
+			this->PrinterButton->TabIndex = 15;
+			this->PrinterButton->UseVisualStyleBackColor = true;
+			this->PrinterButton->Click += gcnew System::EventHandler(this, &InputForm::PrinterButton_Click);
+			// 
 			// InputForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(564, 220);
+			this->ClientSize = System::Drawing::Size(560, 236);
+			this->Controls->Add(this->PrinterButton);
 			this->Controls->Add(this->MenuButton);
 			this->Controls->Add(this->FormPayGroupBox);
 			this->Controls->Add(this->button1);
@@ -416,16 +431,28 @@ namespace DEMKA {
 	}
 	
 	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		//ПОФИКСИТЬ как-то
-		/*MainForm^mainfrom_obj = gcnew MainForm();
 		this->Hide();
-		mainfrom_obj->ShowDialog();
-		*/
 	}
 
 	private: System::Void InputForm_Load(System::Object^  sender, System::EventArgs^  e) {
 
 	}
 
+	//Принтер
+	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		/*Microsoft::   WordprocessingDocument^ wordDoc = WordprocessingDocument::Create("C:\\temp\\MyFile.docx", WordprocessingDocumentType::Document);
+		MainDocumentPart^ mainPart = wordDoc->AddMainDocumentPart();
+
+		mainPart->Document = gcnew Document;
+		Body^ body = mainPart->Document->AppendChild(gcnew Body);
+		Paragraph^ para = body->AppendChild(gcnew Paragraph);
+		Run^ run = para->AppendChild(gcnew Run);
+		run->AppendChild(gcnew DocumentFormat::OpenXml::Wordprocessing::Text("Hello !"));
+
+		delete wordDoc;
+		*/
+
+	}
 };
 }
