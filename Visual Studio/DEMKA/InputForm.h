@@ -397,39 +397,38 @@ namespace DEMKA {
 #pragma endregion
 
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-			
-			System::DateTime now = System::DateTime::Now;
-			String^ date_str = now.ToString("d");
-			String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
-			SQLiteConnection ^db = gcnew SQLiteConnection();
-			
-			original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
-			priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
-			form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
-			form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
 
-			if (MessageBox::Show("Введенные данные действительно верны?", "Подтвердить ввод данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+		System::DateTime now = System::DateTime::Now;
+		String^ date_str = now.ToString("d");
+		String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+
+		original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
+		priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
+		form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+		form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
+
+		if (MessageBox::Show("Введенные данные действительно верны?", "Подтвердить ввод данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+		{
+			try
 			{
-				try
-				{
-					db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
-					db->Open();
+				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+				db->Open();
 
-					SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT); INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + ",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + "','" + NumberBox->Text + "','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
-					cmdInsertValue->ExecuteNonQuery();
-
-					db->Close();
-				}
-				finally
-				{
-					delete (IDisposable^)db;
-				}
+				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+				cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT); INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + ",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + "','" + NumberBox->Text + "','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
+				cmdInsertValue->ExecuteNonQuery();
+				db->Close();
 			}
-			
-		
+			finally
+			{
+				delete (IDisposable^)db;
+			}
+		}
+
+
 	}
-	
+
 	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
 	}
@@ -454,5 +453,5 @@ namespace DEMKA {
 		*/
 
 	}
-};
+	};
 }

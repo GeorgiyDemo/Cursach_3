@@ -134,7 +134,7 @@ namespace DEMKA {
 			this->ResumeLayout(false);
 
 		}
-	#pragma endregion
+#pragma endregion
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		InputForm^InputForm_obj = gcnew InputForm();
 		this->Hide();
@@ -153,7 +153,7 @@ namespace DEMKA {
 	}
 
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-	
+
 	}
-};
+	};
 }

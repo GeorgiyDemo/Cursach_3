@@ -1,4 +1,6 @@
 #include <cliext/vector>
+#include <string>
+#include <map>
 #pragma once
 
 namespace DEMKA {
@@ -74,13 +76,21 @@ namespace DEMKA {
 			// 
 			// dataGridView1
 			// 
-			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::ButtonFace;
+			this->dataGridView1->AllowUserToAddRows = false;
+			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::Menu;
 			this->dataGridView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dataGridView1->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::Raised;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->dataGridView1->Location = System::Drawing::Point(12, 12);
+			this->dataGridView1->Location = System::Drawing::Point(12, 3);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(950, 261);
+			this->dataGridView1->ReadOnly = true;
+			this->dataGridView1->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Sunken;
+			this->dataGridView1->RowHeadersVisible = false;
+			this->dataGridView1->ShowCellErrors = false;
+			this->dataGridView1->ShowEditingIcon = false;
+			this->dataGridView1->Size = System::Drawing::Size(964, 261);
 			this->dataGridView1->TabIndex = 1;
 			// 
 			// RatingForm
@@ -103,59 +113,55 @@ namespace DEMKA {
 		this->Hide();
 	}
 	private: System::Void RatingForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+		std::map <int, std::string> rows_formatter;
+		rows_formatter[0] = "ФИО";
+		rows_formatter[1] = "Сред. балл";
+		rows_formatter[2] = "Приоритет";
+		rows_formatter[3] = "Форма обучения";
+		rows_formatter[4] = "Специальность";
+		rows_formatter[5] = "№";
+		rows_formatter[6] = "Аттестат";
+		rows_formatter[7] = "Форма оплаты";
+		rows_formatter[8] = "Дата ";
+
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		try
 		{
 			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 			db->Open();
 
-			try
-			{
-				SQLiteCommand ^cmdSelect = db->CreateCommand();
-				//Обратите внмиание, что SQL запрос оформляем как обычную строчку
-				cmdSelect->CommandText = "SELECT * FROM students;";
-				SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
+			SQLiteCommand ^cmdSelect = db->CreateCommand();
+			cmdSelect->CommandText = "SELECT * FROM students;";
+			SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
+			DataTable ^table;
+			DataColumn ^column;
+			DataRow ^row;
 
-				//В table будем записывать итоговый результат
-				DataTable ^table; //Невидимая таблица данных
-				DataColumn ^column; //Столбец таблицы
-				DataRow ^row; //Строка таблицы
+			table = gcnew DataTable();
 
-							  //Создаем таблицу данных
-				table = gcnew DataTable();
+			vector<String^>^ nameColumns = gcnew vector<String^>();
 
-				//Вектор названий столбцов
-				vector<String^>^ nameColumns = gcnew vector<String^>();
+			for (int i = 0; i < reader->FieldCount; i++) {
+				String^ buf_row = gcnew System::String(rows_formatter[i].c_str());
+				nameColumns->push_back(buf_row);
+				column = gcnew DataColumn(nameColumns->at(i), String::typeid);
+				table->Columns->Add(column);
+			}
 
-				//Заполним данные о столбцах
+			while (reader->Read()) {
+				row = table->NewRow();
 				for (int i = 0; i < reader->FieldCount; i++) {
-					nameColumns->push_back(reader->GetName(i));
-					column = gcnew DataColumn(nameColumns->at(i), String::typeid);
-					table->Columns->Add(column);
+					row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
+					reader->GetValue(i)->ToString();
 				}
-				//Пробегаем по каждой записи
-				while (reader->Read()) {
-					//Заполняем строчку таблицы
-					row = table->NewRow();
-					//В каждой записи пробегаем по всем столбцам
-					for (int i = 0; i < reader->FieldCount; i++) {
-						//Добавлем значение столбца в row
-						row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
-						reader->GetValue(i)->ToString();
-					}
-					table->Rows->Add(row);
-				}
-
-				//Выводим результат
-				dataGridView1->DataSource = table;
-			}
-			catch (Exception ^e)
-			{
-				MessageBox::Show("Error Executing SQL: " + e->ToString(), "Exception While Displaying MyTable ...");
+				table->Rows->Add(row);
 			}
 
+			dataGridView1->DataSource = table;
 			db->Close();
 		}
+
 		finally
 		{
 			delete (IDisposable^)db;
