@@ -416,7 +416,14 @@ namespace DEMKA {
 				db->Open();
 
 				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-				cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students (name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT); INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + ",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + "','" + NumberBox->Text + "','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
+				
+				cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students"+
+					"(name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT);"+
+					"INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + 
+					",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + 
+					"','" + NumberBox->Text + "','" + original_str + "', '"
+					+ form_pay_str + "','" + date_str + "');";
+				
 				cmdInsertValue->ExecuteNonQuery();
 				db->Close();
 			}
@@ -437,21 +444,57 @@ namespace DEMKA {
 
 	}
 
-	//Принтер
+			 //Принтер
 	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		/*Microsoft::   WordprocessingDocument^ wordDoc = WordprocessingDocument::Create("C:\\temp\\MyFile.docx", WordprocessingDocumentType::Document);
-		MainDocumentPart^ mainPart = wordDoc->AddMainDocumentPart();
 
-		mainPart->Document = gcnew Document;
-		Body^ body = mainPart->Document->AppendChild(gcnew Body);
-		Paragraph^ para = body->AppendChild(gcnew Paragraph);
-		Run^ run = para->AppendChild(gcnew Run);
-		run->AppendChild(gcnew DocumentFormat::OpenXml::Wordprocessing::Text("Hello !"));
+		Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
+		auto t = Type::Missing;
 
-		delete wordDoc;
-		*/
+		try
+		{
+			auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
+			//Делаем видимым все происодящее 
+			WORD->Visible = true;
+			// Открываем новый документ 
+			auto Документ = WORD->Documents->Add(t, t, t, t);
 
+			WORD->Selection->ParagraphFormat->Alignment =
+				Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
+			WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
+			WORD->Selection->Font->Bold = 1; // жирный шрифт
+			WORD->Selection->Font->Size = 20; // высота шрифта 20
+			WORD->Selection->TypeText("Реп по Наруто");
+
+			WORD->Selection->Font->Size = 12;
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->ParagraphFormat->Alignment =
+				Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
+			WORD->Selection->Font->Bold = false;
+			WORD->Selection->TypeText(
+				"Йоу, собаки! Я - Наруто Узумаки!\n" +
+				"Да, и кстати, я - будущий Хокаге.\n" +
+				"У меня все круто, я же все - таки Наруто.\n" +
+				"Ненавижу Орочимару и Каббуто.\n" +
+				"Знаю много дзютсу, ненавижу бутсы.\n" +
+				"Лучше клонов, Расенгана не найдутся.\n" +
+				"У меня фанаты, плюс я люблю Хинату,\n" +
+				"Немало друзей, и однокомнатная хата.\n"
+			);
+
+			//Object ^ ИмяФайла = "C:\\документ.doc";
+			//WORD->ActiveDocument->SaveAs(ИмяФайла,
+			//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+		}
+
+		catch (Exception^ ex)
+		{
+			MessageBox::Show(ex->Message, "Ошибка", MessageBoxButtons::OK,
+				MessageBoxIcon::Exclamation);
+		}
 	}
+
+
+
 	};
 }
