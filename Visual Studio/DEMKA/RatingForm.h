@@ -59,6 +59,7 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
@@ -81,23 +82,34 @@ namespace DEMKA {
 			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::Menu;
 			this->dataGridView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
 			this->dataGridView1->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::Raised;
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Cursor = System::Windows::Forms::Cursors::Hand;
-			this->dataGridView1->Location = System::Drawing::Point(12, 3);
+			this->dataGridView1->Cursor = System::Windows::Forms::Cursors::Arrow;
+			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Top;
+			this->dataGridView1->Location = System::Drawing::Point(0, 0);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->ReadOnly = true;
-			this->dataGridView1->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::Sunken;
+			this->dataGridView1->RowHeadersBorderStyle = System::Windows::Forms::DataGridViewHeaderBorderStyle::None;
 			this->dataGridView1->RowHeadersVisible = false;
 			this->dataGridView1->ShowCellErrors = false;
 			this->dataGridView1->ShowEditingIcon = false;
-			this->dataGridView1->Size = System::Drawing::Size(964, 261);
+			this->dataGridView1->ShowRowErrors = false;
+			this->dataGridView1->Size = System::Drawing::Size(902, 261);
 			this->dataGridView1->TabIndex = 1;
 			// 
 			// RatingForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(988, 340);
+			this->ClientSize = System::Drawing::Size(902, 352);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Name = L"RatingForm";

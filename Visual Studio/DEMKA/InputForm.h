@@ -122,6 +122,7 @@ namespace DEMKA {
 			// 
 			// FIOBox
 			// 
+			this->FIOBox->ForeColor = System::Drawing::SystemColors::WindowText;
 			this->FIOBox->Location = System::Drawing::Point(135, 31);
 			this->FIOBox->Name = L"FIOBox";
 			this->FIOBox->Size = System::Drawing::Size(143, 20);
@@ -208,6 +209,7 @@ namespace DEMKA {
 			this->ScoreBox->Name = L"ScoreBox";
 			this->ScoreBox->Size = System::Drawing::Size(143, 20);
 			this->ScoreBox->TabIndex = 5;
+			this->ScoreBox->TextChanged += gcnew System::EventHandler(this, &InputForm::ScoreBox_TextChanged);
 			// 
 			// label2
 			// 
@@ -249,6 +251,7 @@ namespace DEMKA {
 			this->NumberBox->Name = L"NumberBox";
 			this->NumberBox->Size = System::Drawing::Size(143, 20);
 			this->NumberBox->TabIndex = 9;
+			this->NumberBox->TextChanged += gcnew System::EventHandler(this, &InputForm::NumberBox_TextChanged);
 			// 
 			// groupBox1
 			// 
@@ -444,7 +447,7 @@ namespace DEMKA {
 
 	}
 
-			 //Принтер
+	//Вывод на печать
 	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
 
@@ -495,6 +498,28 @@ namespace DEMKA {
 	}
 
 
+	private: System::Void ScoreBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		double d;
+		try {
+			d = Double::Parse(ScoreBox->Text);
+			if ((System::Convert::ToDouble(ScoreBox->Text) >= 2.0) && (System::Convert::ToDouble(ScoreBox->Text) <= 5.0))
+				ScoreBox->ForeColor = System::Drawing::SystemColors::WindowText;
+			else
+				throw e;
+		}
+		catch (...) {
+			ScoreBox->ForeColor = System::Drawing::Color::Red;
+		}
+	}
 
-	};
+	private: System::Void NumberBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		try {
+			Int32::Parse(NumberBox->Text);
+			NumberBox->ForeColor = System::Drawing::SystemColors::WindowText;
+		}
+		catch (...) {
+			NumberBox->ForeColor = System::Drawing::Color::Red;
+		}
+	}
+};
 }
