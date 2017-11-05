@@ -138,11 +138,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DBChangerForm.cpp" />
     <ClCompile Include="InputForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="RatingForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DBChangerForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="InputForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

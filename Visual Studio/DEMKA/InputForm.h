@@ -1,3 +1,4 @@
+#include <msclr/marshal.h>
 #pragma once
 
 namespace DEMKA {
@@ -127,6 +128,7 @@ namespace DEMKA {
 			this->FIOBox->Name = L"FIOBox";
 			this->FIOBox->Size = System::Drawing::Size(143, 20);
 			this->FIOBox->TabIndex = 1;
+			this->FIOBox->TextChanged += gcnew System::EventHandler(this, &InputForm::FIOBox_TextChanged);
 			// 
 			// label1
 			// 
@@ -520,6 +522,18 @@ namespace DEMKA {
 		catch (...) {
 			NumberBox->ForeColor = System::Drawing::Color::Red;
 		}
+	}
+private: System::Void FIOBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+
+		bool validation = true;
+		msclr::interop::marshal_context oMarshalContext;
+		const char* buf = oMarshalContext.marshal_as<const char*>(FIOBox->Text);
+
+		for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++) {
+			if (iswdigit(buf[i]))
+				validation = false;
+		}
+		FIOBox->ForeColor = (validation == true) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 	}
 };
 }

@@ -104,6 +104,7 @@ namespace DEMKA {
 			this->dataGridView1->ShowRowErrors = false;
 			this->dataGridView1->Size = System::Drawing::Size(902, 261);
 			this->dataGridView1->TabIndex = 1;
+			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RatingForm::dataGridView1_CellContentClick);
 			// 
 			// RatingForm
 			// 
@@ -179,5 +180,7 @@ namespace DEMKA {
 			delete (IDisposable^)db;
 		}
 	}
-	};
+	private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
+	}
+};
 }
