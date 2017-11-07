@@ -1,5 +1,6 @@
 #include "InputForm.h"
 #include "RatingForm.h"
+#include "DBChangerForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -85,6 +86,7 @@ namespace DEMKA {
 			this->button2->TabIndex = 1;
 			this->button2->Text = L"Изменение/удаление данных абитуриента";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MainForm::button2_Click);
 			// 
 			// TopButton
 			// 
@@ -155,5 +157,11 @@ namespace DEMKA {
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
 
 	}
-	};
+	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+		DEMKA::DBChangerForm^DBChangerForm_obj = gcnew DEMKA::DBChangerForm();
+		this->Hide();
+		DBChangerForm_obj->ShowDialog();
+		this->Show();
+	}
+};
 }

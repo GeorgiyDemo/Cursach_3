@@ -1,4 +1,8 @@
 #include <msclr/marshal.h>
+#include <msclr\marshal_cppstd.h>
+#include <algorithm>
+#include <string>
+
 #pragma once
 
 namespace DEMKA {
@@ -400,7 +404,7 @@ namespace DEMKA {
 		}
 
 #pragma endregion
-
+		String^ changer_fix;
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		System::DateTime now = System::DateTime::Now;
@@ -424,7 +428,7 @@ namespace DEMKA {
 				
 				cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students"+
 					"(name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT);"+
-					"INSERT INTO students VALUES('" + FIOBox->Text + "'," + ScoreBox->Text + 
+					"INSERT INTO students VALUES('" + FIOBox->Text + "'," + changer_fix  +
 					",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + 
 					"','" + NumberBox->Text + "','" + original_str + "', '"
 					+ form_pay_str + "','" + date_str + "');";
@@ -501,8 +505,20 @@ namespace DEMKA {
 
 
 	private: System::Void ScoreBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+
+		msclr::interop::marshal_context context;
+		std::string buf_str = context.marshal_as<std::string>(ScoreBox->Text);
+
+		//String^ buf_str = ScoreBox->Text;
 		double d;
+
 		try {
+			for (int i = 0; i < System::Convert::ToInt32(buf_str.length()); i++) {
+				if (buf_str[i] == ',') 
+					buf_str[i] = '.';
+			}
+			changer_fix = gcnew System::String(buf_str.c_str());
+
 			d = Double::Parse(ScoreBox->Text);
 			if ((System::Convert::ToDouble(ScoreBox->Text) >= 2.0) && (System::Convert::ToDouble(ScoreBox->Text) <= 5.0))
 				ScoreBox->ForeColor = System::Drawing::SystemColors::WindowText;

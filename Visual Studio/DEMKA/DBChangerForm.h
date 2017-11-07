@@ -34,6 +34,11 @@ namespace DEMKA {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Button^  ExitButton;
+	protected:
+
+	protected:
+	private: System::Windows::Forms::DataGridView^  dataGridView1;
 
 	private:
 		/// <summary>
@@ -48,12 +53,47 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"DBChangerForm";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->ExitButton = (gcnew System::Windows::Forms::Button());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			this->SuspendLayout();
+			// 
+			// ExitButton
+			// 
+			this->ExitButton->Location = System::Drawing::Point(12, 283);
+			this->ExitButton->Name = L"ExitButton";
+			this->ExitButton->Size = System::Drawing::Size(105, 40);
+			this->ExitButton->TabIndex = 0;
+			this->ExitButton->Text = L"<=";
+			this->ExitButton->UseVisualStyleBackColor = true;
+			this->ExitButton->Click += gcnew System::EventHandler(this, &DBChangerForm::ExitButton_Click);
+			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::Info;
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Location = System::Drawing::Point(12, 12);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(578, 233);
+			this->dataGridView1->TabIndex = 1;
+			// 
+			// DBChangerForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(626, 359);
+			this->Controls->Add(this->dataGridView1);
+			this->Controls->Add(this->ExitButton);
+			this->Name = L"DBChangerForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
+			this->Text = L"Изменение данных";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
+	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
+	}
 	};
 }

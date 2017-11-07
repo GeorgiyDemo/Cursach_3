@@ -158,6 +158,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DBChangerForm.resx">
+      <DependentUpon>DBChangerForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InputForm.resx">
       <DependentUpon>InputForm.h</DependentUpon>
     </EmbeddedResource>
