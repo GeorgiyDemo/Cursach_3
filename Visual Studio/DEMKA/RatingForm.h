@@ -14,7 +14,6 @@ namespace DEMKA {
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
 	using namespace cliext;
-
 	/// <summary>
 	/// Сводка для RatingForm
 	/// </summary>
