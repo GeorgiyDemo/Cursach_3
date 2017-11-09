@@ -28,7 +28,8 @@ namespace DEMKA {
 			//TODO: добавьте код конструктора
 			//
 		}
-
+	public:
+		SQLiteConnection ^db;
 	protected:
 		/// <summary>
 		/// Освободить все используемые ресурсы.
@@ -45,6 +46,7 @@ namespace DEMKA {
 
 	protected:
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
+	private: System::Windows::Forms::Button^  RemoveButton;
 
 	private:
 		/// <summary>
@@ -61,6 +63,7 @@ namespace DEMKA {
 		{
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->RemoveButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -86,11 +89,22 @@ namespace DEMKA {
 			this->dataGridView1->Size = System::Drawing::Size(942, 233);
 			this->dataGridView1->TabIndex = 1;
 			// 
+			// RemoveButton
+			// 
+			this->RemoveButton->Location = System::Drawing::Point(209, 283);
+			this->RemoveButton->Name = L"RemoveButton";
+			this->RemoveButton->Size = System::Drawing::Size(122, 40);
+			this->RemoveButton->TabIndex = 2;
+			this->RemoveButton->Text = L"button1";
+			this->RemoveButton->UseVisualStyleBackColor = true;
+			this->RemoveButton->Click += gcnew System::EventHandler(this, &DBChangerForm::RemoveButton_Click);
+			// 
 			// DBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(942, 359);
+			this->Controls->Add(this->RemoveButton);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Name = L"DBChangerForm";
@@ -106,18 +120,6 @@ namespace DEMKA {
 		this->Hide();
 	}
 	private: System::Void DBChangerForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		std::map <int, std::string> rows_formatter;
-		rows_formatter[0] = "№ заявления";
-		rows_formatter[1] = "ФИО";
-		rows_formatter[2] = "Сред. балл";
-		rows_formatter[3] = "Приоритет";
-		rows_formatter[4] = "Форма обучения";
-		rows_formatter[5] = "Специальность";
-		rows_formatter[6] = "№";
-		rows_formatter[7] = "Аттестат";
-		rows_formatter[8] = "Форма оплаты";
-		rows_formatter[9] = "Дата ";
-
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		try
 		{
@@ -136,8 +138,7 @@ namespace DEMKA {
 			vector<String^>^ nameColumns = gcnew vector<String^>();
 
 			for (int i = 0; i < (reader->FieldCount); i++) {
-				String^ buf_row = gcnew System::String(rows_formatter[i].c_str());
-				nameColumns->push_back(buf_row);
+				nameColumns->push_back(reader->GetName(i));
 				column = gcnew DataColumn(nameColumns->at(i), String::typeid);
 				table->Columns->Add(column);
 			}
@@ -161,5 +162,54 @@ namespace DEMKA {
 			delete (IDisposable^)db;
 		}
 	}
-	};
+	private: System::Void RemoveButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		
+		//Номер выделенной строки
+		int index = dataGridView1->CurrentCell->RowIndex;
+		//Определим _id в выделенной строке
+		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
+
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->Open();
+		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+		cmdInsertValue->CommandText = "DELETE FROM students WHERE ID = " + ID + ";";
+		cmdInsertValue->ExecuteNonQuery();
+		db->Close();
+			//////////////////////////////////ВОТ ЭТО СЕРъЕЗНО ПЕРЕПИЛИТЬ//////////////////////////
+
+		db->Open();
+
+		SQLiteCommand ^cmdSelect = db->CreateCommand();
+		cmdSelect->CommandText = "SELECT * FROM students;";
+		SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
+		DataTable ^table;
+		DataColumn ^column;
+		DataRow ^row;
+
+				table = gcnew DataTable();
+
+				vector<String^>^ nameColumns = gcnew vector<String^>();
+
+				for (int i = 0; i < (reader->FieldCount); i++) {
+					nameColumns->push_back(reader->GetName(i));
+					column = gcnew DataColumn(nameColumns->at(i), String::typeid);
+					table->Columns->Add(column);
+				}
+
+				while (reader->Read()) {
+					row = table->NewRow();
+					for (int i = 0; i < (reader->FieldCount); i++) {
+						row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
+						reader->GetValue(i)->ToString();
+					}
+					table->Rows->Add(row);
+				}
+
+
+				dataGridView1->DataSource = table;
+				db->Close();
+			}
+		
+};
 }
