@@ -77,18 +77,20 @@ namespace DEMKA {
 			// dataGridView1
 			// 
 			this->dataGridView1->BackgroundColor = System::Drawing::SystemColors::Menu;
+			this->dataGridView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->dataGridView1->CellBorderStyle = System::Windows::Forms::DataGridViewCellBorderStyle::Raised;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(626, 233);
+			this->dataGridView1->Size = System::Drawing::Size(942, 233);
 			this->dataGridView1->TabIndex = 1;
 			// 
 			// DBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(626, 359);
+			this->ClientSize = System::Drawing::Size(942, 359);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Name = L"DBChangerForm";
@@ -105,15 +107,16 @@ namespace DEMKA {
 	}
 	private: System::Void DBChangerForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		std::map <int, std::string> rows_formatter;
-		rows_formatter[0] = "ФИО";
-		rows_formatter[1] = "Сред. балл";
-		rows_formatter[2] = "Приоритет";
-		rows_formatter[3] = "Форма обучения";
-		rows_formatter[4] = "Специальность";
-		rows_formatter[5] = "№";
-		rows_formatter[6] = "Аттестат";
-		rows_formatter[7] = "Форма оплаты";
-		rows_formatter[8] = "Дата ";
+		rows_formatter[0] = "№ заявления";
+		rows_formatter[1] = "ФИО";
+		rows_formatter[2] = "Сред. балл";
+		rows_formatter[3] = "Приоритет";
+		rows_formatter[4] = "Форма обучения";
+		rows_formatter[5] = "Специальность";
+		rows_formatter[6] = "№";
+		rows_formatter[7] = "Аттестат";
+		rows_formatter[8] = "Форма оплаты";
+		rows_formatter[9] = "Дата ";
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		try
@@ -132,7 +135,7 @@ namespace DEMKA {
 
 			vector<String^>^ nameColumns = gcnew vector<String^>();
 
-			for (int i = 0; i < reader->FieldCount; i++) {
+			for (int i = 0; i < (reader->FieldCount); i++) {
 				String^ buf_row = gcnew System::String(rows_formatter[i].c_str());
 				nameColumns->push_back(buf_row);
 				column = gcnew DataColumn(nameColumns->at(i), String::typeid);
@@ -141,12 +144,13 @@ namespace DEMKA {
 
 			while (reader->Read()) {
 				row = table->NewRow();
-				for (int i = 0; i < reader->FieldCount; i++) {
+				for (int i = 0; i < (reader->FieldCount); i++) {
 					row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
 					reader->GetValue(i)->ToString();
 				}
 				table->Rows->Add(row);
 			}
+			
 
 			dataGridView1->DataSource = table;
 			db->Close();

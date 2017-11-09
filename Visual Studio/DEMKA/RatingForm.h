@@ -101,7 +101,7 @@ namespace DEMKA {
 			this->dataGridView1->ShowCellErrors = false;
 			this->dataGridView1->ShowEditingIcon = false;
 			this->dataGridView1->ShowRowErrors = false;
-			this->dataGridView1->Size = System::Drawing::Size(902, 261);
+			this->dataGridView1->Size = System::Drawing::Size(900, 261);
 			this->dataGridView1->TabIndex = 1;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RatingForm::dataGridView1_CellContentClick);
 			// 
@@ -109,7 +109,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(902, 352);
+			this->ClientSize = System::Drawing::Size(900, 352);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Name = L"RatingForm";
@@ -127,12 +127,12 @@ namespace DEMKA {
 	private: System::Void RatingForm_Load(System::Object^  sender, System::EventArgs^  e) {
 
 		std::map <int, std::string> rows_formatter;
-		rows_formatter[0] = "ФИО";
-		rows_formatter[1] = "Сред. балл";
-		rows_formatter[2] = "Приоритет";
-		rows_formatter[3] = "Форма обучения";
-		rows_formatter[4] = "Специальность";
-		rows_formatter[5] = "№";
+		rows_formatter[0] = "№ заявления";
+		rows_formatter[1] = "ФИО";
+		rows_formatter[2] = "Сред. балл";
+		rows_formatter[3] = "Приоритет";
+		rows_formatter[4] = "Форма обучения";
+		rows_formatter[5] = "Специальность";
 		rows_formatter[6] = "Аттестат";
 		rows_formatter[7] = "Форма оплаты";
 		rows_formatter[8] = "Дата ";

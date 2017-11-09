@@ -63,8 +63,8 @@ namespace DEMKA {
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::TextBox^  MajorBox;
 
-	private: System::Windows::Forms::Label^  label4;
-	private: System::Windows::Forms::TextBox^  NumberBox;
+
+
 
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::GroupBox^  StudyformBox;
@@ -106,8 +106,6 @@ namespace DEMKA {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->MajorBox = (gcnew System::Windows::Forms::TextBox());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->NumberBox = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->StudyformBox = (gcnew System::Windows::Forms::GroupBox());
 			this->StudyformRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
@@ -242,36 +240,17 @@ namespace DEMKA {
 			this->MajorBox->Size = System::Drawing::Size(143, 20);
 			this->MajorBox->TabIndex = 7;
 			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(19, 119);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(75, 13);
-			this->label4->TabIndex = 10;
-			this->label4->Text = L"№ заявления";
-			// 
-			// NumberBox
-			// 
-			this->NumberBox->Location = System::Drawing::Point(135, 116);
-			this->NumberBox->Name = L"NumberBox";
-			this->NumberBox->Size = System::Drawing::Size(143, 20);
-			this->NumberBox->TabIndex = 9;
-			this->NumberBox->TextChanged += gcnew System::EventHandler(this, &InputForm::NumberBox_TextChanged);
-			// 
 			// groupBox1
 			// 
 			this->groupBox1->Controls->Add(this->label1);
-			this->groupBox1->Controls->Add(this->label4);
 			this->groupBox1->Controls->Add(this->FIOBox);
-			this->groupBox1->Controls->Add(this->NumberBox);
 			this->groupBox1->Controls->Add(this->ScoreBox);
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
 			this->groupBox1->Controls->Add(this->MajorBox);
 			this->groupBox1->Location = System::Drawing::Point(12, 31);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(296, 152);
+			this->groupBox1->Size = System::Drawing::Size(296, 147);
 			this->groupBox1->TabIndex = 11;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Ввод";
@@ -411,7 +390,6 @@ namespace DEMKA {
 		String^ date_str = now.ToString("d");
 		String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-
 		original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
 		priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
 		form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
@@ -422,16 +400,16 @@ namespace DEMKA {
 			try
 			{
 				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+
 				db->Open();
 
 				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 				
 				cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students"+
-					"(name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, number TEXT, original TEXT, form_pay TEXT, date TEXT);"+
-					"INSERT INTO students VALUES('" + FIOBox->Text + "'," + changer_fix  +
+					"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);"+
+					"INSERT INTO students VALUES(NULL,'" + FIOBox->Text + "'," + changer_fix  +
 					",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + 
-					"','" + NumberBox->Text + "','" + original_str + "', '"
-					+ form_pay_str + "','" + date_str + "');";
+					"','" + original_str + "', '"+ form_pay_str + "','" + date_str + "');";
 				
 				cmdInsertValue->ExecuteNonQuery();
 				db->Close();
@@ -530,15 +508,6 @@ namespace DEMKA {
 		}
 	}
 
-	private: System::Void NumberBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-		try {
-			Int32::Parse(NumberBox->Text);
-			NumberBox->ForeColor = System::Drawing::SystemColors::WindowText;
-		}
-		catch (...) {
-			NumberBox->ForeColor = System::Drawing::Color::Red;
-		}
-	}
 private: System::Void FIOBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 
 		bool validation = true;
