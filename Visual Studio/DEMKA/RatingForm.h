@@ -1,6 +1,7 @@
 #include <cliext/vector>
 #include <string>
 #include <map>
+#include "PrintForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -41,6 +42,7 @@ namespace DEMKA {
 		}
 	private: System::Windows::Forms::Button^  ExitButton;
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
+	private: System::Windows::Forms::Button^  PrinterButton;
 
 
 	protected:
@@ -59,8 +61,10 @@ namespace DEMKA {
 		void InitializeComponent(void)
 		{
 			System::Windows::Forms::DataGridViewCellStyle^  dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(RatingForm::typeid));
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->PrinterButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -106,11 +110,22 @@ namespace DEMKA {
 			this->dataGridView1->TabIndex = 1;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RatingForm::dataGridView1_CellContentClick);
 			// 
+			// PrinterButton
+			// 
+			this->PrinterButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PrinterButton.Image")));
+			this->PrinterButton->Location = System::Drawing::Point(835, 290);
+			this->PrinterButton->Name = L"PrinterButton";
+			this->PrinterButton->Size = System::Drawing::Size(42, 37);
+			this->PrinterButton->TabIndex = 16;
+			this->PrinterButton->UseVisualStyleBackColor = true;
+			this->PrinterButton->Click += gcnew System::EventHandler(this, &RatingForm::PrinterButton_Click);
+			// 
 			// RatingForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(900, 352);
+			this->Controls->Add(this->PrinterButton);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Name = L"RatingForm";
@@ -182,5 +197,10 @@ namespace DEMKA {
 	}
 	private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 	}
+private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	DEMKA::PrintForm^PrintForm_obj = gcnew DEMKA::PrintForm();
+	PrintForm_obj->ShowDialog();
+	this->Show();
+}
 };
 }

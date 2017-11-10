@@ -141,6 +141,7 @@
     <ClCompile Include="DBChangerForm.cpp" />
     <ClCompile Include="InputForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="PrintForm.cpp" />
     <ClCompile Include="RatingForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="PrintForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="RatingForm.h">
@@ -166,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintForm.resx">
+      <DependentUpon>PrintForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RatingForm.resx">
       <DependentUpon>RatingForm.h</DependentUpon>
