@@ -184,16 +184,69 @@ namespace DEMKA {
 	}
 private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
+	//ЭТО ДЛЯ WORD 
+	Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
+	auto t = Type::Missing;
 
+	auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
+	//Делаем видимым все происодящее 
+	WORD->Visible = true;
+
+	/*
+	std::map <int, std::string> rows_formatter;
+	rows_formatter[0] = "№ заявления";
+	rows_formatter[1] = "ФИО";
+	rows_formatter[2] = "Сред. балл";
+	rows_formatter[3] = "Приоритет";
+	rows_formatter[4] = "Форма обучения";
+	rows_formatter[5] = "Специальность";
+	rows_formatter[6] = "Аттестат";
+	rows_formatter[7] = "Форма оплаты";
+	rows_formatter[8] = "Дата ";
+
+	SQLiteConnection ^db = gcnew SQLiteConnection();
+	try
 	{
-		Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
-		auto t = Type::Missing;
+		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->Open();
 
-		try
-		{
-			auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
-			//Делаем видимым все происодящее 
-			WORD->Visible = true;
+		SQLiteCommand ^cmdSelect = db->CreateCommand();
+		cmdSelect->CommandText = "SELECT * FROM students;";
+		SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
+		
+		DataTable ^table;
+		DataColumn ^column;
+		DataRow ^row;
+
+		table = gcnew DataTable();
+
+		vector<String^>^ nameColumns = gcnew vector<String^>();
+
+		for (int i = 0; i < reader->FieldCount; i++) {
+			String^ buf_row = gcnew System::String(rows_formatter[i].c_str());
+			nameColumns->push_back(buf_row);
+			column = gcnew DataColumn(nameColumns->at(i), String::typeid);
+			table->Columns->Add(column);
+		}
+
+		while (reader->Read()) {
+			row = table->NewRow();
+			for (int i = 0; i < reader->FieldCount; i++) {
+				row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
+				reader->GetValue(i)->ToString();
+			}
+			table->Rows->Add(row);
+		}
+
+		dataGridView1->DataSource = table;
+		db->Close();
+	}
+
+	finally
+	{
+		delete (IDisposable^)db;
+	}
+	*/
 			// Открываем новый документ 
 			auto Документ = WORD->Documents->Add(t, t, t, t);
 
@@ -223,9 +276,9 @@ private: System::Void ReportButton_Click(System::Object^  sender, System::EventA
 			Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
 			WORD->ActiveDocument->Tables->Add(wrdRng, 3, 9, ПоказыватьГраницы, РегулирШирины);
 			// Заполнение ячеек таблицы
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 10; j++) {
-					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter("1");
+			for (int i = 0; i < 3; i++) {
+				for (int j = 1; j <	10; j++) {
+					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter("ПИДОР");
 				}
 			}
 			/*WORD->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Времена года");
@@ -234,21 +287,11 @@ private: System::Void ReportButton_Click(System::Object^  sender, System::EventA
 			WORD->ActiveDocument->Tables[1]->Cell(3, 1)->Range->InsertAfter("Весна");
 			WORD->ActiveDocument->Tables[1]->Cell(4, 1)->Range->InsertAfter("Лето");
 			*/
-
-			//https://mega.nz/#F!YUJiwaTB!qegOFC-MBhSAcBT1sLUw5w
 			//----------------------- СОХРАНЕНИЕ ОТЧЕТА ------------------------------//
 			//Если формирование отчета проводить в скрытом режиме, то имеет смысл сохранится
 			//Object ^ ИмяФайла = "C:\\документ.doc";
 			//WORD->ActiveDocument->SaveAs(ИмяФайла,
 			//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
-		}
-
-		catch (Exception^ ex)
-		{
-			MessageBox::Show(ex->Message, "Ошибка", MessageBoxButtons::OK,
-				MessageBoxIcon::Exclamation);
-		}
-	}
 }
 };
 }

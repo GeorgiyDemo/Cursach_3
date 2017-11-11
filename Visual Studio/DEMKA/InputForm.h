@@ -383,7 +383,25 @@ namespace DEMKA {
 		}
 
 #pragma endregion
-		String^ changer_fix;
+	
+		
+		
+	String^ changer_fix;
+
+
+	private: int valid_checker(){
+		if (
+			FIOBox->Text != ""
+			&&
+			ScoreBox->Text != ""
+			&&
+			MajorBox->Text != ""
+			)
+			return 1;
+		return 0;
+	}
+
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		System::DateTime now = System::DateTime::Now;
@@ -434,51 +452,91 @@ namespace DEMKA {
 	//Вывод на печать
 	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
+		if (valid_checker() == 1) {
+			Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
+			auto t = Type::Missing;
 
-		Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
-		auto t = Type::Missing;
+			String^ original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
+			String^ priority_str = (PriorityRadioButton1->Checked == true) ? "есть" : "нет";
+			String^ form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+			String^ form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
 
-		try
-		{
-			auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
-			//Делаем видимым все происодящее 
-			WORD->Visible = true;
-			// Открываем новый документ 
-			auto Документ = WORD->Documents->Add(t, t, t, t);
+			System::DateTime now = System::DateTime::Now;
+			String^ date_str = now.ToString("d");
 
-			WORD->Selection->ParagraphFormat->Alignment =
-				Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
-			WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
-			WORD->Selection->Font->Bold = 1; // жирный шрифт
-			WORD->Selection->Font->Size = 20; // высота шрифта 20
-			WORD->Selection->TypeText("Реп по Наруто");
+			try
+			{
+				auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
+				//Делаем видимым все происходящее 
+				WORD->Visible = true;
+				// Открываем новый документ 
+				auto Документ = WORD->Documents->Add(t, t, t, t);
 
-			WORD->Selection->Font->Size = 12;
-			WORD->Selection->TypeParagraph();
-			WORD->Selection->ParagraphFormat->Alignment =
-				Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
-			WORD->Selection->Font->Bold = false;
-			WORD->Selection->TypeText(
-				"Йоу, собаки! Я - Наруто Узумаки!\n" +
-				"Да, и кстати, я - будущий Хокаге.\n" +
-				"У меня все круто, я же все - таки Наруто.\n" +
-				"Ненавижу Орочимару и Каббуто.\n" +
-				"Знаю много дзютсу, ненавижу бутсы.\n" +
-				"Лучше клонов, Расенгана не найдутся.\n" +
-				"У меня фанаты, плюс я люблю Хинату,\n" +
-				"Немало друзей, и однокомнатная хата.\n"
-			);
+				WORD->Selection->ParagraphFormat->Alignment =
+					Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
+				WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
+				WORD->Selection->Font->Bold = 1; // жирный шрифт
+				WORD->Selection->Font->Size = 18; // высота шрифта 18
+				WORD->Selection->TypeText("Справка о приеме документов в КИП при ФУ РФ");
 
-			//Object ^ ИмяФайла = "C:\\документ.doc";
-			//WORD->ActiveDocument->SaveAs(ИмяФайла,
-			//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+				WORD->Selection->Font->Size = 12;
+				WORD->Selection->TypeParagraph();
+				WORD->Selection->ParagraphFormat->Alignment =
+					Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
+
+				WORD->Selection->TypeParagraph();
+				WORD->Selection->Font->Size = 16;
+				WORD->Selection->TypeText("Основная информация:");
+				WORD->Selection->Font->Bold = false;
+				WORD->Selection->TypeParagraph();
+				WORD->Selection->Font->Size = 14;
+
+				WORD->Selection->TypeText(
+					"ФИО: " + FIOBox->Text + "\n" +
+					"Средний балл аттестата: " + ScoreBox->Text + "\n" +
+					"Направление: " + MajorBox->Text + "\n"
+				);
+
+				WORD->Selection->TypeParagraph();
+				WORD->Selection->Font->Bold = true;
+				WORD->Selection->Font->Size = 16; // высота шрифта 16
+				WORD->Selection->TypeText("Дополнительная информация:");
+				WORD->Selection->Font->Bold = false;
+				WORD->Selection->TypeParagraph();
+				WORD->Selection->Font->Size = 14;
+
+				WORD->Selection->TypeText(
+					"Форма оплаты: " + form_pay_str + "\n" +
+					"Тип аттестата: " + original_str + "\n" +
+					"Форма обучения: " + form_sudy_str + "\n" +
+					"Пиоритет: " + priority_str + "\n"
+				);
+
+				WORD->Selection->TypeParagraph();
+				WORD->Selection->ParagraphFormat->Alignment =
+					Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphRight;
+				WORD->Selection->TypeText(
+					"Дата: " + date_str +
+					"Подпись: ______________\n" +
+					"Расшифровка: ______________"
+				);
+
+
+				//Object ^ ИмяФайла = "C:\\документ.doc";
+				//WORD->ActiveDocument->SaveAs(ИмяФайла,
+				//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+			}
+
+			catch (Exception^ ex)
+			{
+				MessageBox::Show(ex->Message, "Ошибка", MessageBoxButtons::OK,
+					MessageBoxIcon::Exclamation);
+			}
+
 		}
-
-		catch (Exception^ ex)
-		{
-			MessageBox::Show(ex->Message, "Ошибка", MessageBoxButtons::OK,
-				MessageBoxIcon::Exclamation);
-		}
+		else
+			MessageBox::Show("Проверьте правильность ввода данных!");
+		
 	}
 
 
