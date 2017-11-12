@@ -105,7 +105,7 @@ namespace DEMKA {
 			this->groupBox1->Controls->Add(this->AdmissionButton);
 			this->groupBox1->Location = System::Drawing::Point(28, 46);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(258, 206);
+			this->groupBox1->Size = System::Drawing::Size(240, 206);
 			this->groupBox1->TabIndex = 4;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Выбор действия:";
@@ -125,7 +125,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(316, 331);
+			this->ClientSize = System::Drawing::Size(302, 331);
 			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->groupBox1);
 			this->Name = L"MainForm";

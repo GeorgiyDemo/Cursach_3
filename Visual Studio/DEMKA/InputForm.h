@@ -72,7 +72,10 @@ namespace DEMKA {
 	private: System::Windows::Forms::RadioButton^  StudyformRadioButton1;
 	private: System::Windows::Forms::Button^  button1;
 	private: System::Windows::Forms::GroupBox^  FormPayGroupBox;
-	private: System::Windows::Forms::RadioButton^  FromPayRadioButton2;
+	private: System::Windows::Forms::RadioButton^  FormPayRadioButton2;
+
+
+
 	private: System::Windows::Forms::RadioButton^  FormPayRadioButton1;
 	private: System::Windows::Forms::Button^  MenuButton;
 	private: System::Windows::Forms::Button^  PrinterButton;
@@ -112,7 +115,7 @@ namespace DEMKA {
 			this->StudyformRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->FormPayGroupBox = (gcnew System::Windows::Forms::GroupBox());
-			this->FromPayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->FormPayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->FormPayRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->MenuButton = (gcnew System::Windows::Forms::Button());
 			this->PrinterButton = (gcnew System::Windows::Forms::Button());
@@ -300,7 +303,7 @@ namespace DEMKA {
 			// 
 			// FormPayGroupBox
 			// 
-			this->FormPayGroupBox->Controls->Add(this->FromPayRadioButton2);
+			this->FormPayGroupBox->Controls->Add(this->FormPayRadioButton2);
 			this->FormPayGroupBox->Controls->Add(this->FormPayRadioButton1);
 			this->FormPayGroupBox->Location = System::Drawing::Point(440, 112);
 			this->FormPayGroupBox->Name = L"FormPayGroupBox";
@@ -309,16 +312,16 @@ namespace DEMKA {
 			this->FormPayGroupBox->TabStop = false;
 			this->FormPayGroupBox->Text = L"Форма оплаты";
 			// 
-			// FromPayRadioButton2
+			// FormPayRadioButton2
 			// 
-			this->FromPayRadioButton2->AutoSize = true;
-			this->FromPayRadioButton2->Location = System::Drawing::Point(7, 44);
-			this->FromPayRadioButton2->Name = L"FromPayRadioButton2";
-			this->FromPayRadioButton2->Size = System::Drawing::Size(69, 17);
-			this->FromPayRadioButton2->TabIndex = 1;
-			this->FromPayRadioButton2->TabStop = true;
-			this->FromPayRadioButton2->Text = L"Договор";
-			this->FromPayRadioButton2->UseVisualStyleBackColor = true;
+			this->FormPayRadioButton2->AutoSize = true;
+			this->FormPayRadioButton2->Location = System::Drawing::Point(7, 44);
+			this->FormPayRadioButton2->Name = L"FormPayRadioButton2";
+			this->FormPayRadioButton2->Size = System::Drawing::Size(69, 17);
+			this->FormPayRadioButton2->TabIndex = 1;
+			this->FormPayRadioButton2->TabStop = true;
+			this->FormPayRadioButton2->Text = L"Договор";
+			this->FormPayRadioButton2->UseVisualStyleBackColor = true;
 			// 
 			// FormPayRadioButton1
 			// 
@@ -390,68 +393,27 @@ namespace DEMKA {
 
 
 	private: int valid_checker(){
+		//ДОБАВИТЬ ФИЛЬТРАЦИЮ ПО ВАЛИДАЦИИ ТЕКСТА
 		if (
 			FIOBox->Text != ""
 			&&
 			ScoreBox->Text != ""
 			&&
 			MajorBox->Text != ""
+			&&
+			(OriginalRadioButton1->Checked == true || OriginalRadioButton2->Checked == true)
+			&&
+			(StudyformRadioButton1->Checked == true || StudyformRadioButton2->Checked == true)
+			&& 
+			(PriorityRadioButton1->Checked == true || PriorityRadioButton2->Checked == true)
+			&&
+			(FormPayRadioButton1->Checked  == true || FormPayRadioButton2->Checked == true)
 			)
-			return 1;
+				return 1;
 		return 0;
 	}
 
-
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-
-		System::DateTime now = System::DateTime::Now;
-		String^ date_str = now.ToString("d");
-		String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
-		SQLiteConnection ^db = gcnew SQLiteConnection();
-		original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
-		priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
-		form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
-		form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
-
-		if (MessageBox::Show("Введенные данные действительно верны?", "Подтвердить ввод данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
-		{
-			try
-			{
-				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
-
-				db->Open();
-
-				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-				
-				cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students"+
-					"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);"+
-					"INSERT INTO students VALUES(NULL,'" + FIOBox->Text + "'," + changer_fix  +
-					",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text + 
-					"','" + original_str + "', '"+ form_pay_str + "','" + date_str + "');";
-				
-				cmdInsertValue->ExecuteNonQuery();
-				db->Close();
-			}
-			finally
-			{
-				delete (IDisposable^)db;
-			}
-		}
-
-
-	}
-
-	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->Hide();
-	}
-
-	private: System::Void InputForm_Load(System::Object^  sender, System::EventArgs^  e) {
-
-	}
-
-	//Вывод на печать
-	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
-
+	private: void print_outer() {
 		if (valid_checker() == 1) {
 			Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
 			auto t = Type::Missing;
@@ -516,15 +478,11 @@ namespace DEMKA {
 				WORD->Selection->ParagraphFormat->Alignment =
 					Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphRight;
 				WORD->Selection->TypeText(
-					"Дата: " + date_str +
+					"Дата: " + date_str +" \n" +
 					"Подпись: ______________\n" +
 					"Расшифровка: ______________"
 				);
 
-
-				//Object ^ ИмяФайла = "C:\\документ.doc";
-				//WORD->ActiveDocument->SaveAs(ИмяФайла,
-				//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
 			}
 
 			catch (Exception^ ex)
@@ -536,7 +494,68 @@ namespace DEMKA {
 		}
 		else
 			MessageBox::Show("Проверьте правильность ввода данных!");
-		
+
+	}
+
+
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (valid_checker() == 1) {
+			System::DateTime now = System::DateTime::Now;
+			String^ date_str = now.ToString("d");
+			String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
+			SQLiteConnection ^db = gcnew SQLiteConnection();
+			original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
+			priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
+			form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+			form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
+
+			if (MessageBox::Show("Введенные данные действительно верны?", "Подтвердить ввод данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+			{
+				try
+				{
+					db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+
+					db->Open();
+
+					SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+
+					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students" +
+						"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);" +
+						"INSERT INTO students VALUES(NULL,'" + FIOBox->Text + "'," + changer_fix +
+						",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text +
+						"','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
+
+					cmdInsertValue->ExecuteNonQuery();
+					db->Close();
+				}
+				finally
+				{
+					delete (IDisposable^)db;
+				}
+
+
+				if (MessageBox::Show("Данные успешно записаны! Хотите сформировать отчет?", "Формирование отчета", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+				{
+					print_outer();
+				}
+			}
+		}
+		else
+			MessageBox::Show("Проверьте правильность ввода данных!");
+
+	}
+
+	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
+	}
+
+	private: System::Void InputForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+	}
+
+	//Вывод на печать
+	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		print_outer();
 	}
 
 
@@ -572,7 +591,7 @@ private: System::Void FIOBox_TextChanged(System::Object^  sender, System::EventA
 		msclr::interop::marshal_context oMarshalContext;
 		const char* buf = oMarshalContext.marshal_as<const char*>(FIOBox->Text);
 
-		for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++) {
+		for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++){
 			if (iswdigit(buf[i]))
 				validation = false;
 		}
