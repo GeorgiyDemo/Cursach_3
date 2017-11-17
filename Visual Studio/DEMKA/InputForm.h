@@ -70,7 +70,8 @@ namespace DEMKA {
 	private: System::Windows::Forms::GroupBox^  StudyformBox;
 	private: System::Windows::Forms::RadioButton^  StudyformRadioButton2;
 	private: System::Windows::Forms::RadioButton^  StudyformRadioButton1;
-	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  NextButton;
+
 	private: System::Windows::Forms::GroupBox^  FormPayGroupBox;
 	private: System::Windows::Forms::RadioButton^  FormPayRadioButton2;
 
@@ -113,7 +114,7 @@ namespace DEMKA {
 			this->StudyformBox = (gcnew System::Windows::Forms::GroupBox());
 			this->StudyformRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->StudyformRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->NextButton = (gcnew System::Windows::Forms::Button());
 			this->FormPayGroupBox = (gcnew System::Windows::Forms::GroupBox());
 			this->FormPayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->FormPayRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
@@ -291,15 +292,15 @@ namespace DEMKA {
 			this->StudyformRadioButton1->Text = L"Очная";
 			this->StudyformRadioButton1->UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// NextButton
 			// 
-			this->button1->Location = System::Drawing::Point(427, 184);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(125, 43);
-			this->button1->TabIndex = 12;
-			this->button1->Text = L"=>";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &InputForm::button1_Click);
+			this->NextButton->Location = System::Drawing::Point(427, 184);
+			this->NextButton->Name = L"NextButton";
+			this->NextButton->Size = System::Drawing::Size(125, 43);
+			this->NextButton->TabIndex = 12;
+			this->NextButton->Text = L"=>";
+			this->NextButton->UseVisualStyleBackColor = true;
+			this->NextButton->Click += gcnew System::EventHandler(this, &InputForm::button1_Click);
 			// 
 			// FormPayGroupBox
 			// 
@@ -362,7 +363,7 @@ namespace DEMKA {
 			this->Controls->Add(this->PrinterButton);
 			this->Controls->Add(this->MenuButton);
 			this->Controls->Add(this->FormPayGroupBox);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->NextButton);
 			this->Controls->Add(this->StudyformBox);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->PriorityBox);
@@ -564,7 +565,6 @@ namespace DEMKA {
 		msclr::interop::marshal_context context;
 		std::string buf_str = context.marshal_as<std::string>(ScoreBox->Text);
 
-		//String^ buf_str = ScoreBox->Text;
 		double d;
 
 		try {

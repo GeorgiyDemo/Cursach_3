@@ -137,11 +137,7 @@ namespace DEMKA {
 
 		}
 #pragma endregion
-	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->Hide();
-	}
-	private: System::Void RatingForm_Load(System::Object^  sender, System::EventArgs^  e) {
-
+	private: DataTable^ FillTableRatingForm() {
 		std::map <int, std::string> rows_formatter;
 		rows_formatter[0] = "№ заявления";
 		rows_formatter[1] = "ФИО";
@@ -154,8 +150,7 @@ namespace DEMKA {
 		rows_formatter[8] = "Дата ";
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		try
-		{
+
 			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 			db->Open();
 
@@ -185,16 +180,16 @@ namespace DEMKA {
 				}
 				table->Rows->Add(row);
 			}
-
-			dataGridView1->DataSource = table;
 			db->Close();
-		}
-
-		finally
-		{
-			delete (IDisposable^)db;
-		}
+			return table;
 	}
+	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
+	}
+	private: System::Void RatingForm_Load(System::Object^  sender, System::EventArgs^  e) {
+			dataGridView1->DataSource = FillTableRatingForm();
+	}
+
 	private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 	}
 private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {

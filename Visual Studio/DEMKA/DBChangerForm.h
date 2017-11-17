@@ -130,20 +130,16 @@ namespace DEMKA {
 
 		}
 #pragma endregion
-	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->Hide();
-	}
-	private: System::Void DBChangerForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+	private: DataTable^ GetDataTable() {
+		DataTable ^table;
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		try
-		{
+
 			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 			db->Open();
-
 			SQLiteCommand ^cmdSelect = db->CreateCommand();
 			cmdSelect->CommandText = "SELECT * FROM students;";
 			SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
-			DataTable ^table;
 			DataColumn ^column;
 			DataRow ^row;
 
@@ -165,16 +161,15 @@ namespace DEMKA {
 				}
 				table->Rows->Add(row);
 			}
-			
+		db->Close();
+		return table;
+	}
 
-			dataGridView1->DataSource = table;
-			db->Close();
-		}
-
-		finally
-		{
-			delete (IDisposable^)db;
-		}
+	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
+	}
+	private: System::Void DBChangerForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		dataGridView1->DataSource = GetDataTable();
 	}
 	private: System::Void RemoveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		
@@ -190,40 +185,9 @@ namespace DEMKA {
 		cmdInsertValue->CommandText = "DELETE FROM students WHERE ID = " + ID + ";";
 		cmdInsertValue->ExecuteNonQuery();
 		db->Close();
-			//////////////////////////////////ÂÎÒ ÝÒÎ ÑÅÐúÅÇÍÎ ÏÅÐÅÏÈËÈÒÜ//////////////////////////
-
-		db->Open();
-
-		SQLiteCommand ^cmdSelect = db->CreateCommand();
-		cmdSelect->CommandText = "SELECT * FROM students;";
-		SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
-		DataTable ^table;
-		DataColumn ^column;
-		DataRow ^row;
-
-				table = gcnew DataTable();
-
-				vector<String^>^ nameColumns = gcnew vector<String^>();
-
-				for (int i = 0; i < (reader->FieldCount); i++) {
-					nameColumns->push_back(reader->GetName(i));
-					column = gcnew DataColumn(nameColumns->at(i), String::typeid);
-					table->Columns->Add(column);
-				}
-
-				while (reader->Read()) {
-					row = table->NewRow();
-					for (int i = 0; i < (reader->FieldCount); i++) {
-						row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
-						reader->GetValue(i)->ToString();
-					}
-					table->Rows->Add(row);
-				}
-
-
-				dataGridView1->DataSource = table;
-				db->Close();
-			}
+		dataGridView1->DataSource = GetDataTable();
+		
+		}
 		
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		
@@ -236,36 +200,9 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 		cmdInsertValue->CommandText = "INSERT INTO students VALUES(NULL, 'ÊÎÒ', 40,'íåò','TEST','TEST','îðèãèíàë','äîãîâîð','" + date_str + "');";
 		cmdInsertValue->ExecuteNonQuery();
-
-		SQLiteCommand ^cmdSelect = db->CreateCommand();
-		cmdSelect->CommandText = "SELECT * FROM students;";
-		SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
-		DataTable ^table;
-		DataColumn ^column;
-		DataRow ^row;
-
-		table = gcnew DataTable();
-
-		vector<String^>^ nameColumns = gcnew vector<String^>();
-
-		for (int i = 0; i < (reader->FieldCount); i++) {
-			nameColumns->push_back(reader->GetName(i));
-			column = gcnew DataColumn(nameColumns->at(i), String::typeid);
-			table->Columns->Add(column);
-		}
-
-		while (reader->Read()) {
-			row = table->NewRow();
-			for (int i = 0; i < (reader->FieldCount); i++) {
-				row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
-				reader->GetValue(i)->ToString();
-			}
-			table->Rows->Add(row);
-		}
-
-
-		dataGridView1->DataSource = table;
 		db->Close();
+		
+		dataGridView1->DataSource = GetDataTable();
 	}
 };
 }

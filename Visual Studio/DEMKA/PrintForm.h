@@ -1,3 +1,5 @@
+#include <cliext/vector>
+#include <map>
 #pragma once
 
 namespace DEMKA {
@@ -8,6 +10,9 @@ namespace DEMKA {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SQLite;
+	using namespace System::Text;
+	using namespace cliext;
 
 	/// <summary>
 	/// Сводка для PrintForm
@@ -179,44 +184,32 @@ namespace DEMKA {
 
 		}
 #pragma endregion
-	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->Hide();
-	}
-private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
-	//ЭТО ДЛЯ WORD 
-	Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
-	auto t = Type::Missing;
 
-	auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
-	//Делаем видимым все происодящее 
-	WORD->Visible = true;
+	private: DataTable^ GetDataTable() {
 
-	/*
-	std::map <int, std::string> rows_formatter;
-	rows_formatter[0] = "№ заявления";
-	rows_formatter[1] = "ФИО";
-	rows_formatter[2] = "Сред. балл";
-	rows_formatter[3] = "Приоритет";
-	rows_formatter[4] = "Форма обучения";
-	rows_formatter[5] = "Специальность";
-	rows_formatter[6] = "Аттестат";
-	rows_formatter[7] = "Форма оплаты";
-	rows_formatter[8] = "Дата ";
+		std::map <int, std::string> rows_formatter;
+		rows_formatter[0] = "№ заявления";
+		rows_formatter[1] = "ФИО";
+		rows_formatter[2] = "Сред. балл";
+		rows_formatter[3] = "Приоритет";
+		rows_formatter[4] = "Форма обучения";
+		rows_formatter[5] = "Специальность";
+		rows_formatter[6] = "Аттестат";
+		rows_formatter[7] = "Форма оплаты";
+		rows_formatter[8] = "Дата ";
 
-	SQLiteConnection ^db = gcnew SQLiteConnection();
-	try
-	{
+		DataTable ^table;
+		DataColumn ^column;
+		DataRow ^row;
+
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
 		cmdSelect->CommandText = "SELECT * FROM students;";
 		SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
-		
-		DataTable ^table;
-		DataColumn ^column;
-		DataRow ^row;
 
 		table = gcnew DataTable();
 
@@ -238,16 +231,24 @@ private: System::Void ReportButton_Click(System::Object^  sender, System::EventA
 			table->Rows->Add(row);
 		}
 
-		dataGridView1->DataSource = table;
 		db->Close();
+		return table;
 	}
 
-	finally
-	{
-		delete (IDisposable^)db;
+	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
 	}
-	*/
-			// Открываем новый документ 
+private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
+	//ЭТО ДЛЯ WORD 
+	Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
+	auto t = Type::Missing;
+
+	auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
+	//Делаем видимым все происодящее 
+	WORD->Visible = true;
+
+
 			auto Документ = WORD->Documents->Add(t, t, t, t);
 
 
@@ -278,7 +279,7 @@ private: System::Void ReportButton_Click(System::Object^  sender, System::EventA
 			// Заполнение ячеек таблицы
 			for (int i = 0; i < 3; i++) {
 				for (int j = 1; j <	10; j++) {
-					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter("ПИДОР");
+					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter("ТЕСТ");
 				}
 			}
 			/*WORD->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Времена года");
