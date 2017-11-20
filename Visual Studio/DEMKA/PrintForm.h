@@ -213,7 +213,7 @@ namespace DEMKA {
 
 		table = gcnew DataTable();
 
-		vector<String^>^ nameColumns = gcnew vector<String^>();
+		vector<String^> ^nameColumns = gcnew vector<String^>();
 
 		for (int i = 0; i < reader->FieldCount; i++) {
 			String^ buf_row = gcnew System::String(rows_formatter[i].c_str());

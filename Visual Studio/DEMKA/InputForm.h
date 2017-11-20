@@ -61,7 +61,7 @@ namespace DEMKA {
 
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::TextBox^  MajorBox;
+
 
 
 
@@ -80,6 +80,9 @@ namespace DEMKA {
 	private: System::Windows::Forms::RadioButton^  FormPayRadioButton1;
 	private: System::Windows::Forms::Button^  MenuButton;
 	private: System::Windows::Forms::Button^  PrinterButton;
+	private: System::Windows::Forms::ComboBox^  MajorComboBox;
+
+
 
 
 	protected:
@@ -109,8 +112,8 @@ namespace DEMKA {
 			this->ScoreBox = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->MajorBox = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->MajorComboBox = (gcnew System::Windows::Forms::ComboBox());
 			this->StudyformBox = (gcnew System::Windows::Forms::GroupBox());
 			this->StudyformRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->StudyformRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
@@ -237,27 +240,29 @@ namespace DEMKA {
 			this->label3->TabIndex = 8;
 			this->label3->Text = L"Направление:";
 			// 
-			// MajorBox
-			// 
-			this->MajorBox->Location = System::Drawing::Point(135, 90);
-			this->MajorBox->Name = L"MajorBox";
-			this->MajorBox->Size = System::Drawing::Size(143, 20);
-			this->MajorBox->TabIndex = 7;
-			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->MajorComboBox);
 			this->groupBox1->Controls->Add(this->label1);
 			this->groupBox1->Controls->Add(this->FIOBox);
 			this->groupBox1->Controls->Add(this->ScoreBox);
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
-			this->groupBox1->Controls->Add(this->MajorBox);
 			this->groupBox1->Location = System::Drawing::Point(12, 31);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(296, 147);
 			this->groupBox1->TabIndex = 11;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Ввод";
+			// 
+			// MajorComboBox
+			// 
+			this->MajorComboBox->FormattingEnabled = true;
+			this->MajorComboBox->Location = System::Drawing::Point(135, 90);
+			this->MajorComboBox->Name = L"MajorComboBox";
+			this->MajorComboBox->Size = System::Drawing::Size(143, 21);
+			this->MajorComboBox->TabIndex = 10;
+			this->MajorComboBox->TextChanged += gcnew System::EventHandler(this, &InputForm::MajorComboBox_TextChanged);
 			// 
 			// StudyformBox
 			// 
@@ -391,17 +396,18 @@ namespace DEMKA {
 		
 		
 	String^ changer_fix;
-
+	array<bool>^ valid_array;
 
 	private: int valid_checker(){
 		//ДОБАВИТЬ ФИЛЬТРАЦИЮ ПО ВАЛИДАЦИИ ТЕКСТА
+		bool main_checker = true;
+		for (int i = 0; i < valid_array->Length; i++)
+			if (valid_array[i] == false)
+				main_checker = false;
+
 		if (
-			FIOBox->Text != ""
-			&&
-			ScoreBox->Text != ""
-			&&
-			MajorBox->Text != ""
-			&&
+			(main_checker == true)
+			&& 
 			(OriginalRadioButton1->Checked == true || OriginalRadioButton2->Checked == true)
 			&&
 			(StudyformRadioButton1->Checked == true || StudyformRadioButton2->Checked == true)
@@ -426,6 +432,7 @@ namespace DEMKA {
 
 			System::DateTime now = System::DateTime::Now;
 			String^ date_str = now.ToString("d");
+			String^ time_str = now.ToString("t");
 
 			try
 			{
@@ -457,7 +464,7 @@ namespace DEMKA {
 				WORD->Selection->TypeText(
 					"ФИО: " + FIOBox->Text + "\n" +
 					"Средний балл аттестата: " + ScoreBox->Text + "\n" +
-					"Направление: " + MajorBox->Text + "\n"
+					"Направление: " + MajorComboBox->Text + "\n"
 				);
 
 				WORD->Selection->TypeParagraph();
@@ -479,7 +486,8 @@ namespace DEMKA {
 				WORD->Selection->ParagraphFormat->Alignment =
 					Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphRight;
 				WORD->Selection->TypeText(
-					"Дата: " + date_str +" \n" +
+					"Дата: " + date_str + "\n" +
+					"Время: " + time_str + "\n" +
 					"Подпись: ______________\n" +
 					"Расшифровка: ______________"
 				);
@@ -523,7 +531,7 @@ namespace DEMKA {
 					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students" +
 						"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);" +
 						"INSERT INTO students VALUES(NULL,'" + FIOBox->Text + "'," + changer_fix +
-						",'" + priority_str + "','" + form_sudy_str + "','" + MajorBox->Text +
+						",'" + priority_str + "','" + form_sudy_str + "','" + MajorComboBox->Text +
 						"','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
 
 					cmdInsertValue->ExecuteNonQuery();
@@ -543,7 +551,6 @@ namespace DEMKA {
 		}
 		else
 			MessageBox::Show("Проверьте правильность ввода данных!");
-
 	}
 
 	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -551,7 +558,12 @@ namespace DEMKA {
 	}
 
 	private: System::Void InputForm_Load(System::Object^  sender, System::EventArgs^  e) {
-
+		valid_array = gcnew array<bool>(3);
+		for (int i = 0; i < valid_array->Length; i++)
+			valid_array[i] = false;
+		MajorComboBox->DropDownStyle = ComboBoxStyle::DropDownList;
+		MajorComboBox->Items->Add("ПКС");
+		MajorComboBox->Items->Add("ИБАС");
 	}
 
 	//Вывод на печать
@@ -567,35 +579,57 @@ namespace DEMKA {
 
 		double d;
 
-		try {
-			for (int i = 0; i < System::Convert::ToInt32(buf_str.length()); i++) {
-				if (buf_str[i] == ',') 
-					buf_str[i] = '.';
-			}
-			changer_fix = gcnew System::String(buf_str.c_str());
-
-			d = Double::Parse(ScoreBox->Text);
-			if ((System::Convert::ToDouble(ScoreBox->Text) >= 2.0) && (System::Convert::ToDouble(ScoreBox->Text) <= 5.0))
-				ScoreBox->ForeColor = System::Drawing::SystemColors::WindowText;
-			else
-				throw e;
+		if (ScoreBox->Text == "")
+		{
+			valid_array[1] = false;
 		}
-		catch (...) {
-			ScoreBox->ForeColor = System::Drawing::Color::Red;
+		else {
+			try {
+				for (int i = 0; i < System::Convert::ToInt32(buf_str.length()); i++) {
+					if (buf_str[i] == ',')
+						buf_str[i] = '.';
+				}
+				changer_fix = gcnew System::String(buf_str.c_str());
+
+				d = Double::Parse(ScoreBox->Text);
+				if ((System::Convert::ToDouble(ScoreBox->Text) >= 2.0) && (System::Convert::ToDouble(ScoreBox->Text) <= 5.0)) {
+					ScoreBox->ForeColor = System::Drawing::SystemColors::WindowText;
+					valid_array[1] = true;
+				}
+				else
+					throw e;
+			}
+			catch (...) {
+				valid_array[1] = false;
+				ScoreBox->ForeColor = System::Drawing::Color::Red;
+			}
+		}
+	}
+	private: System::Void FIOBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+
+		if (FIOBox->Text == "")
+		{
+			valid_array[0] = false;
+		}
+		else {
+			valid_array[0] = true;
+			msclr::interop::marshal_context oMarshalContext;
+			const char* buf = oMarshalContext.marshal_as<const char*>(FIOBox->Text);
+
+			for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++) {
+				if (iswdigit(buf[i])) {
+					valid_array[0] = false;
+				}
+			}
+			FIOBox->ForeColor = (valid_array[0] == true) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 		}
 	}
 
-private: System::Void FIOBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-
-		bool validation = true;
-		msclr::interop::marshal_context oMarshalContext;
-		const char* buf = oMarshalContext.marshal_as<const char*>(FIOBox->Text);
-
-		for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++){
-			if (iswdigit(buf[i]))
-				validation = false;
-		}
-		FIOBox->ForeColor = (validation == true) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+	private: System::Void MajorComboBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (MajorComboBox->Text == "")
+			valid_array[2] = false;
+		else
+			valid_array[2] = true;
 	}
 };
 }
