@@ -2,6 +2,7 @@
 #include <msclr\marshal_cppstd.h>
 #include <algorithm>
 #include <string>
+#include "MoreStudentInfoForm.h"
 
 #pragma once
 
@@ -41,10 +42,8 @@ namespace DEMKA {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::TextBox^  FIOBox;
-	protected:
-
-
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::GroupBox^  OriginalBox;
 	private: System::Windows::Forms::RadioButton^  OriginalRadioButton2;
@@ -396,6 +395,7 @@ namespace DEMKA {
 		
 		
 	String^ changer_fix;
+	String^ FIO_public;
 	array<bool>^ valid_array;
 
 	private: int valid_checker(){
@@ -543,9 +543,14 @@ namespace DEMKA {
 				}
 
 
-				if (MessageBox::Show("Данные успешно записаны! Хотите сформировать отчет?", "Формирование отчета", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+				if (MessageBox::Show("Данные успешно записаны!\nХотите ввести дополнительную информацию об абитуриенте?", "Дополнительная информация", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
 				{
-					print_outer();
+					DEMKA::MoreStudentInfoForm^MoreStudentInfoForm_obj = gcnew DEMKA::MoreStudentInfoForm();
+					this->Hide();
+					MoreStudentInfoForm_obj->Text = "Дополнительная информация - "+FIO_public;
+					//передать поле ID и поздравить РАР с др прям тут
+					MoreStudentInfoForm_obj->ShowDialog();
+					//print_outer();
 				}
 			}
 		}
@@ -613,6 +618,7 @@ namespace DEMKA {
 		}
 		else {
 			valid_array[0] = true;
+			FIO_public = FIOBox->Text;
 			msclr::interop::marshal_context oMarshalContext;
 			const char* buf = oMarshalContext.marshal_as<const char*>(FIOBox->Text);
 
