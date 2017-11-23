@@ -28,7 +28,9 @@ namespace DEMKA {
 			//TODO: добавьте код конструктора
 			//
 		}
-	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  AddDBButton;
+	public:
+
 	public:
 	public:
 		SQLiteConnection ^db;
@@ -66,7 +68,7 @@ namespace DEMKA {
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->RemoveButton = (gcnew System::Windows::Forms::Button());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->AddDBButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -102,22 +104,22 @@ namespace DEMKA {
 			this->RemoveButton->UseVisualStyleBackColor = true;
 			this->RemoveButton->Click += gcnew System::EventHandler(this, &DBChangerForm::RemoveButton_Click);
 			// 
-			// button1
+			// AddDBButton
 			// 
-			this->button1->Location = System::Drawing::Point(379, 283);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(113, 40);
-			this->button1->TabIndex = 3;
-			this->button1->Text = L"button1";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &DBChangerForm::button1_Click);
+			this->AddDBButton->Location = System::Drawing::Point(359, 283);
+			this->AddDBButton->Name = L"AddDBButton";
+			this->AddDBButton->Size = System::Drawing::Size(122, 40);
+			this->AddDBButton->TabIndex = 3;
+			this->AddDBButton->Text = L"Добавление в бд";
+			this->AddDBButton->UseVisualStyleBackColor = true;
+			this->AddDBButton->Click += gcnew System::EventHandler(this, &DBChangerForm::button1_Click);
 			// 
 			// DBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(942, 359);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->AddDBButton);
 			this->Controls->Add(this->RemoveButton);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
@@ -130,6 +132,8 @@ namespace DEMKA {
 
 		}
 #pragma endregion
+	
+	array<String^>^ GridTableRow_array;
 
 	private: DataTable^ GetDataTable() {
 		DataTable ^table;
@@ -193,12 +197,22 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 		
 		System::DateTime now = System::DateTime::Now;
 		String^ date_str = now.ToString("d");
-		
+		int index = dataGridView1->CurrentCell->RowIndex;
+
+		GridTableRow_array = gcnew array<String^>(9);
+		for (int i = 0; i < GridTableRow_array->Length; i++) {
+			GridTableRow_array[i] = dataGridView1->Rows[index]->Cells[i]->Value->ToString();
+			MessageBox::Show(GridTableRow_array[i]);
+		}
+
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 		db->Open();
+
 		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-		cmdInsertValue->CommandText = "INSERT INTO students VALUES(NULL, 'КОТ', 40,'нет','TEST','TEST','оригинал','договор','" + date_str + "');";
+		cmdInsertValue->CommandText = "INSERT INTO students VALUES(NULL,'" + GridTableRow_array[1] + "'," + GridTableRow_array[2] +
+			",'" + GridTableRow_array[3] + "','" + GridTableRow_array[4] + "','" + GridTableRow_array[5] +
+			"','" + GridTableRow_array[6] + "', '" + GridTableRow_array[7] + "','" + date_str + "');";
 		cmdInsertValue->ExecuteNonQuery();
 		db->Close();
 		
