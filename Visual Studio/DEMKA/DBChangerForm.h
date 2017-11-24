@@ -1,3 +1,5 @@
+#include <msclr/marshal.h>
+#include <msclr\marshal_cppstd.h>
 #include <cliext/vector>
 #include <string>
 #include <map>
@@ -133,7 +135,71 @@ namespace DEMKA {
 		}
 #pragma endregion
 	
+	String^ changer_fix;
 	array<String^>^ GridTableRow_array;
+
+	private: int valid_checker() {
+
+		array<bool>^ BoolCheckArr;
+		BoolCheckArr = gcnew array<bool>(3);
+		for (int i = 0; i < BoolCheckArr->Length; i++) {
+			BoolCheckArr[i] = false;
+		}
+
+		if (GridTableRow_array[1] == "")
+		{
+			MessageBox::Show("ВОШЕЛ В 1 IF");
+			BoolCheckArr[1] = false;
+		}
+		else {
+
+			BoolCheckArr[1] = true;
+			msclr::interop::marshal_context oMarshalContext;
+			const char* buf = oMarshalContext.marshal_as<const char*>(GridTableRow_array[1]);
+
+			for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++) {
+				if (iswdigit(buf[i])) {
+					MessageBox::Show("ВОШЕЛ В if (iswdigit(buf[i]))");
+					MessageBox::Show(System::Convert::ToString(buf[i]));
+					BoolCheckArr[1] = false;
+				}
+			}
+		}
+
+		msclr::interop::marshal_context context;
+		std::string buf_str = context.marshal_as<std::string>(GridTableRow_array[2]);
+		double d;
+		if (GridTableRow_array[2] == "")
+		{
+			BoolCheckArr[2] = false;
+		}
+		else {
+			try {
+				for (int i = 0; i < System::Convert::ToInt32(buf_str.length()); i++) {
+					if (buf_str[i] == ',')
+						buf_str[i] = '.';
+				}
+				changer_fix = gcnew System::String(buf_str.c_str());
+
+				d = Double::Parse(GridTableRow_array[2]);
+				if ((System::Convert::ToDouble(GridTableRow_array[2]) >= 2.0) && (System::Convert::ToDouble(GridTableRow_array[2]) <= 5.0))
+					BoolCheckArr[2] = true;
+			}
+			catch (...) {
+				BoolCheckArr[2] = false;
+			}
+		}
+
+		/////////////////////////////////////////////////////
+
+		for (int i = 1; i < BoolCheckArr->Length; i++) {
+			MessageBox::Show(System::Convert::ToString(BoolCheckArr[i]));
+			if (BoolCheckArr[i] == false) {
+				return 1;
+			}
+		}
+		return 0;
+	}
 
 	private: DataTable^ GetDataTable() {
 		DataTable ^table;
@@ -194,27 +260,28 @@ namespace DEMKA {
 		}
 		
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-		
-		System::DateTime now = System::DateTime::Now;
-		String^ date_str = now.ToString("d");
+
 		int index = dataGridView1->CurrentCell->RowIndex;
 
 		GridTableRow_array = gcnew array<String^>(9);
-		for (int i = 0; i < GridTableRow_array->Length; i++) {
+		for (int i = 0; i < GridTableRow_array->Length; i++)
 			GridTableRow_array[i] = dataGridView1->Rows[index]->Cells[i]->Value->ToString();
-			MessageBox::Show(GridTableRow_array[i]);
+
+		if (valid_checker() == 0) {
+
+			SQLiteConnection ^db = gcnew SQLiteConnection();
+			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->Open();
+
+			SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+			cmdInsertValue->CommandText = "INSERT INTO students VALUES(NULL,'" + GridTableRow_array[1] + "'," + changer_fix +
+				",'" + GridTableRow_array[3] + "','" + GridTableRow_array[4] + "','" + GridTableRow_array[5] +
+				"','" + GridTableRow_array[6] + "', '" + GridTableRow_array[7] + "','" + GridTableRow_array[8] + "');";
+			cmdInsertValue->ExecuteNonQuery();
+			db->Close();
 		}
-
-		SQLiteConnection ^db = gcnew SQLiteConnection();
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
-		db->Open();
-
-		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-		cmdInsertValue->CommandText = "INSERT INTO students VALUES(NULL,'" + GridTableRow_array[1] + "'," + GridTableRow_array[2] +
-			",'" + GridTableRow_array[3] + "','" + GridTableRow_array[4] + "','" + GridTableRow_array[5] +
-			"','" + GridTableRow_array[6] + "', '" + GridTableRow_array[7] + "','" + date_str + "');";
-		cmdInsertValue->ExecuteNonQuery();
-		db->Close();
+		else
+			MessageBox::Show("Проверьте правильность ввода данных!");
 		
 		dataGridView1->DataSource = GetDataTable();
 	}

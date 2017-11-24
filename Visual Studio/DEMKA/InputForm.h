@@ -506,7 +506,6 @@ namespace DEMKA {
 
 	}
 
-
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (valid_checker() == 1) {
 			System::DateTime now = System::DateTime::Now;
