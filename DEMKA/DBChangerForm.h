@@ -101,7 +101,7 @@ namespace DEMKA {
 			// 
 			// RemoveBDButton
 			// 
-			this->RemoveBDButton->Location = System::Drawing::Point(209, 283);
+			this->RemoveBDButton->Location = System::Drawing::Point(479, 283);
 			this->RemoveBDButton->Name = L"RemoveBDButton";
 			this->RemoveBDButton->Size = System::Drawing::Size(122, 40);
 			this->RemoveBDButton->TabIndex = 2;
@@ -111,7 +111,7 @@ namespace DEMKA {
 			// 
 			// AddDBButton
 			// 
-			this->AddDBButton->Location = System::Drawing::Point(359, 283);
+			this->AddDBButton->Location = System::Drawing::Point(629, 283);
 			this->AddDBButton->Name = L"AddDBButton";
 			this->AddDBButton->Size = System::Drawing::Size(122, 40);
 			this->AddDBButton->TabIndex = 3;
@@ -121,7 +121,7 @@ namespace DEMKA {
 			// 
 			// UpdateBDButton
 			// 
-			this->UpdateBDButton->Location = System::Drawing::Point(509, 283);
+			this->UpdateBDButton->Location = System::Drawing::Point(781, 283);
 			this->UpdateBDButton->Name = L"UpdateBDButton";
 			this->UpdateBDButton->Size = System::Drawing::Size(122, 40);
 			this->UpdateBDButton->TabIndex = 4;
@@ -302,8 +302,33 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 		
 		dataGridView1->DataSource = GetDataTable();
 	}
-private: System::Void UpdateBDButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	//Тут обновление
-}
+	private: System::Void UpdateBDButton_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		int index = dataGridView1->CurrentCell->RowIndex;
+		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
+
+		GridTableRow_array = gcnew array<String^>(9);
+		for (int i = 0; i < GridTableRow_array->Length; i++)
+			GridTableRow_array[i] = dataGridView1->Rows[index]->Cells[i]->Value->ToString();
+
+		if (valid_checker() == 0) {
+
+			SQLiteConnection ^db = gcnew SQLiteConnection();
+			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->Open();
+
+			SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+			cmdInsertValue->CommandText = "UPDATE students SET name='" + GridTableRow_array[1] + "',score=" + changer_fix +
+				",priority='" + GridTableRow_array[3] + "',form_sudy='" + GridTableRow_array[4] + "',major='" + GridTableRow_array[5] +
+				"',original='" + GridTableRow_array[6] + "', form_pay='" + GridTableRow_array[7] + "',date='" + GridTableRow_array[8] + "' WHERE ID =" + ID;
+			cmdInsertValue->ExecuteNonQuery();
+			db->Close();
+			MessageBox::Show("Успешное обновление данных");
+		}
+		else
+			MessageBox::Show("Проверьте правильность ввода данных!");
+
+		dataGridView1->DataSource = GetDataTable();
+	}
 };
 }
