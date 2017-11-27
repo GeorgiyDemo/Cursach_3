@@ -31,6 +31,7 @@ namespace DEMKA {
 			//
 		}
 	private: System::Windows::Forms::Button^  AddDBButton;
+	private: System::Windows::Forms::Button^  UpdateBDButton;
 	public:
 
 	public:
@@ -52,7 +53,8 @@ namespace DEMKA {
 
 	protected:
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
-	private: System::Windows::Forms::Button^  RemoveButton;
+	private: System::Windows::Forms::Button^  RemoveBDButton;
+
 
 	private:
 		/// <summary>
@@ -69,8 +71,9 @@ namespace DEMKA {
 		{
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->RemoveButton = (gcnew System::Windows::Forms::Button());
+			this->RemoveBDButton = (gcnew System::Windows::Forms::Button());
 			this->AddDBButton = (gcnew System::Windows::Forms::Button());
+			this->UpdateBDButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -96,15 +99,15 @@ namespace DEMKA {
 			this->dataGridView1->Size = System::Drawing::Size(942, 233);
 			this->dataGridView1->TabIndex = 1;
 			// 
-			// RemoveButton
+			// RemoveBDButton
 			// 
-			this->RemoveButton->Location = System::Drawing::Point(209, 283);
-			this->RemoveButton->Name = L"RemoveButton";
-			this->RemoveButton->Size = System::Drawing::Size(122, 40);
-			this->RemoveButton->TabIndex = 2;
-			this->RemoveButton->Text = L"Удаление из БД";
-			this->RemoveButton->UseVisualStyleBackColor = true;
-			this->RemoveButton->Click += gcnew System::EventHandler(this, &DBChangerForm::RemoveButton_Click);
+			this->RemoveBDButton->Location = System::Drawing::Point(209, 283);
+			this->RemoveBDButton->Name = L"RemoveBDButton";
+			this->RemoveBDButton->Size = System::Drawing::Size(122, 40);
+			this->RemoveBDButton->TabIndex = 2;
+			this->RemoveBDButton->Text = L"Удаление из БД";
+			this->RemoveBDButton->UseVisualStyleBackColor = true;
+			this->RemoveBDButton->Click += gcnew System::EventHandler(this, &DBChangerForm::RemoveButton_Click);
 			// 
 			// AddDBButton
 			// 
@@ -112,17 +115,28 @@ namespace DEMKA {
 			this->AddDBButton->Name = L"AddDBButton";
 			this->AddDBButton->Size = System::Drawing::Size(122, 40);
 			this->AddDBButton->TabIndex = 3;
-			this->AddDBButton->Text = L"Добавление в бд";
+			this->AddDBButton->Text = L"Добавление в БД";
 			this->AddDBButton->UseVisualStyleBackColor = true;
 			this->AddDBButton->Click += gcnew System::EventHandler(this, &DBChangerForm::button1_Click);
+			// 
+			// UpdateBDButton
+			// 
+			this->UpdateBDButton->Location = System::Drawing::Point(509, 283);
+			this->UpdateBDButton->Name = L"UpdateBDButton";
+			this->UpdateBDButton->Size = System::Drawing::Size(122, 40);
+			this->UpdateBDButton->TabIndex = 4;
+			this->UpdateBDButton->Text = L"Обновление БД";
+			this->UpdateBDButton->UseVisualStyleBackColor = true;
+			this->UpdateBDButton->Click += gcnew System::EventHandler(this, &DBChangerForm::UpdateBDButton_Click);
 			// 
 			// DBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(942, 359);
+			this->Controls->Add(this->UpdateBDButton);
 			this->Controls->Add(this->AddDBButton);
-			this->Controls->Add(this->RemoveButton);
+			this->Controls->Add(this->RemoveBDButton);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Name = L"DBChangerForm";
@@ -141,14 +155,14 @@ namespace DEMKA {
 	private: int valid_checker() {
 
 		array<bool>^ BoolCheckArr;
-		BoolCheckArr = gcnew array<bool>(3);
+		BoolCheckArr = gcnew array<bool>(8);
 		for (int i = 0; i < BoolCheckArr->Length; i++) {
 			BoolCheckArr[i] = false;
 		}
 
+		//Валидация ФИО
 		if (GridTableRow_array[1] == "")
 		{
-			MessageBox::Show("ВОШЕЛ В 1 IF");
 			BoolCheckArr[1] = false;
 		}
 		else {
@@ -159,13 +173,12 @@ namespace DEMKA {
 
 			for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++) {
 				if (iswdigit(buf[i])) {
-					MessageBox::Show("ВОШЕЛ В if (iswdigit(buf[i]))");
-					MessageBox::Show(System::Convert::ToString(buf[i]));
 					BoolCheckArr[1] = false;
 				}
 			}
 		}
 
+		//Валидация Сред. балла
 		msclr::interop::marshal_context context;
 		std::string buf_str = context.marshal_as<std::string>(GridTableRow_array[2]);
 		double d;
@@ -190,14 +203,16 @@ namespace DEMKA {
 			}
 		}
 
-		/////////////////////////////////////////////////////
+		//Другие валидации
+		BoolCheckArr[3] = ((GridTableRow_array[3] == "да") || (GridTableRow_array[3] == "нет")) ? true : false;
+		BoolCheckArr[4] = ((GridTableRow_array[4] == "очная") || (GridTableRow_array[4] == "заочная")) ? true : false;
+		BoolCheckArr[5] = ((GridTableRow_array[5] == "ПКС") || (GridTableRow_array[5] == "ИБАС")) ? true : false;
+		BoolCheckArr[6] = ((GridTableRow_array[6] == "оригинал") || (GridTableRow_array[6] == "копия")) ? true : false;
+		BoolCheckArr[7] = ((GridTableRow_array[7] == "бюджет") || (GridTableRow_array[7] == "договор")) ? true : false;
 
-		for (int i = 1; i < BoolCheckArr->Length; i++) {
-			MessageBox::Show(System::Convert::ToString(BoolCheckArr[i]));
-			if (BoolCheckArr[i] == false) {
+		for (int i = 1; i < BoolCheckArr->Length; i++)
+			if (BoolCheckArr[i] == false)
 				return 1;
-			}
-		}
 		return 0;
 	}
 
@@ -256,8 +271,9 @@ namespace DEMKA {
 		cmdInsertValue->ExecuteNonQuery();
 		db->Close();
 		dataGridView1->DataSource = GetDataTable();
+		MessageBox::Show("Успешное удаление данных");
 		
-		}
+	}
 		
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -279,11 +295,15 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 				"','" + GridTableRow_array[6] + "', '" + GridTableRow_array[7] + "','" + GridTableRow_array[8] + "');";
 			cmdInsertValue->ExecuteNonQuery();
 			db->Close();
+			MessageBox::Show("Успешная запись данных");
 		}
 		else
 			MessageBox::Show("Проверьте правильность ввода данных!");
 		
 		dataGridView1->DataSource = GetDataTable();
 	}
+private: System::Void UpdateBDButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	//Тут обновление
+}
 };
 }
