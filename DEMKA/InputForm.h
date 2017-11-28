@@ -399,7 +399,6 @@ namespace DEMKA {
 	array<bool>^ valid_array;
 
 	private: int valid_checker(){
-		//ДОБАВИТЬ ФИЛЬТРАЦИЮ ПО ВАЛИДАЦИИ ТЕКСТА
 		bool main_checker = true;
 		for (int i = 0; i < valid_array->Length; i++)
 			if (valid_array[i] == false)
@@ -546,10 +545,8 @@ namespace DEMKA {
 				{
 					DEMKA::MoreStudentInfoForm^MoreStudentInfoForm_obj = gcnew DEMKA::MoreStudentInfoForm();
 					this->Hide();
-					MoreStudentInfoForm_obj->Text = "Дополнительная информация - "+FIO_public;
-					//передать поле ID и поздравить РАР с др прям тут
+					MoreStudentInfoForm_obj->Text = FIO_public;
 					MoreStudentInfoForm_obj->ShowDialog();
-					//print_outer();
 				}
 			}
 		}
