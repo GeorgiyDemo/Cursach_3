@@ -1,4 +1,3 @@
-#include <string>
 #pragma once
 
 namespace DEMKA {
@@ -193,14 +192,10 @@ namespace DEMKA {
 		}
 #pragma endregion
 	array<bool>^ valid_array;
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//ПИЛИТЬ//
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 	private: int ID_getter() {
-		//SELECT * FROM dbo.Object WHERE ID = (SELECT MAX(ID) FROM dbo.Object)
+
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		std::string columnIndex;
+		String^ columnIndex;
 
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 		db->Open();
@@ -208,17 +203,12 @@ namespace DEMKA {
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
 		cmdSelect->CommandText = "SELECT * FROM students WHERE ID = (SELECT MAX(ID) FROM students);";
 		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
-		if (data->Read())
+		while (data->Read())
 		{
-			columnIndex = data["ID"]->ToString;
+			columnIndex = data->GetValue(0)->ToString();
 		}
-		//int columnIndex = reader->GetOrdinal("name");
-		String^ MyString = gcnew String(columnIndex.c_str());
-		MessageBox::Show(MyString);
-
 		db->Close();
-
-		return System::Convert::ToInt32(MyString);
+		return System::Convert::ToInt32(columnIndex);
 
 	}
 
@@ -231,7 +221,6 @@ namespace DEMKA {
 	}
 	private: System::Void NextButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		MessageBox::Show("ID инкримента студента: "+System::Convert::ToString(ID_getter()));
 		try
 		{
 			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
@@ -246,7 +235,7 @@ namespace DEMKA {
 				"telephone TEXT," +
 				"FOREIGN KEY(student_id) REFERENCES students(ID));" +
 
-				"INSERT INTO contacts VALUES(NULL, 1, 'ул Ленина', 'student@e-mail.com', '+79945969459');";
+				"INSERT INTO contacts VALUES(NULL," +System::Convert::ToString(ID_getter())+", 'ул Ленина', 'student@e-mail.com', '+79945969459');";
 
 			cmdInsertValue->ExecuteNonQuery();
 			db->Close();
@@ -255,7 +244,6 @@ namespace DEMKA {
 		{
 			delete (IDisposable^)db;
 		}
-		//MessageBox::Show(InputForm->FIO_public);
 	}
 private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->Hide();
