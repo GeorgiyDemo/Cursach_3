@@ -1,7 +1,14 @@
 PRAGMA foreign_keys=on;
 CREATE TABLE IF NOT EXISTS students(
-  ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-  name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);
+	ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	name TEXT,
+	score REAL,
+	priority TEXT,
+	form_sudy TEXT,
+	major TEXT,
+	original TEXT,
+	form_pay TEXT,
+	date TEXT);
 
 CREATE TABLE IF NOT EXISTS data(
 	ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

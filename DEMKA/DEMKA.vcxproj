@@ -142,6 +142,7 @@
     <ClCompile Include="InputForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="MoreStudentInfoForm.cpp" />
+    <ClCompile Include="ParentsContactForm.cpp" />
     <ClCompile Include="PrintForm.cpp" />
     <ClCompile Include="RatingForm.cpp" />
   </ItemGroup>
@@ -156,6 +157,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MoreStudentInfoForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ParentsContactForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="PrintForm.h">
@@ -177,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MoreStudentInfoForm.resx">
       <DependentUpon>MoreStudentInfoForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParentsContactForm.resx">
+      <DependentUpon>ParentsContactForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintForm.resx">
       <DependentUpon>PrintForm.h</DependentUpon>

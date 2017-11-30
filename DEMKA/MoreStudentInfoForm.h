@@ -1,3 +1,5 @@
+#include <regex>
+#include <msclr\marshal_cppstd.h>
 #pragma once
 
 namespace DEMKA {
@@ -130,6 +132,7 @@ namespace DEMKA {
 			this->PhoneBox->Name = L"PhoneBox";
 			this->PhoneBox->Size = System::Drawing::Size(143, 20);
 			this->PhoneBox->TabIndex = 9;
+			this->PhoneBox->TextChanged += gcnew System::EventHandler(this, &MoreStudentInfoForm::PhoneBox_TextChanged);
 			// 
 			// AdressBox
 			// 
@@ -138,6 +141,7 @@ namespace DEMKA {
 			this->AdressBox->Name = L"AdressBox";
 			this->AdressBox->Size = System::Drawing::Size(143, 20);
 			this->AdressBox->TabIndex = 1;
+			this->AdressBox->TextChanged += gcnew System::EventHandler(this, &MoreStudentInfoForm::AdressBox_TextChanged);
 			// 
 			// EmailBox
 			// 
@@ -145,6 +149,7 @@ namespace DEMKA {
 			this->EmailBox->Name = L"EmailBox";
 			this->EmailBox->Size = System::Drawing::Size(143, 20);
 			this->EmailBox->TabIndex = 5;
+			this->EmailBox->TextChanged += gcnew System::EventHandler(this, &MoreStudentInfoForm::EmailBox_TextChanged);
 			// 
 			// label3
 			// 
@@ -190,8 +195,34 @@ namespace DEMKA {
 			this->ResumeLayout(false);
 
 		}
+
 #pragma endregion
 	array<bool>^ valid_array;
+
+	private: bool is_valid_number(const std::string& number)
+	{
+		static const std::string AllowedChars = "0123456789";
+		for (auto numberChar = number.begin();
+			numberChar != number.end(); ++numberChar)
+
+			if (AllowedChars.end() == std::find(
+				AllowedChars.begin(), AllowedChars.end(), *numberChar)
+			)
+			{
+				return false;
+			}
+
+		return true;
+	}
+
+	private: bool is_valid_email(const std::string& email)
+	{
+		const std::regex pattern
+		("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+
+		return std::regex_match(email, pattern);
+	}
+
 	private: int ID_getter() {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
@@ -219,39 +250,77 @@ namespace DEMKA {
 				return 1;
 		return 0;
 	}
+	
 	private: System::Void NextButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		SQLiteConnection ^db = gcnew SQLiteConnection();
-		try
-		{
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
-			db->Open();
-			SQLiteCommand ^cmdInsertValue = db->CreateCommand();
-			cmdInsertValue->CommandText =
-				"CREATE TABLE IF NOT EXISTS contacts(" +
-				"ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-				"student_id INTEGER UNIQUE NOT NULL," +
-				"adress TEXT," +
-				"e_mail TEXT," +
-				"telephone TEXT," +
-				"FOREIGN KEY(student_id) REFERENCES students(ID));" +
 
-				"INSERT INTO contacts VALUES(NULL," +System::Convert::ToString(ID_getter())+", 'ул Ленина', 'student@e-mail.com', '+79945969459');";
+		if (valid_checker() == 0) {
+			SQLiteConnection ^db = gcnew SQLiteConnection();
+			try
+			{
+				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+				db->Open();
+				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+				cmdInsertValue->CommandText =
+					"CREATE TABLE IF NOT EXISTS contacts(" +
+					"ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+					"student_id INTEGER UNIQUE NOT NULL," +
+					"adress TEXT," +
+					"e_mail TEXT," +
+					"telephone TEXT," +
+					"FOREIGN KEY(student_id) REFERENCES students(ID));" +
 
-			cmdInsertValue->ExecuteNonQuery();
-			db->Close();
+					"INSERT INTO contacts VALUES(NULL," + System::Convert::ToString(ID_getter()) + ", '" + AdressBox->Text + "', '" + EmailBox->Text + "', '" + PhoneBox->Text + "');";
+
+				cmdInsertValue->ExecuteNonQuery();
+				db->Close();
+			}
+			finally
+			{
+				delete (IDisposable^)db;
+			}
+			if (MessageBox::Show("Контактные данные успешно записаны!\nХотите ввести контактные данные родителей?", "Контактные данные родителей", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+			{
+				/*
+				DEMKA::MoreStudentInfoForm^MoreStudentInfoForm_obj = gcnew DEMKA::MoreStudentInfoForm();
+				this->Hide();
+				MoreStudentInfoForm_obj->Text = FIO_public;
+				MoreStudentInfoForm_obj->ShowDialog();
+				*/
+			}
+			else
+				this->Hide();
 		}
-		finally
-		{
-			delete (IDisposable^)db;
-		}
+		else
+			MessageBox::Show("Проверьте правильность ввода данных!");
 	}
-private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->Hide();
 }
-private: System::Void MoreStudentInfoForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void MoreStudentInfoForm_Load(System::Object^  sender, System::EventArgs^  e) {
 	valid_array = gcnew array<bool>(3);
 	for (int i = 0; i < valid_array->Length; i++)
 		valid_array[i] = false;
 }
+	private: System::Void AdressBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		valid_array[0] = (AdressBox->Text != "") ? true : false;
+	}
+
+	private: System::Void EmailBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+
+	System::String^ buf_str = EmailBox->Text;
+	std::string Email_str = msclr::interop::marshal_as<std::string>(buf_str);
+	valid_array[1] = (is_valid_email(Email_str)) ? true : false;
+	EmailBox->ForeColor = is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+}
+
+	private: System::Void PhoneBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	
+	System::String^ buf_str = PhoneBox->Text;
+	std::string Phone_str = msclr::interop::marshal_as<std::string>(buf_str);
+	bool boolflag = is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
+	valid_array[2] = (boolflag) ? true : false;
+	PhoneBox->ForeColor = (boolflag) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+	
+	}
 };
 }
