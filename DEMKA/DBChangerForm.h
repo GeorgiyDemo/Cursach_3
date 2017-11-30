@@ -79,7 +79,7 @@ namespace DEMKA {
 			// 
 			// ExitButton
 			// 
-			this->ExitButton->Location = System::Drawing::Point(12, 283);
+			this->ExitButton->Location = System::Drawing::Point(12, 292);
 			this->ExitButton->Name = L"ExitButton";
 			this->ExitButton->Size = System::Drawing::Size(105, 40);
 			this->ExitButton->TabIndex = 0;
@@ -96,12 +96,12 @@ namespace DEMKA {
 			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(942, 233);
+			this->dataGridView1->Size = System::Drawing::Size(961, 270);
 			this->dataGridView1->TabIndex = 1;
 			// 
 			// RemoveBDButton
 			// 
-			this->RemoveBDButton->Location = System::Drawing::Point(479, 283);
+			this->RemoveBDButton->Location = System::Drawing::Point(479, 292);
 			this->RemoveBDButton->Name = L"RemoveBDButton";
 			this->RemoveBDButton->Size = System::Drawing::Size(122, 40);
 			this->RemoveBDButton->TabIndex = 2;
@@ -111,7 +111,7 @@ namespace DEMKA {
 			// 
 			// AddDBButton
 			// 
-			this->AddDBButton->Location = System::Drawing::Point(629, 283);
+			this->AddDBButton->Location = System::Drawing::Point(629, 292);
 			this->AddDBButton->Name = L"AddDBButton";
 			this->AddDBButton->Size = System::Drawing::Size(122, 40);
 			this->AddDBButton->TabIndex = 3;
@@ -121,7 +121,7 @@ namespace DEMKA {
 			// 
 			// UpdateBDButton
 			// 
-			this->UpdateBDButton->Location = System::Drawing::Point(781, 283);
+			this->UpdateBDButton->Location = System::Drawing::Point(781, 292);
 			this->UpdateBDButton->Name = L"UpdateBDButton";
 			this->UpdateBDButton->Size = System::Drawing::Size(122, 40);
 			this->UpdateBDButton->TabIndex = 4;
@@ -133,7 +133,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(942, 359);
+			this->ClientSize = System::Drawing::Size(961, 359);
 			this->Controls->Add(this->UpdateBDButton);
 			this->Controls->Add(this->AddDBButton);
 			this->Controls->Add(this->RemoveBDButton);

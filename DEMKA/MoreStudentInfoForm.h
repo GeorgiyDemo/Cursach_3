@@ -58,12 +58,13 @@ namespace DEMKA {
 
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label2;
+	private: System::Windows::Forms::Button^  ExitButton;
 
 
 
 
 
-	private: System::Windows::Forms::Button^  MenuButton;
+
 	private: System::Windows::Forms::TextBox^  PhoneBox;
 
 
@@ -88,7 +89,7 @@ namespace DEMKA {
 			this->EmailBox = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->MenuButton = (gcnew System::Windows::Forms::Button());
+			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -169,15 +170,15 @@ namespace DEMKA {
 			this->label2->TabIndex = 6;
 			this->label2->Text = L"E-mail:";
 			// 
-			// MenuButton
+			// ExitButton
 			// 
-			this->MenuButton->Location = System::Drawing::Point(12, 147);
-			this->MenuButton->Name = L"MenuButton";
-			this->MenuButton->Size = System::Drawing::Size(125, 43);
-			this->MenuButton->TabIndex = 22;
-			this->MenuButton->Text = L"<=";
-			this->MenuButton->UseVisualStyleBackColor = true;
-			this->MenuButton->Click += gcnew System::EventHandler(this, &MoreStudentInfoForm::MenuButton_Click);
+			this->ExitButton->Location = System::Drawing::Point(12, 147);
+			this->ExitButton->Name = L"ExitButton";
+			this->ExitButton->Size = System::Drawing::Size(125, 43);
+			this->ExitButton->TabIndex = 22;
+			this->ExitButton->Text = L"<=";
+			this->ExitButton->UseVisualStyleBackColor = true;
+			this->ExitButton->Click += gcnew System::EventHandler(this, &MoreStudentInfoForm::MenuButton_Click);
 			// 
 			// MoreStudentInfoForm
 			// 
@@ -186,7 +187,7 @@ namespace DEMKA {
 			this->ClientSize = System::Drawing::Size(316, 196);
 			this->Controls->Add(this->NextButton);
 			this->Controls->Add(this->groupBox1);
-			this->Controls->Add(this->MenuButton);
+			this->Controls->Add(this->ExitButton);
 			this->Name = L"MoreStudentInfoForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
 			this->Load += gcnew System::EventHandler(this, &MoreStudentInfoForm::MoreStudentInfoForm_Load);

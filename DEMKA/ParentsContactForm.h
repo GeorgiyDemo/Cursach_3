@@ -38,12 +38,25 @@ namespace DEMKA {
 	protected:
 	private: System::Windows::Forms::Button^  NextButton;
 	private: System::Windows::Forms::GroupBox^  groupBox1;
-	private: System::Windows::Forms::TextBox^  PhoneBox;
-	private: System::Windows::Forms::TextBox^  AdressBox;
-	private: System::Windows::Forms::TextBox^  EmailBox;
+	private: System::Windows::Forms::TextBox^  ParentPhoneBox;
+
+	private: System::Windows::Forms::TextBox^  ParentAdressBox;
+	private: System::Windows::Forms::TextBox^  ParentEmailBox;
+
+
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::Button^  MenuButton;
+	private: System::Windows::Forms::Button^  ExitButton;
+
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::TextBox^  ParentFIOBox;
+
+
+
+
+
+
+
 
 	private:
 		/// <summary>
@@ -61,19 +74,21 @@ namespace DEMKA {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->NextButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->PhoneBox = (gcnew System::Windows::Forms::TextBox());
-			this->AdressBox = (gcnew System::Windows::Forms::TextBox());
-			this->EmailBox = (gcnew System::Windows::Forms::TextBox());
+			this->ParentPhoneBox = (gcnew System::Windows::Forms::TextBox());
+			this->ParentAdressBox = (gcnew System::Windows::Forms::TextBox());
+			this->ParentEmailBox = (gcnew System::Windows::Forms::TextBox());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->MenuButton = (gcnew System::Windows::Forms::Button());
+			this->ExitButton = (gcnew System::Windows::Forms::Button());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->ParentFIOBox = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(19, 34);
+			this->label1->Location = System::Drawing::Point(19, 59);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(41, 13);
 			this->label1->TabIndex = 2;
@@ -81,54 +96,56 @@ namespace DEMKA {
 			// 
 			// NextButton
 			// 
-			this->NextButton->Location = System::Drawing::Point(357, 177);
+			this->NextButton->Location = System::Drawing::Point(161, 180);
 			this->NextButton->Name = L"NextButton";
-			this->NextButton->Size = System::Drawing::Size(178, 44);
+			this->NextButton->Size = System::Drawing::Size(117, 44);
 			this->NextButton->TabIndex = 24;
 			this->NextButton->Text = L"=>";
 			this->NextButton->UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
-			this->groupBox1->Controls->Add(this->PhoneBox);
+			this->groupBox1->Controls->Add(this->label4);
+			this->groupBox1->Controls->Add(this->ParentFIOBox);
+			this->groupBox1->Controls->Add(this->ParentPhoneBox);
 			this->groupBox1->Controls->Add(this->label1);
-			this->groupBox1->Controls->Add(this->AdressBox);
-			this->groupBox1->Controls->Add(this->EmailBox);
+			this->groupBox1->Controls->Add(this->ParentAdressBox);
+			this->groupBox1->Controls->Add(this->ParentEmailBox);
 			this->groupBox1->Controls->Add(this->label3);
 			this->groupBox1->Controls->Add(this->label2);
-			this->groupBox1->Location = System::Drawing::Point(257, 12);
+			this->groupBox1->Location = System::Drawing::Point(12, 12);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(295, 130);
+			this->groupBox1->Size = System::Drawing::Size(268, 162);
 			this->groupBox1->TabIndex = 23;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Контактная информация";
 			// 
-			// PhoneBox
+			// ParentPhoneBox
 			// 
-			this->PhoneBox->Location = System::Drawing::Point(135, 93);
-			this->PhoneBox->Name = L"PhoneBox";
-			this->PhoneBox->Size = System::Drawing::Size(143, 20);
-			this->PhoneBox->TabIndex = 9;
+			this->ParentPhoneBox->Location = System::Drawing::Point(94, 118);
+			this->ParentPhoneBox->Name = L"ParentPhoneBox";
+			this->ParentPhoneBox->Size = System::Drawing::Size(143, 20);
+			this->ParentPhoneBox->TabIndex = 9;
 			// 
-			// AdressBox
+			// ParentAdressBox
 			// 
-			this->AdressBox->ForeColor = System::Drawing::SystemColors::WindowText;
-			this->AdressBox->Location = System::Drawing::Point(135, 31);
-			this->AdressBox->Name = L"AdressBox";
-			this->AdressBox->Size = System::Drawing::Size(143, 20);
-			this->AdressBox->TabIndex = 1;
+			this->ParentAdressBox->ForeColor = System::Drawing::SystemColors::WindowText;
+			this->ParentAdressBox->Location = System::Drawing::Point(94, 56);
+			this->ParentAdressBox->Name = L"ParentAdressBox";
+			this->ParentAdressBox->Size = System::Drawing::Size(143, 20);
+			this->ParentAdressBox->TabIndex = 1;
 			// 
-			// EmailBox
+			// ParentEmailBox
 			// 
-			this->EmailBox->Location = System::Drawing::Point(135, 59);
-			this->EmailBox->Name = L"EmailBox";
-			this->EmailBox->Size = System::Drawing::Size(143, 20);
-			this->EmailBox->TabIndex = 5;
+			this->ParentEmailBox->Location = System::Drawing::Point(94, 87);
+			this->ParentEmailBox->Name = L"ParentEmailBox";
+			this->ParentEmailBox->Size = System::Drawing::Size(143, 20);
+			this->ParentEmailBox->TabIndex = 5;
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(19, 93);
+			this->label3->Location = System::Drawing::Point(19, 118);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(55, 13);
 			this->label3->TabIndex = 8;
@@ -137,29 +154,47 @@ namespace DEMKA {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(19, 62);
+			this->label2->Location = System::Drawing::Point(19, 87);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(38, 13);
 			this->label2->TabIndex = 6;
 			this->label2->Text = L"E-mail:";
 			// 
-			// MenuButton
+			// ExitButton
 			// 
-			this->MenuButton->Location = System::Drawing::Point(21, 177);
-			this->MenuButton->Name = L"MenuButton";
-			this->MenuButton->Size = System::Drawing::Size(178, 44);
-			this->MenuButton->TabIndex = 25;
-			this->MenuButton->Text = L"<=";
-			this->MenuButton->UseVisualStyleBackColor = true;
+			this->ExitButton->Location = System::Drawing::Point(12, 180);
+			this->ExitButton->Name = L"ExitButton";
+			this->ExitButton->Size = System::Drawing::Size(109, 44);
+			this->ExitButton->TabIndex = 25;
+			this->ExitButton->Text = L"<=";
+			this->ExitButton->UseVisualStyleBackColor = true;
+			this->ExitButton->Click += gcnew System::EventHandler(this, &ParentsContactForm::ExitButton_Click);
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(19, 29);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(34, 13);
+			this->label4->TabIndex = 11;
+			this->label4->Text = L"ФИО";
+			// 
+			// ParentFIOBox
+			// 
+			this->ParentFIOBox->ForeColor = System::Drawing::SystemColors::WindowText;
+			this->ParentFIOBox->Location = System::Drawing::Point(94, 26);
+			this->ParentFIOBox->Name = L"ParentFIOBox";
+			this->ParentFIOBox->Size = System::Drawing::Size(143, 20);
+			this->ParentFIOBox->TabIndex = 10;
 			// 
 			// ParentsContactForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(564, 243);
+			this->ClientSize = System::Drawing::Size(293, 232);
 			this->Controls->Add(this->NextButton);
 			this->Controls->Add(this->groupBox1);
-			this->Controls->Add(this->MenuButton);
+			this->Controls->Add(this->ExitButton);
 			this->Name = L"ParentsContactForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"ParentsContactForm";
@@ -169,5 +204,10 @@ namespace DEMKA {
 
 		}
 #pragma endregion
-	};
+	private: System::Void label4_Click(System::Object^  sender, System::EventArgs^  e) {
+	}
+private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->Hide();
+}
+};
 }

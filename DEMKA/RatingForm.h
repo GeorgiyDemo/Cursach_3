@@ -106,7 +106,7 @@ namespace DEMKA {
 			this->dataGridView1->ShowCellErrors = false;
 			this->dataGridView1->ShowEditingIcon = false;
 			this->dataGridView1->ShowRowErrors = false;
-			this->dataGridView1->Size = System::Drawing::Size(900, 261);
+			this->dataGridView1->Size = System::Drawing::Size(918, 273);
 			this->dataGridView1->TabIndex = 1;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &RatingForm::dataGridView1_CellContentClick);
 			// 
@@ -124,7 +124,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(900, 352);
+			this->ClientSize = System::Drawing::Size(918, 355);
 			this->Controls->Add(this->PrinterButton);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
