@@ -1,5 +1,7 @@
 #include <regex>
+#include <string>
 #include <msclr\marshal_cppstd.h>
+#include "ParentsContactForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -245,7 +247,6 @@ namespace DEMKA {
 	}
 
 	private: int valid_checker() {
-		bool main_checker = true;
 		for (int i = 0; i < valid_array->Length; i++)
 			if (valid_array[i] == false)
 				return 1;
@@ -281,12 +282,10 @@ namespace DEMKA {
 			}
 			if (MessageBox::Show("Контактные данные успешно записаны!\nХотите ввести контактные данные родителей?", "Контактные данные родителей", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
 			{
-				/*
-				DEMKA::MoreStudentInfoForm^MoreStudentInfoForm_obj = gcnew DEMKA::MoreStudentInfoForm();
+				DEMKA::ParentsContactForm^ParentsContactForm_obj = gcnew DEMKA::ParentsContactForm();
 				this->Hide();
-				MoreStudentInfoForm_obj->Text = FIO_public;
-				MoreStudentInfoForm_obj->ShowDialog();
-				*/
+				ParentsContactForm_obj->Text = this->Text;
+				ParentsContactForm_obj->ShowDialog();
 			}
 			else
 				this->Hide();
@@ -307,21 +306,18 @@ namespace DEMKA {
 	}
 
 	private: System::Void EmailBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-
-	System::String^ buf_str = EmailBox->Text;
-	std::string Email_str = msclr::interop::marshal_as<std::string>(buf_str);
-	valid_array[1] = (is_valid_email(Email_str)) ? true : false;
-	EmailBox->ForeColor = is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
-}
+		System::String^ buf_str = EmailBox->Text;
+		std::string Email_str = msclr::interop::marshal_as<std::string>(buf_str);
+		valid_array[1] = (is_valid_email(Email_str)) ? true : false;
+		EmailBox->ForeColor = is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+	}
 
 	private: System::Void PhoneBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	
-	System::String^ buf_str = PhoneBox->Text;
-	std::string Phone_str = msclr::interop::marshal_as<std::string>(buf_str);
-	bool boolflag = is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
-	valid_array[2] = (boolflag) ? true : false;
-	PhoneBox->ForeColor = (boolflag) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
-	
+		System::String^ buf_str = PhoneBox->Text;
+		std::string Phone_str = msclr::interop::marshal_as<std::string>(buf_str);
+		bool boolflag = is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
+		valid_array[2] = (boolflag) ? true : false;
+		PhoneBox->ForeColor = (boolflag) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 	}
 };
 }
