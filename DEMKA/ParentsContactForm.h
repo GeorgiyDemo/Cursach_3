@@ -1,6 +1,7 @@
 #include <regex>
 #include <string>
 #include <msclr\marshal_cppstd.h>
+#include "FinalPrintForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -76,6 +77,7 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(ParentsContactForm::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->NextButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
@@ -124,7 +126,7 @@ namespace DEMKA {
 			this->groupBox1->Size = System::Drawing::Size(268, 162);
 			this->groupBox1->TabIndex = 23;
 			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Контактная информация";
+			this->groupBox1->Text = L"Контактная информация родителей:";
 			// 
 			// label4
 			// 
@@ -205,6 +207,7 @@ namespace DEMKA {
 			this->Controls->Add(this->NextButton);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->ExitButton);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"ParentsContactForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Контакты родителей";
@@ -279,7 +282,6 @@ namespace DEMKA {
 			SQLiteConnection ^db = gcnew SQLiteConnection();
 			try
 			{
-				MessageBox::Show("INSERT INTO parents(NULL," + System::Convert::ToString(ID_getter()) + ", '" + ParentAdressBox->Text + "', '" + ParentFIOBox->Text + "', '" + ParentEmailBox->Text + "','" + ParentPhoneBox->Text + "');");
 				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 				db->Open();
 				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
@@ -303,14 +305,9 @@ namespace DEMKA {
 			}
 			if (MessageBox::Show("Контактные данные родителей успешно записаны!\nХотите сформировать общий отчет?", "Формирование отчета", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
 			{
-				/*
-				DEMKA::ParentsContactForm^ParentsContactForm_obj = gcnew DEMKA::ParentsContactForm();
+				DEMKA::FinalPrintForm^FinalPrintForm_obj = gcnew DEMKA::FinalPrintForm();
 				this->Hide();
-				ParentsContactForm_obj->Text = this->Text;
-				ParentsContactForm_obj->ShowDialog();
-				*/
-				MessageBox::Show("А ОН НЕ ХОЧИТ)))))))");
-				this->Hide();
+				FinalPrintForm_obj->ShowDialog();	
 			}
 			else
 				this->Hide();

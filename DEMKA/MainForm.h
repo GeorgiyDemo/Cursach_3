@@ -60,6 +60,7 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->AdmissionButton = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->TopButton = (gcnew System::Windows::Forms::Button());
@@ -128,6 +129,7 @@ namespace DEMKA {
 			this->ClientSize = System::Drawing::Size(302, 331);
 			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->groupBox1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Главная форма АИС";

@@ -83,6 +83,7 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(MoreStudentInfoForm::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->NextButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
@@ -190,6 +191,7 @@ namespace DEMKA {
 			this->Controls->Add(this->NextButton);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->ExitButton);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MoreStudentInfoForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
 			this->Load += gcnew System::EventHandler(this, &MoreStudentInfoForm::MoreStudentInfoForm_Load);

@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DBChangerForm.cpp" />
+    <ClCompile Include="FinalPrintForm.cpp" />
     <ClCompile Include="InputForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="MoreStudentInfoForm.cpp" />
@@ -148,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DBChangerForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="FinalPrintForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="InputForm.h">
@@ -172,6 +176,9 @@
   <ItemGroup>
     <EmbeddedResource Include="DBChangerForm.resx">
       <DependentUpon>DBChangerForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinalPrintForm.resx">
+      <DependentUpon>FinalPrintForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputForm.resx">
       <DependentUpon>InputForm.h</DependentUpon>

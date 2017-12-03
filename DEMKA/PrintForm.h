@@ -66,6 +66,7 @@ namespace DEMKA {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(PrintForm::typeid));
 			this->Form_PayPrintBox = (gcnew System::Windows::Forms::GroupBox());
 			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
@@ -173,9 +174,10 @@ namespace DEMKA {
 			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->Form_PayPrintBox);
 			this->Controls->Add(this->MajorPrintBox);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"PrintForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Формаирование рейтинга";
+			this->Text = L"Формирование рейтинга";
 			this->Form_PayPrintBox->ResumeLayout(false);
 			this->Form_PayPrintBox->PerformLayout();
 			this->MajorPrintBox->ResumeLayout(false);

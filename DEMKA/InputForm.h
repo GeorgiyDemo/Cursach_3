@@ -372,6 +372,7 @@ namespace DEMKA {
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->PriorityBox);
 			this->Controls->Add(this->OriginalBox);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"InputForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Прием нового абитуриента";
@@ -516,8 +517,6 @@ namespace DEMKA {
 			form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
 			form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
 
-			if (MessageBox::Show("Введенные данные действительно верны?", "Подтвердить ввод данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
-			{
 				try
 				{
 					db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
@@ -548,7 +547,6 @@ namespace DEMKA {
 					MoreStudentInfoForm_obj->ShowDialog();
 				}
 			}
-		}
 		else
 			MessageBox::Show("Проверьте правильность ввода данных!");
 	}
