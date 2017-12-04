@@ -128,7 +128,7 @@ namespace DEMKA {
 			this->groupBox1->Size = System::Drawing::Size(296, 129);
 			this->groupBox1->TabIndex = 19;
 			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Контактная информация";
+			this->groupBox1->Text = L"Контактная информация абитуриента";
 			// 
 			// PhoneBox
 			// 

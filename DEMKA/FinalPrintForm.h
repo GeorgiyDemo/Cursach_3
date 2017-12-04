@@ -45,7 +45,8 @@ namespace DEMKA {
 	private: System::Windows::Forms::CheckBox^  ParentsContactsCheckBox;
 	private: System::Windows::Forms::CheckBox^  StudentContactsCheckBox;
 	private: System::Windows::Forms::CheckBox^  MainInfoCheckBox;
-	private: System::Windows::Forms::CheckBox^  checkBox6;
+	private: System::Windows::Forms::CheckBox^  WriterCheckBox;
+
 	private: System::Windows::Forms::CheckBox^  TimeCheckBox;
 
 	private: System::Windows::Forms::CheckBox^  DateCheckBox;
@@ -73,7 +74,7 @@ namespace DEMKA {
 			this->StudentContactsCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->MainInfoCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->OtherGroupBox = (gcnew System::Windows::Forms::GroupBox());
-			this->checkBox6 = (gcnew System::Windows::Forms::CheckBox());
+			this->WriterCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->TimeCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->DateCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->ReportButton = (gcnew System::Windows::Forms::Button());
@@ -126,7 +127,7 @@ namespace DEMKA {
 			// 
 			// OtherGroupBox
 			// 
-			this->OtherGroupBox->Controls->Add(this->checkBox6);
+			this->OtherGroupBox->Controls->Add(this->WriterCheckBox);
 			this->OtherGroupBox->Controls->Add(this->TimeCheckBox);
 			this->OtherGroupBox->Controls->Add(this->DateCheckBox);
 			this->OtherGroupBox->Location = System::Drawing::Point(229, 12);
@@ -136,15 +137,15 @@ namespace DEMKA {
 			this->OtherGroupBox->TabStop = false;
 			this->OtherGroupBox->Text = L"Дополнительные параметры";
 			// 
-			// checkBox6
+			// WriterCheckBox
 			// 
-			this->checkBox6->AutoSize = true;
-			this->checkBox6->Location = System::Drawing::Point(7, 78);
-			this->checkBox6->Name = L"checkBox6";
-			this->checkBox6->Size = System::Drawing::Size(118, 17);
-			this->checkBox6->TabIndex = 2;
-			this->checkBox6->Text = L"Поле для подписи";
-			this->checkBox6->UseVisualStyleBackColor = true;
+			this->WriterCheckBox->AutoSize = true;
+			this->WriterCheckBox->Location = System::Drawing::Point(7, 78);
+			this->WriterCheckBox->Name = L"WriterCheckBox";
+			this->WriterCheckBox->Size = System::Drawing::Size(118, 17);
+			this->WriterCheckBox->TabIndex = 2;
+			this->WriterCheckBox->Text = L"Поле для подписи";
+			this->WriterCheckBox->UseVisualStyleBackColor = true;
 			// 
 			// TimeCheckBox
 			// 
@@ -252,57 +253,110 @@ namespace DEMKA {
 		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
 
 		while (data->Read())
-			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++) {
+			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++)
 				ParentsCont_arr[cell_index] = data->GetValue(cell_index)->ToString();
-				MessageBox::Show(ParentsCont_arr[cell_index]);
-			}
 		db->Close();
 	}
 
 	private: void WordWorker() {
+
+		System::DateTime now = System::DateTime::Now;
+		String^ date_str = now.ToString("d");
+		String^ time_str = now.ToString("t");
 		Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
 		auto t = Type::Missing;
 
 		auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
-		//Делаем видимым все происодящее 
 		WORD->Visible = true;
-
-
 		auto Документ = WORD->Documents->Add(t, t, t, t);
 
-
-		//----------------------- РАБОТА С ТЕКСТОМ ------------------------------//
 		WORD->Selection->ParagraphFormat->Alignment =
 			Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
 		WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
 		WORD->Selection->Font->Bold = 1; // жирный шрифт
-		WORD->Selection->Font->Size = 20; // высота шрифта 20
-		WORD->Selection->TypeText("Справка о подаче заявления в кембридж");
+		WORD->Selection->Font->Size = 18; // высота шрифта 18
+		WORD->Selection->TypeText("Справка о приеме документов в КИП при ФУ РФ");
 
 		WORD->Selection->Font->Size = 12;
 		WORD->Selection->TypeParagraph();
-		WORD->Selection->ParagraphFormat->Alignment =
-			Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
-		WORD->Selection->Font->Bold = false;
+		WORD->Selection->ParagraphFormat->Alignment = Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
 
-		//Главное меню выбрано
-		WORD->Selection->TypeText("Основной причиной смены времён года " +
-			"является наклон земной оси по отношению к плоскости эклиптики. " +
-			"Без наклона оси продолжительность дня и ночи в любом месте Земли " +
-			"была бы одинакова, и днём солнце поднималось бы над горизонтом " +
-			"на одну и ту же высоту в течение всего года.");
+		//Основная информация
+		if (MainInfoCheckBox->Checked == true) {
+			MainInfoGetter();
 
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->Font->Size = 16;
+			WORD->Selection->TypeText("Основная информация:");
+			WORD->Selection->Font->Bold = false;
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->Font->Size = 14;
 
-		//----------------------- СОЗДАНИЕ ТАБЛИЦЫ ------------------------------//
-		Object ^ ПоказыватьГраницы = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
-		Object ^ РегулирШирины = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitWindow;
-		Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
-		WORD->ActiveDocument->Tables->Add(wrdRng, 3, 9, ПоказыватьГраницы, РегулирШирины);
-		// Заполнение ячеек таблицы
-		for (int i = 0; i < 3; i++) {
-			for (int j = 1; j < 10; j++) {
-				WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter("ТЕСТ");
-			}
+			WORD->Selection->TypeText(
+				"ФИО: " + main_arr[1] + "\n" +
+				"Средний балл аттестата: " + main_arr[2] + "\n" +
+				"Направление: " + main_arr[5] + "\n" +
+				"Форма оплаты: " + main_arr[7] + "\n" +
+				"Тип аттестата: " + main_arr[6] + "\n" +
+				"Форма обучения: " + main_arr[4] + "\n" +
+				"Приоритет: " + main_arr[3] + "\n"
+			);
+
+		}
+
+		if (StudentContactsCheckBox->Checked == true) {
+			StudentContactsInfoGetter();
+
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->Font->Size = 16;
+			WORD->Selection->Font->Bold = true;
+			WORD->Selection->TypeText("Контактные данные абитуриента:");
+			WORD->Selection->Font->Bold = false;
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->Font->Size = 14;
+
+			WORD->Selection->TypeText(
+				"Адрес: " + StudContacts_arr[2] + "\n" +
+				"E-mail: " + StudContacts_arr[3] + "\n" +
+				"Телефон: " + StudContacts_arr[4] + "\n"
+			);
+		}
+
+		if (ParentsContactsCheckBox->Checked == true) {
+			ParentsContactsInfoGetter();
+
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->Font->Size = 16;
+			WORD->Selection->Font->Bold = true;
+			WORD->Selection->TypeText("Контактные данные родителей абитуриента:");
+			WORD->Selection->Font->Bold = false;
+			WORD->Selection->TypeParagraph();
+			WORD->Selection->Font->Size = 14;
+
+			WORD->Selection->TypeText(
+				"ФИО: " + ParentsCont_arr[2] + "\n" +
+				"Адрес: " + ParentsCont_arr[4] + "\n" +
+				"E-mail: " + ParentsCont_arr[3] + "\n" +
+				"Телефон: " + ParentsCont_arr[5] + "\n"
+			);
+		}
+
+		if (DateCheckBox->Checked == true) {
+			WORD->Selection->ParagraphFormat->Alignment = Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphRight;
+			WORD->Selection->TypeText("Дата: " + date_str + "\n");
+		}
+
+		if (TimeCheckBox->Checked == true) {
+			WORD->Selection->ParagraphFormat->Alignment = Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphRight;
+			WORD->Selection->TypeText("Время: " + time_str + "\n");
+		}
+
+		if (WriterCheckBox->Checked == true) {
+			WORD->Selection->ParagraphFormat->Alignment = Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphRight;
+			WORD->Selection->TypeText(
+				"Подпись: ______________\n" +
+				"Расшифровка: ______________"
+			);
 		}
 	}
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {

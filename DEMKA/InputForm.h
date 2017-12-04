@@ -569,7 +569,6 @@ namespace DEMKA {
 		print_outer();
 	}
 
-
 	private: System::Void ScoreBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 
 		msclr::interop::marshal_context context;

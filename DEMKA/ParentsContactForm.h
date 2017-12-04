@@ -210,7 +210,6 @@ namespace DEMKA {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"ParentsContactForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Контакты родителей";
 			this->Load += gcnew System::EventHandler(this, &ParentsContactForm::ParentsContactForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
