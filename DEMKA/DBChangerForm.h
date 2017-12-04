@@ -143,7 +143,7 @@ namespace DEMKA {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"DBChangerForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
-			this->Text = L"Изменение данных";
+			this->Text = L"Изменение данных таблицы students";
 			this->Load += gcnew System::EventHandler(this, &DBChangerForm::DBChangerForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);

@@ -138,9 +138,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ContactsDBChangerForm.cpp" />
     <ClCompile Include="DBChangerForm.cpp" />
     <ClCompile Include="FinalPrintForm.cpp" />
     <ClCompile Include="InputForm.cpp" />
+    <ClCompile Include="MainDBChangerForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="MoreStudentInfoForm.cpp" />
     <ClCompile Include="ParentsContactForm.cpp" />
@@ -148,6 +150,9 @@
     <ClCompile Include="RatingForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ContactsDBChangerForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="DBChangerForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -155,6 +160,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="InputForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="MainDBChangerForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
@@ -174,6 +182,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ContactsDBChangerForm.resx">
+      <DependentUpon>ContactsDBChangerForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DBChangerForm.resx">
       <DependentUpon>DBChangerForm.h</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InputForm.resx">
       <DependentUpon>InputForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainDBChangerForm.resx">
+      <DependentUpon>MainDBChangerForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
