@@ -1,5 +1,6 @@
 #include "DBChangerForm.h"
 #include "ContactsDBChangerForm.h"
+#include "ParentsDBChangerForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -87,6 +88,7 @@ namespace DEMKA {
 			this->ParentsTableButton->TabIndex = 2;
 			this->ParentsTableButton->Text = L"Таблица \"parents\"";
 			this->ParentsTableButton->UseVisualStyleBackColor = true;
+			this->ParentsTableButton->Click += gcnew System::EventHandler(this, &MainDBChangerForm::ParentsTableButton_Click);
 			// 
 			// ContactsTableButton
 			// 
@@ -162,6 +164,12 @@ private: System::Void ContactsTableButton_Click(System::Object^  sender, System:
 	DEMKA::ContactsDBChangerForm^ContactsDBChangerForm_obj = gcnew DEMKA::ContactsDBChangerForm();
 	this->Hide();
 	ContactsDBChangerForm_obj->ShowDialog();
+	this->Show();
+}
+private: System::Void ParentsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	DEMKA::ParentsDBChangerForm^ParentsDBChangerForm_obj = gcnew DEMKA::ParentsDBChangerForm();
+	this->Hide();
+	ParentsDBChangerForm_obj->ShowDialog();
 	this->Show();
 }
 };
