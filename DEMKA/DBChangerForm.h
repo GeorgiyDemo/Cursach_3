@@ -260,9 +260,7 @@ namespace DEMKA {
 	}
 	private: System::Void RemoveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		
-		//Номер выделенной строки
 		int index = dataGridView1->CurrentCell->RowIndex;
-		//Определим _id в выделенной строке
 		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
