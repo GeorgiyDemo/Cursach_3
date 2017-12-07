@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS data(
 	adress TEXT,
 	e_mail TEXT,
 	telephone TEXT,
-FOREIGN KEY (student_id) REFERENCES students(ID));
+FOREIGN KEY (student_id) REFERENCES students(ID) ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS parents(
 	ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS parents(
 	adress TEXT,
 	e_mail TEXT,
 	telephone TEXT,
-FOREIGN KEY (student_id) REFERENCES students(ID));
+FOREIGN KEY (student_id) REFERENCES students(ID) ON DELETE CASCADE);
 
 INSERT INTO students VALUES(NULL,"Петров Александр",5.0,"да","очная","ПКС","оригинал","бюджет","20.10.2016");
 INSERT INTO data VALUES(NULL,1,"ул Ленина","student@e-mail.com","+79945969459");
