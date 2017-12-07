@@ -271,10 +271,10 @@ namespace DEMKA {
 					"adress TEXT," +
 					"e_mail TEXT," +
 					"telephone TEXT," +
-					"FOREIGN KEY(student_id) REFERENCES students(ID));" +
+					"FOREIGN KEY(student_id) REFERENCES students(ID) ON DELETE CASCADE);" +
 
 					"INSERT INTO contacts VALUES(NULL," + System::Convert::ToString(ID_getter()) + ", '" + AdressBox->Text + "', '" + EmailBox->Text + "', '" + PhoneBox->Text + "');";
-
+				
 				cmdInsertValue->ExecuteNonQuery();
 				db->Close();
 			}

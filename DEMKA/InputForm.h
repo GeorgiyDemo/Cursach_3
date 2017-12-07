@@ -605,20 +605,17 @@ namespace DEMKA {
 	private: System::Void FIOBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 
 		if (FIOBox->Text == "")
-		{
 			valid_array[0] = false;
-		}
 		else {
 			valid_array[0] = true;
 			FIO_public = FIOBox->Text;
 			msclr::interop::marshal_context oMarshalContext;
 			const char* buf = oMarshalContext.marshal_as<const char*>(FIOBox->Text);
 
-			for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++) {
-				if (iswdigit(buf[i])) {
+			for (int i = 0; i < System::Convert::ToInt32(strlen(buf)); i++)
+				if (iswdigit(buf[i]))
 					valid_array[0] = false;
-				}
-			}
+
 			FIOBox->ForeColor = (valid_array[0] == true) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 		}
 	}

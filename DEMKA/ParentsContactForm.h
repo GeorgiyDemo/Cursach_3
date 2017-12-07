@@ -292,8 +292,8 @@ namespace DEMKA {
 					"e_mail TEXT," +
 					"adress TEXT," +
 					"telephone TEXT," +
-					"FOREIGN KEY(student_id) REFERENCES students(ID));"+
-					"INSERT INTO parents VALUES (NULL," + System::Convert::ToString(ID_getter()) + ", '" + ParentAdressBox->Text + "', '" + ParentFIOBox->Text + "', '" + ParentEmailBox->Text + "','"+ParentPhoneBox->Text+"');";
+					"FOREIGN KEY(student_id) REFERENCES students(ID) ON DELETE CASCADE);"+
+					"INSERT INTO parents VALUES (NULL," + System::Convert::ToString(ID_getter()) + ", '" + ParentFIOBox->Text + "', '" + ParentEmailBox->Text + "', '" + ParentAdressBox->Text + "','"+ParentPhoneBox->Text+"');";
 
 				cmdInsertValue->ExecuteNonQuery();
 				db->Close();

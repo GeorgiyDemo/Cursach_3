@@ -3,7 +3,6 @@
 #include <cliext/vector>
 #include <string>
 #include <regex>
-#include <map>
 #pragma once
 
 namespace DEMKA {
@@ -226,12 +225,9 @@ namespace DEMKA {
 		//Другие валидации
 		BoolCheckArr[2] = (GridTableRow_array[2] != "") ? true : false;
 
-
-		for (int i = 2; i < BoolCheckArr->Length; i++) {
-			MessageBox::Show(System::Convert::ToString(BoolCheckArr[i]));
+		for (int i = 2; i < BoolCheckArr->Length; i++)
 			if (BoolCheckArr[i] == false)
 				return 1;
-		}
 		return 0;
 	}
 
