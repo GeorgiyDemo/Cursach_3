@@ -39,16 +39,27 @@ namespace DEMKA {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::GroupBox^  Form_PayPrintBox;
+	private: System::Windows::Forms::GroupBox^  PayPrintBox;
+	private: System::Windows::Forms::RadioButton^  PayRadioButton2;
+
+	private: System::Windows::Forms::RadioButton^  PayRadioButton1;
 	protected:
 
 	protected:
-	private: System::Windows::Forms::RadioButton^  radioButton2;
-	private: System::Windows::Forms::RadioButton^  radioButton1;
+
+	protected:
+
+
+
 	private: System::Windows::Forms::GroupBox^  MajorPrintBox;
+	private: System::Windows::Forms::RadioButton^  MajorRadioButton2;
 
-	private: System::Windows::Forms::RadioButton^  radioButton4;
-	private: System::Windows::Forms::RadioButton^  radioButton3;
+
+	private: System::Windows::Forms::RadioButton^  MajorRadioButton1;
+
+
+
+
 	private: System::Windows::Forms::Button^  ExitButton;
 	private: System::Windows::Forms::Button^  ReportButton;
 
@@ -67,55 +78,55 @@ namespace DEMKA {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(PrintForm::typeid));
-			this->Form_PayPrintBox = (gcnew System::Windows::Forms::GroupBox());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->PayPrintBox = (gcnew System::Windows::Forms::GroupBox());
+			this->PayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->PayRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->MajorPrintBox = (gcnew System::Windows::Forms::GroupBox());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
+			this->MajorRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->MajorRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->ReportButton = (gcnew System::Windows::Forms::Button());
-			this->Form_PayPrintBox->SuspendLayout();
+			this->PayPrintBox->SuspendLayout();
 			this->MajorPrintBox->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// Form_PayPrintBox
+			// PayPrintBox
 			// 
-			this->Form_PayPrintBox->Controls->Add(this->radioButton2);
-			this->Form_PayPrintBox->Controls->Add(this->radioButton1);
-			this->Form_PayPrintBox->Location = System::Drawing::Point(5, 12);
-			this->Form_PayPrintBox->Name = L"Form_PayPrintBox";
-			this->Form_PayPrintBox->Size = System::Drawing::Size(182, 107);
-			this->Form_PayPrintBox->TabIndex = 0;
-			this->Form_PayPrintBox->TabStop = false;
-			this->Form_PayPrintBox->Text = L"Фильтр по форме оплаты";
+			this->PayPrintBox->Controls->Add(this->PayRadioButton2);
+			this->PayPrintBox->Controls->Add(this->PayRadioButton1);
+			this->PayPrintBox->Location = System::Drawing::Point(5, 12);
+			this->PayPrintBox->Name = L"PayPrintBox";
+			this->PayPrintBox->Size = System::Drawing::Size(182, 107);
+			this->PayPrintBox->TabIndex = 0;
+			this->PayPrintBox->TabStop = false;
+			this->PayPrintBox->Text = L"Фильтр по форме оплаты";
 			// 
-			// radioButton2
+			// PayRadioButton2
 			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(17, 72);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(69, 17);
-			this->radioButton2->TabIndex = 1;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"Договор";
-			this->radioButton2->UseVisualStyleBackColor = true;
+			this->PayRadioButton2->AutoSize = true;
+			this->PayRadioButton2->Location = System::Drawing::Point(17, 72);
+			this->PayRadioButton2->Name = L"PayRadioButton2";
+			this->PayRadioButton2->Size = System::Drawing::Size(69, 17);
+			this->PayRadioButton2->TabIndex = 1;
+			this->PayRadioButton2->TabStop = true;
+			this->PayRadioButton2->Text = L"Договор";
+			this->PayRadioButton2->UseVisualStyleBackColor = true;
 			// 
-			// radioButton1
+			// PayRadioButton1
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(17, 38);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(65, 17);
-			this->radioButton1->TabIndex = 0;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"Бюджет";
-			this->radioButton1->UseVisualStyleBackColor = true;
+			this->PayRadioButton1->AutoSize = true;
+			this->PayRadioButton1->Location = System::Drawing::Point(17, 38);
+			this->PayRadioButton1->Name = L"PayRadioButton1";
+			this->PayRadioButton1->Size = System::Drawing::Size(65, 17);
+			this->PayRadioButton1->TabIndex = 0;
+			this->PayRadioButton1->TabStop = true;
+			this->PayRadioButton1->Text = L"Бюджет";
+			this->PayRadioButton1->UseVisualStyleBackColor = true;
 			// 
 			// MajorPrintBox
 			// 
-			this->MajorPrintBox->Controls->Add(this->radioButton4);
-			this->MajorPrintBox->Controls->Add(this->radioButton3);
+			this->MajorPrintBox->Controls->Add(this->MajorRadioButton2);
+			this->MajorPrintBox->Controls->Add(this->MajorRadioButton1);
 			this->MajorPrintBox->Location = System::Drawing::Point(193, 12);
 			this->MajorPrintBox->Name = L"MajorPrintBox";
 			this->MajorPrintBox->Size = System::Drawing::Size(182, 107);
@@ -123,27 +134,27 @@ namespace DEMKA {
 			this->MajorPrintBox->TabStop = false;
 			this->MajorPrintBox->Text = L"Фильтр по специальности:";
 			// 
-			// radioButton4
+			// MajorRadioButton2
 			// 
-			this->radioButton4->AutoSize = true;
-			this->radioButton4->Location = System::Drawing::Point(6, 72);
-			this->radioButton4->Name = L"radioButton4";
-			this->radioButton4->Size = System::Drawing::Size(54, 17);
-			this->radioButton4->TabIndex = 1;
-			this->radioButton4->TabStop = true;
-			this->radioButton4->Text = L"ИБАС";
-			this->radioButton4->UseVisualStyleBackColor = true;
+			this->MajorRadioButton2->AutoSize = true;
+			this->MajorRadioButton2->Location = System::Drawing::Point(6, 72);
+			this->MajorRadioButton2->Name = L"MajorRadioButton2";
+			this->MajorRadioButton2->Size = System::Drawing::Size(54, 17);
+			this->MajorRadioButton2->TabIndex = 1;
+			this->MajorRadioButton2->TabStop = true;
+			this->MajorRadioButton2->Text = L"ИБАС";
+			this->MajorRadioButton2->UseVisualStyleBackColor = true;
 			// 
-			// radioButton3
+			// MajorRadioButton1
 			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Location = System::Drawing::Point(6, 38);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(47, 17);
-			this->radioButton3->TabIndex = 0;
-			this->radioButton3->TabStop = true;
-			this->radioButton3->Text = L"ПКС";
-			this->radioButton3->UseVisualStyleBackColor = true;
+			this->MajorRadioButton1->AutoSize = true;
+			this->MajorRadioButton1->Location = System::Drawing::Point(6, 38);
+			this->MajorRadioButton1->Name = L"MajorRadioButton1";
+			this->MajorRadioButton1->Size = System::Drawing::Size(47, 17);
+			this->MajorRadioButton1->TabIndex = 0;
+			this->MajorRadioButton1->TabStop = true;
+			this->MajorRadioButton1->Text = L"ПКС";
+			this->MajorRadioButton1->UseVisualStyleBackColor = true;
 			// 
 			// ExitButton
 			// 
@@ -172,14 +183,14 @@ namespace DEMKA {
 			this->ClientSize = System::Drawing::Size(382, 205);
 			this->Controls->Add(this->ReportButton);
 			this->Controls->Add(this->ExitButton);
-			this->Controls->Add(this->Form_PayPrintBox);
+			this->Controls->Add(this->PayPrintBox);
 			this->Controls->Add(this->MajorPrintBox);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"PrintForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Формирование рейтинга";
-			this->Form_PayPrintBox->ResumeLayout(false);
-			this->Form_PayPrintBox->PerformLayout();
+			this->PayPrintBox->ResumeLayout(false);
+			this->PayPrintBox->PerformLayout();
 			this->MajorPrintBox->ResumeLayout(false);
 			this->MajorPrintBox->PerformLayout();
 			this->ResumeLayout(false);
@@ -187,69 +198,57 @@ namespace DEMKA {
 		}
 #pragma endregion
 
-	private: DataTable^ GetDataTable() {
+		array<String^>^ MainSQL;
 
-		std::map <int, std::string> rows_formatter;
-		rows_formatter[0] = "№ заявления";
-		rows_formatter[1] = "ФИО";
-		rows_formatter[2] = "Сред. балл";
-		rows_formatter[3] = "Приоритет";
-		rows_formatter[4] = "Форма обучения";
-		rows_formatter[5] = "Специальность";
-		rows_formatter[6] = "Аттестат";
-		rows_formatter[7] = "Форма оплаты";
-		rows_formatter[8] = "Дата ";
+		String^ SQLFormatter(){
+			if ((PayRadioButton1->Checked == true) && (MajorRadioButton1->Checked == true))
+				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ПКС';";
 
-		DataTable ^table;
-		DataColumn ^column;
-		DataRow ^row;
+			if ((PayRadioButton1->Checked == true) && (MajorRadioButton2->Checked == true))
+				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ИБАС';";
 
-		SQLiteConnection ^db = gcnew SQLiteConnection();
+			if ((PayRadioButton2->Checked == true) && (MajorRadioButton1->Checked == true))
+				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ПКС';";
 
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
-		db->Open();
-
-		SQLiteCommand ^cmdSelect = db->CreateCommand();
-		cmdSelect->CommandText = "SELECT * FROM students;";
-		SQLiteDataReader ^reader = cmdSelect->ExecuteReader();
-
-		table = gcnew DataTable();
-
-		vector<String^> ^nameColumns = gcnew vector<String^>();
-
-		for (int i = 0; i < reader->FieldCount; i++) {
-			String^ buf_row = gcnew System::String(rows_formatter[i].c_str());
-			nameColumns->push_back(buf_row);
-			column = gcnew DataColumn(nameColumns->at(i), String::typeid);
-			table->Columns->Add(column);
+			if ((PayRadioButton2->Checked == true) && (MajorRadioButton2->Checked == true))
+				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ИБАС';";
 		}
+		
+		private: void SQLGetter(String^ SQLCommand) {
+			SQLiteConnection ^db = gcnew SQLiteConnection();
+			MainSQL = gcnew array<String^>(9);
+			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->Open();
 
-		while (reader->Read()) {
-			row = table->NewRow();
-			for (int i = 0; i < reader->FieldCount; i++) {
-				row[nameColumns->at(i)] = reader->GetValue(i)->ToString();
-				reader->GetValue(i)->ToString();
-			}
-			table->Rows->Add(row);
+			SQLiteCommand ^cmdSelect = db->CreateCommand();
+			cmdSelect->CommandText = SQLCommand;
+			SQLiteDataReader ^data = cmdSelect->ExecuteReader();
+
+			while (data->Read())
+				for (int cell_index = 0; cell_index < data->FieldCount; cell_index++){
+					MainSQL[cell_index] = data->GetValue(cell_index)->ToString();
+					MessageBox::Show(MainSQL[cell_index]);
+				}
+			
+			db->Close();
 		}
-
-		db->Close();
-		return table;
-	}
 
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
 	}
 private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	SQLGetter(SQLFormatter());
+		
 	//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
 	//ЭТО ДЛЯ WORD 
+
 	Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
 	auto t = Type::Missing;
 
 	auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
 	//Делаем видимым все происодящее 
 	WORD->Visible = true;
-
 
 			auto Документ = WORD->Documents->Add(t, t, t, t);
 
@@ -277,24 +276,32 @@ private: System::Void ReportButton_Click(System::Object^  sender, System::EventA
 			Object ^ ПоказыватьГраницы = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
 			Object ^ РегулирШирины = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitWindow;
 			Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
-			WORD->ActiveDocument->Tables->Add(wrdRng, 3, 9, ПоказыватьГраницы, РегулирШирины);
-			// Заполнение ячеек таблицы
-			for (int i = 0; i < 3; i++) {
-				for (int j = 1; j <	10; j++) {
-					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter("ТЕСТ");
+			WORD->ActiveDocument->Tables->Add(wrdRng, MainSQL->Length, 9, ПоказыватьГраницы, РегулирШирины);
+			//Заполнение ячеек таблицы
+			/*
+			int j = 0;
+			for (int i = 0; i < MainSQL->Length; i++) {
+
+					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter(MainSQL[i]);
+					if (i % 9 == 0)
+						j = 0;
+					j++;
 				}
 			}
+			*/
 			/*WORD->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Времена года");
 			WORD->ActiveDocument->Tables[1]->Cell(1, 2)->Range->InsertAfter("Средняя t, C°");
 			WORD->ActiveDocument->Tables[1]->Cell(2, 1)->Range->InsertAfter("Зима");
 			WORD->ActiveDocument->Tables[1]->Cell(3, 1)->Range->InsertAfter("Весна");
 			WORD->ActiveDocument->Tables[1]->Cell(4, 1)->Range->InsertAfter("Лето");
-			*/
 			//----------------------- СОХРАНЕНИЕ ОТЧЕТА ------------------------------//
 			//Если формирование отчета проводить в скрытом режиме, то имеет смысл сохранится
 			//Object ^ ИмяФайла = "C:\\документ.doc";
 			//WORD->ActiveDocument->SaveAs(ИмяФайла,
 			//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+			*/
+			
 }
+		
 };
 }
