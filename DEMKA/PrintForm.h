@@ -265,7 +265,7 @@ namespace DEMKA {
 			InputList->name = data["name"]->ToString();
 			InputList->score = Double::Parse(data["score"]->ToString());
 			InputList->priority = data["priority"]->ToString();
-			InputList->form_study = data["form_sudy"]->ToString();
+			InputList->form_study = data["form_study"]->ToString();
 			InputList->major = data["major"]->ToString();
 			InputList->original = data["original"]->ToString();
 			InputList->form_pay = data["form_pay"]->ToString();

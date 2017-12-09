@@ -427,7 +427,7 @@ namespace DEMKA {
 
 			String^ original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
 			String^ priority_str = (PriorityRadioButton1->Checked == true) ? "есть" : "нет";
-			String^ form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+			String^ form_study_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
 			String^ form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
 
 			System::DateTime now = System::DateTime::Now;
@@ -478,7 +478,7 @@ namespace DEMKA {
 				WORD->Selection->TypeText(
 					"Форма оплаты: " + form_pay_str + "\n" +
 					"Тип аттестата: " + original_str + "\n" +
-					"Форма обучения: " + form_sudy_str + "\n" +
+					"Форма обучения: " + form_study_str + "\n" +
 					"Пиоритет: " + priority_str + "\n"
 				);
 
@@ -510,11 +510,11 @@ namespace DEMKA {
 		if (valid_checker() == 1) {
 			System::DateTime now = System::DateTime::Now;
 			String^ date_str = now.ToString("d");
-			String ^priority_str, ^form_sudy_str, ^original_str, ^form_pay_str;
+			String ^priority_str, ^form_study_str, ^original_str, ^form_pay_str;
 			SQLiteConnection ^db = gcnew SQLiteConnection();
 			original_str = (OriginalRadioButton1->Checked == true) ? "оригинал" : "копия";
 			priority_str = (PriorityRadioButton1->Checked == true) ? "да" : "нет";
-			form_sudy_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
+			form_study_str = (StudyformRadioButton1->Checked == true) ? "очная" : "заочная";
 			form_pay_str = (FormPayRadioButton1->Checked == true) ? "бюджет" : "договор";
 
 				try
@@ -526,9 +526,9 @@ namespace DEMKA {
 					SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 
 					cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS students" +
-						"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score REAL, priority TEXT, form_sudy TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);" +
+						"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, score REAL, priority TEXT, form_study TEXT, major TEXT, original TEXT, form_pay TEXT, date TEXT);" +
 						"INSERT INTO students VALUES(NULL,'" + FIOBox->Text + "'," + changer_fix +
-						",'" + priority_str + "','" + form_sudy_str + "','" + MajorComboBox->Text +
+						",'" + priority_str + "','" + form_study_str + "','" + MajorComboBox->Text +
 						"','" + original_str + "', '" + form_pay_str + "','" + date_str + "');";
 
 					cmdInsertValue->ExecuteNonQuery();

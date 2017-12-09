@@ -319,7 +319,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 
 			SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 			cmdInsertValue->CommandText = "UPDATE students SET name='" + GridTableRow_array[1] + "',score=" + changer_fix +
-				",priority='" + GridTableRow_array[3] + "',form_sudy='" + GridTableRow_array[4] + "',major='" + GridTableRow_array[5] +
+				",priority='" + GridTableRow_array[3] + "',form_study='" + GridTableRow_array[4] + "',major='" + GridTableRow_array[5] +
 				"',original='" + GridTableRow_array[6] + "', form_pay='" + GridTableRow_array[7] + "',date='" + GridTableRow_array[8] + "' WHERE ID =" + ID;
 			cmdInsertValue->ExecuteNonQuery();
 			db->Close();

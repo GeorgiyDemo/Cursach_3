@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS students(
 	name TEXT,
 	score REAL,
 	priority TEXT,
-	form_sudy TEXT,
+	form_study TEXT,
 	major TEXT,
 	original TEXT,
 	form_pay TEXT,
