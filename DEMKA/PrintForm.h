@@ -1,17 +1,18 @@
 #include <cliext/vector>
 #include <map>
+#include <list>
 #pragma once
 
 namespace DEMKA {
 
 	using namespace System;
 	using namespace System::ComponentModel;
-	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
+	using namespace System::Collections;
 	using namespace cliext;
 
 	/// <summary>
@@ -189,6 +190,7 @@ namespace DEMKA {
 			this->Name = L"PrintForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Формирование рейтинга";
+			this->Load += gcnew System::EventHandler(this, &PrintForm::PrintForm_Load);
 			this->PayPrintBox->ResumeLayout(false);
 			this->PayPrintBox->PerformLayout();
 			this->MajorPrintBox->ResumeLayout(false);
@@ -198,8 +200,29 @@ namespace DEMKA {
 		}
 #pragma endregion
 
-		array<String^>^ MainSQL;
+		public: ref class memclass {
+			public:
+				int ^ID;
+				System::String ^name;
+				double score;
+				System::String ^priority;
+				System::String ^form_study;
+				System::String ^major;
+				System::String ^original;
+				System::String ^form_pay;
+				System::String ^date;
+				memclass() {};
+		};
+			
+				System::Collections::Generic::List<memclass^> ^InputLists;
+				//memclass^ 1mem_obj[] = gcnew memclass[];
+				//main_arr = gcnew array<String^>(9);
+		
+				//list <list<String^>^ > ^ AnotherName = gcnew std::list<list<System::String^>^>(size);
+				//for (int ix = 0; ix < 2; ix++)
+				//	AnotherName->Add(gcnew list <String^>);
 
+		
 		String^ SQLFormatter(){
 			if ((PayRadioButton1->Checked == true) && (MajorRadioButton1->Checked == true))
 				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ПКС';";
@@ -214,94 +237,109 @@ namespace DEMKA {
 				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ИБАС';";
 		}
 		
-		private: void SQLGetter(String^ SQLCommand) {
-			SQLiteConnection ^db = gcnew SQLiteConnection();
-			MainSQL = gcnew array<String^>(9);
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
-			db->Open();
+	private: void SQLGetter(String^ SQLCommand) {
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->Open();
 
-			SQLiteCommand ^cmdSelect = db->CreateCommand();
-			cmdSelect->CommandText = SQLCommand;
-			SQLiteDataReader ^data = cmdSelect->ExecuteReader();
+		SQLiteCommand ^cmdSelect = db->CreateCommand();
+		cmdSelect->CommandText = SQLCommand;
+		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
 
-			while (data->Read())
-				for (int cell_index = 0; cell_index < data->FieldCount; cell_index++){
-					MainSQL[cell_index] = data->GetValue(cell_index)->ToString();
-					MessageBox::Show(MainSQL[cell_index]);
-				}
-			
-			db->Close();
+		while (data->Read()) {
+
+			memclass ^InputList = gcnew memclass();
+			InputList->ID = Int32::Parse(data["ID"]->ToString());
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->ID));
+			InputList->name = data["name"]->ToString();
+			MessageBox::Show(System::Convert::ToString(InputList->name));
+			InputList->score = Double::Parse(data["score"]->ToString());
+			InputList->priority = data["priority"]->ToString();
+			InputList->form_study = data["form_sudy"]->ToString();
+			InputList->major = data["major"]->ToString();
+			InputList->original = data["original"]->ToString();
+			InputList->form_pay = data["form_pay"]->ToString();
+			InputList->date = data["date"]->ToString();
+			InputLists->Add(InputList);
+			delete InputList;
+
+
+			/*for (int cell_index = 0; cell_index < data->FieldCount; cell_index++){
+				MainSQL->Add(data->GetString(cell_index));
+				MessageBox::Show(MainSQL[cell_index]);
+			}
+			*/
 		}
+		db->Close();
+	}
 
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
 	}
-private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	
-	SQLGetter(SQLFormatter());
+	private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		SQLGetter(SQLFormatter());
+
+		//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
+		//ЭТО ДЛЯ WORD 
+
+		Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
+		auto t = Type::Missing;
+
+		auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
+		//Делаем видимым все происодящее 
+		WORD->Visible = true;
+
+		auto Документ = WORD->Documents->Add(t, t, t, t);
+
+
+		//----------------------- РАБОТА С ТЕКСТОМ ------------------------------//
+		WORD->Selection->ParagraphFormat->Alignment =
+			Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
+		WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
+		WORD->Selection->Font->Bold = 1; // жирный шрифт
+		WORD->Selection->Font->Size = 20; // высота шрифта 20
+		WORD->Selection->TypeText("Времена года");
+
+		WORD->Selection->Font->Size = 12;
+		WORD->Selection->TypeParagraph();
+		WORD->Selection->ParagraphFormat->Alignment =
+			Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
+		WORD->Selection->Font->Bold = false;
+		WORD->Selection->TypeText("Основной причиной смены времён года " +
+			"является наклон земной оси по отношению к плоскости эклиптики. " +
+			"Без наклона оси продолжительность дня и ночи в любом месте Земли " +
+			"была бы одинакова, и днём солнце поднималось бы над горизонтом " +
+			"на одну и ту же высоту в течение всего года.");
+
+		//----------------------- СОЗДАНИЕ ТАБЛИЦЫ ------------------------------//
+		Object ^ ПоказыватьГраницы = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
+		Object ^ РегулирШирины = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitWindow;
+		Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
+		WORD->ActiveDocument->Tables->Add(wrdRng, 3, 9, ПоказыватьГраницы, РегулирШирины);
+		//Заполнение ячеек таблицы
+		int i = 0;
+		for each (memclass ^InputList in InputLists) {
+			//WORD->ActiveDocument->Tables[1]->Cell(0, i)->Range->InsertAfter(InputList->major);
+			i++;
+		}
 		
-	//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
-	//ЭТО ДЛЯ WORD 
+		/*WORD->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Времена года");
+		WORD->ActiveDocument->Tables[1]->Cell(1, 2)->Range->InsertAfter("Средняя t, C°");
+		WORD->ActiveDocument->Tables[1]->Cell(2, 1)->Range->InsertAfter("Зима");
+		WORD->ActiveDocument->Tables[1]->Cell(3, 1)->Range->InsertAfter("Весна");
+		WORD->ActiveDocument->Tables[1]->Cell(4, 1)->Range->InsertAfter("Лето");
+		//----------------------- СОХРАНЕНИЕ ОТЧЕТА ------------------------------//
+		//Если формирование отчета проводить в скрытом режиме, то имеет смысл сохранится
+		//Object ^ ИмяФайла = "C:\\документ.doc";
+		//WORD->ActiveDocument->SaveAs(ИмяФайла,
+		//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
+		*/
 
-	Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
-	auto t = Type::Missing;
-
-	auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
-	//Делаем видимым все происодящее 
-	WORD->Visible = true;
-
-			auto Документ = WORD->Documents->Add(t, t, t, t);
-
-
-			//----------------------- РАБОТА С ТЕКСТОМ ------------------------------//
-			WORD->Selection->ParagraphFormat->Alignment =
-				Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
-			WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
-			WORD->Selection->Font->Bold = 1; // жирный шрифт
-			WORD->Selection->Font->Size = 20; // высота шрифта 20
-			WORD->Selection->TypeText("Времена года");
-
-			WORD->Selection->Font->Size = 12;
-			WORD->Selection->TypeParagraph();
-			WORD->Selection->ParagraphFormat->Alignment =
-				Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
-			WORD->Selection->Font->Bold = false;
-			WORD->Selection->TypeText("Основной причиной смены времён года " +
-				"является наклон земной оси по отношению к плоскости эклиптики. " +
-				"Без наклона оси продолжительность дня и ночи в любом месте Земли " +
-				"была бы одинакова, и днём солнце поднималось бы над горизонтом " +
-				"на одну и ту же высоту в течение всего года.");
-
-			//----------------------- СОЗДАНИЕ ТАБЛИЦЫ ------------------------------//
-			Object ^ ПоказыватьГраницы = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
-			Object ^ РегулирШирины = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitWindow;
-			Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
-			WORD->ActiveDocument->Tables->Add(wrdRng, MainSQL->Length, 9, ПоказыватьГраницы, РегулирШирины);
-			//Заполнение ячеек таблицы
-			/*
-			int j = 0;
-			for (int i = 0; i < MainSQL->Length; i++) {
-
-					WORD->ActiveDocument->Tables[1]->Cell(i, j)->Range->InsertAfter(MainSQL[i]);
-					if (i % 9 == 0)
-						j = 0;
-					j++;
-				}
-			}
-			*/
-			/*WORD->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Времена года");
-			WORD->ActiveDocument->Tables[1]->Cell(1, 2)->Range->InsertAfter("Средняя t, C°");
-			WORD->ActiveDocument->Tables[1]->Cell(2, 1)->Range->InsertAfter("Зима");
-			WORD->ActiveDocument->Tables[1]->Cell(3, 1)->Range->InsertAfter("Весна");
-			WORD->ActiveDocument->Tables[1]->Cell(4, 1)->Range->InsertAfter("Лето");
-			//----------------------- СОХРАНЕНИЕ ОТЧЕТА ------------------------------//
-			//Если формирование отчета проводить в скрытом режиме, то имеет смысл сохранится
-			//Object ^ ИмяФайла = "C:\\документ.doc";
-			//WORD->ActiveDocument->SaveAs(ИмяФайла,
-			//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
-			*/
-			
+	}
+		
+private: System::Void PrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
 }
-		
 };
 }

@@ -200,6 +200,7 @@ namespace DEMKA {
 			this->Name = L"FinalPrintForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Мастер печати отчетов";
+			this->Load += gcnew System::EventHandler(this, &FinalPrintForm::FinalPrintForm_Load);
 			this->MainGroupBox->ResumeLayout(false);
 			this->MainGroupBox->PerformLayout();
 			this->OtherGroupBox->ResumeLayout(false);
@@ -366,5 +367,7 @@ namespace DEMKA {
 		WordWorker();
 
 	}
+private: System::Void FinalPrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
+}
 };
 }
