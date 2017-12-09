@@ -49,6 +49,7 @@ namespace DEMKA {
 	private: System::Windows::Forms::Button^  RemoveBDButton;
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
 	private: System::Windows::Forms::Button^  ExitButton;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
 
 	private:
 		/// <summary>
@@ -69,14 +70,16 @@ namespace DEMKA {
 			this->RemoveBDButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// UpdateBDButton
 			// 
-			this->UpdateBDButton->Location = System::Drawing::Point(781, 339);
+			this->UpdateBDButton->Location = System::Drawing::Point(217, 19);
 			this->UpdateBDButton->Name = L"UpdateBDButton";
-			this->UpdateBDButton->Size = System::Drawing::Size(122, 40);
+			this->UpdateBDButton->Size = System::Drawing::Size(86, 40);
 			this->UpdateBDButton->TabIndex = 9;
 			this->UpdateBDButton->Text = L"Обновление БД";
 			this->UpdateBDButton->UseVisualStyleBackColor = true;
@@ -84,9 +87,9 @@ namespace DEMKA {
 			// 
 			// AddDBButton
 			// 
-			this->AddDBButton->Location = System::Drawing::Point(629, 339);
+			this->AddDBButton->Location = System::Drawing::Point(111, 19);
 			this->AddDBButton->Name = L"AddDBButton";
-			this->AddDBButton->Size = System::Drawing::Size(122, 40);
+			this->AddDBButton->Size = System::Drawing::Size(86, 40);
 			this->AddDBButton->TabIndex = 8;
 			this->AddDBButton->Text = L"Добавление в БД";
 			this->AddDBButton->UseVisualStyleBackColor = true;
@@ -94,9 +97,9 @@ namespace DEMKA {
 			// 
 			// RemoveBDButton
 			// 
-			this->RemoveBDButton->Location = System::Drawing::Point(479, 339);
+			this->RemoveBDButton->Location = System::Drawing::Point(6, 19);
 			this->RemoveBDButton->Name = L"RemoveBDButton";
-			this->RemoveBDButton->Size = System::Drawing::Size(122, 40);
+			this->RemoveBDButton->Size = System::Drawing::Size(86, 40);
 			this->RemoveBDButton->TabIndex = 7;
 			this->RemoveBDButton->Text = L"Удаление из БД";
 			this->RemoveBDButton->UseVisualStyleBackColor = true;
@@ -111,12 +114,12 @@ namespace DEMKA {
 			this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Top;
 			this->dataGridView1->Location = System::Drawing::Point(0, 0);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(939, 270);
+			this->dataGridView1->Size = System::Drawing::Size(660, 270);
 			this->dataGridView1->TabIndex = 6;
 			// 
 			// ExitButton
 			// 
-			this->ExitButton->Location = System::Drawing::Point(12, 339);
+			this->ExitButton->Location = System::Drawing::Point(12, 350);
 			this->ExitButton->Name = L"ExitButton";
 			this->ExitButton->Size = System::Drawing::Size(105, 40);
 			this->ExitButton->TabIndex = 5;
@@ -124,14 +127,24 @@ namespace DEMKA {
 			this->ExitButton->UseVisualStyleBackColor = true;
 			this->ExitButton->Click += gcnew System::EventHandler(this, &ParentsDBChangerForm::ExitButton_Click);
 			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->RemoveBDButton);
+			this->groupBox1->Controls->Add(this->UpdateBDButton);
+			this->groupBox1->Controls->Add(this->AddDBButton);
+			this->groupBox1->Location = System::Drawing::Point(331, 331);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(317, 74);
+			this->groupBox1->TabIndex = 10;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Действия с базой данных";
+			// 
 			// ParentsDBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(939, 417);
-			this->Controls->Add(this->UpdateBDButton);
-			this->Controls->Add(this->AddDBButton);
-			this->Controls->Add(this->RemoveBDButton);
+			this->ClientSize = System::Drawing::Size(660, 417);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -140,6 +153,7 @@ namespace DEMKA {
 			this->Text = L"Изменение данных таблицы parents";
 			this->Load += gcnew System::EventHandler(this, &ParentsDBChangerForm::ParentsDBChangerForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			this->groupBox1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}

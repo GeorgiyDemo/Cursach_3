@@ -147,8 +147,8 @@ namespace DEMKA {
 		else
 			MessageBox::Show("Неверный пароль, попробуйте ввести еще раз");
 	}
-private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->Hide();
-}
+	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
+	}
 };
 }

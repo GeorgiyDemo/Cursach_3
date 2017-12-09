@@ -30,8 +30,13 @@ namespace DEMKA {
 			//TODO: добавьте код конструктора
 			//
 		}
-	private: System::Windows::Forms::Button^  AddDBButton;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
+	public:
+	private: System::Windows::Forms::Button^  RemoveBDButton;
 	private: System::Windows::Forms::Button^  UpdateBDButton;
+	private: System::Windows::Forms::Button^  AddDBButton;
+
+
 	public:
 
 	public:
@@ -53,7 +58,7 @@ namespace DEMKA {
 
 	protected:
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
-	private: System::Windows::Forms::Button^  RemoveBDButton;
+
 
 
 	private:
@@ -72,10 +77,12 @@ namespace DEMKA {
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(DBChangerForm::typeid));
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->RemoveBDButton = (gcnew System::Windows::Forms::Button());
-			this->AddDBButton = (gcnew System::Windows::Forms::Button());
 			this->UpdateBDButton = (gcnew System::Windows::Forms::Button());
+			this->AddDBButton = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// ExitButton
@@ -100,44 +107,54 @@ namespace DEMKA {
 			this->dataGridView1->Size = System::Drawing::Size(961, 270);
 			this->dataGridView1->TabIndex = 1;
 			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->RemoveBDButton);
+			this->groupBox1->Controls->Add(this->UpdateBDButton);
+			this->groupBox1->Controls->Add(this->AddDBButton);
+			this->groupBox1->Location = System::Drawing::Point(614, 274);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(335, 73);
+			this->groupBox1->TabIndex = 11;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Действия с базой данных";
+			// 
 			// RemoveBDButton
 			// 
-			this->RemoveBDButton->Location = System::Drawing::Point(479, 292);
+			this->RemoveBDButton->Location = System::Drawing::Point(8, 19);
 			this->RemoveBDButton->Name = L"RemoveBDButton";
-			this->RemoveBDButton->Size = System::Drawing::Size(122, 40);
-			this->RemoveBDButton->TabIndex = 2;
+			this->RemoveBDButton->Size = System::Drawing::Size(92, 40);
+			this->RemoveBDButton->TabIndex = 7;
 			this->RemoveBDButton->Text = L"Удаление из БД";
 			this->RemoveBDButton->UseVisualStyleBackColor = true;
-			this->RemoveBDButton->Click += gcnew System::EventHandler(this, &DBChangerForm::RemoveButton_Click);
-			// 
-			// AddDBButton
-			// 
-			this->AddDBButton->Location = System::Drawing::Point(629, 292);
-			this->AddDBButton->Name = L"AddDBButton";
-			this->AddDBButton->Size = System::Drawing::Size(122, 40);
-			this->AddDBButton->TabIndex = 3;
-			this->AddDBButton->Text = L"Добавление в БД";
-			this->AddDBButton->UseVisualStyleBackColor = true;
-			this->AddDBButton->Click += gcnew System::EventHandler(this, &DBChangerForm::button1_Click);
+			this->RemoveBDButton->Click += gcnew System::EventHandler(this, &DBChangerForm::RemoveBDButton_Click);
 			// 
 			// UpdateBDButton
 			// 
-			this->UpdateBDButton->Location = System::Drawing::Point(781, 292);
+			this->UpdateBDButton->Location = System::Drawing::Point(231, 19);
 			this->UpdateBDButton->Name = L"UpdateBDButton";
-			this->UpdateBDButton->Size = System::Drawing::Size(122, 40);
-			this->UpdateBDButton->TabIndex = 4;
+			this->UpdateBDButton->Size = System::Drawing::Size(92, 40);
+			this->UpdateBDButton->TabIndex = 9;
 			this->UpdateBDButton->Text = L"Обновление БД";
 			this->UpdateBDButton->UseVisualStyleBackColor = true;
-			this->UpdateBDButton->Click += gcnew System::EventHandler(this, &DBChangerForm::UpdateBDButton_Click);
+			this->UpdateBDButton->Click += gcnew System::EventHandler(this, &DBChangerForm::UpdateBDButton_Click_1);
+			// 
+			// AddDBButton
+			// 
+			this->AddDBButton->Location = System::Drawing::Point(121, 19);
+			this->AddDBButton->Name = L"AddDBButton";
+			this->AddDBButton->Size = System::Drawing::Size(92, 40);
+			this->AddDBButton->TabIndex = 8;
+			this->AddDBButton->Text = L"Добавление в БД";
+			this->AddDBButton->UseVisualStyleBackColor = true;
+			this->AddDBButton->Click += gcnew System::EventHandler(this, &DBChangerForm::AddDBButton_Click);
 			// 
 			// DBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(961, 359);
-			this->Controls->Add(this->UpdateBDButton);
-			this->Controls->Add(this->AddDBButton);
-			this->Controls->Add(this->RemoveBDButton);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->ExitButton);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -146,6 +163,7 @@ namespace DEMKA {
 			this->Text = L"Изменение данных таблицы students";
 			this->Load += gcnew System::EventHandler(this, &DBChangerForm::DBChangerForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			this->groupBox1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
@@ -258,8 +276,8 @@ namespace DEMKA {
 	private: System::Void DBChangerForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		dataGridView1->DataSource = GetDataTable();
 	}
-	private: System::Void RemoveButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		
+
+	private: System::Void RemoveBDButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		int index = dataGridView1->CurrentCell->RowIndex;
 		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
 
@@ -272,10 +290,9 @@ namespace DEMKA {
 		db->Close();
 		dataGridView1->DataSource = GetDataTable();
 		MessageBox::Show("Успешное удаление данных");
-		
 	}
-		
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	private: System::Void AddDBButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		int index = dataGridView1->CurrentCell->RowIndex;
 
@@ -299,10 +316,10 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 		}
 		else
 			MessageBox::Show("Проверьте правильность ввода данных!");
-		
+
 		dataGridView1->DataSource = GetDataTable();
 	}
-	private: System::Void UpdateBDButton_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void UpdateBDButton_Click_1(System::Object^  sender, System::EventArgs^  e) {
 
 		int index = dataGridView1->CurrentCell->RowIndex;
 		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
@@ -329,6 +346,7 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 			MessageBox::Show("Проверьте правильность ввода данных!");
 
 		dataGridView1->DataSource = GetDataTable();
+
 	}
 };
 }
