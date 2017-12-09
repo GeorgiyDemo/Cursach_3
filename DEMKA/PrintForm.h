@@ -213,8 +213,8 @@ namespace DEMKA {
 				System::String ^date;
 				memclass() {};
 		};
-			
-				System::Collections::Generic::List<memclass^> ^InputLists;
+		System::Collections::Generic::List<memclass^> ^InputLists;
+
 				//memclass^ 1mem_obj[] = gcnew memclass[];
 				//main_arr = gcnew array<String^>(9);
 		
@@ -238,6 +238,7 @@ namespace DEMKA {
 		}
 		
 	private: void SQLGetter(String^ SQLCommand) {
+
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 		db->Open();
@@ -249,20 +250,35 @@ namespace DEMKA {
 		while (data->Read()) {
 
 			memclass ^InputList = gcnew memclass();
+
 			InputList->ID = Int32::Parse(data["ID"]->ToString());
 			//
 			MessageBox::Show(System::Convert::ToString(InputList->ID));
 			InputList->name = data["name"]->ToString();
+			//
 			MessageBox::Show(System::Convert::ToString(InputList->name));
 			InputList->score = Double::Parse(data["score"]->ToString());
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->score));
 			InputList->priority = data["priority"]->ToString();
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->priority));
 			InputList->form_study = data["form_sudy"]->ToString();
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->form_study));
 			InputList->major = data["major"]->ToString();
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->major));
 			InputList->original = data["original"]->ToString();
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->original));
 			InputList->form_pay = data["form_pay"]->ToString();
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->form_pay));
 			InputList->date = data["date"]->ToString();
+			//
+			MessageBox::Show(System::Convert::ToString(InputList->date));
 			InputLists->Add(InputList);
-			delete InputList;
 
 
 			/*for (int cell_index = 0; cell_index < data->FieldCount; cell_index++){
@@ -319,9 +335,11 @@ namespace DEMKA {
 		Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
 		WORD->ActiveDocument->Tables->Add(wrdRng, 3, 9, ѕоказывать√раницы, –егулирЎирины);
 		//«аполнение €чеек таблицы
-		int i = 0;
+		int i = 1;
 		for each (memclass ^InputList in InputLists) {
-			//WORD->ActiveDocument->Tables[1]->Cell(0, i)->Range->InsertAfter(InputList->major);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 1)->Range->InsertAfter(System::Convert::ToString(InputList->ID));
+			WORD->ActiveDocument->Tables[1]->Cell(i, 2)->Range->InsertAfter(InputList->name);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 3)->Range->InsertAfter(InputList->major);
 			i++;
 		}
 		
@@ -340,6 +358,8 @@ namespace DEMKA {
 	}
 		
 private: System::Void PrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+	InputLists = gcnew System::Collections::Generic::List<memclass^>();
 }
 };
 }
