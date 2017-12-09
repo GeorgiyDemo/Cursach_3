@@ -1,6 +1,7 @@
 #include <cliext/vector>
 #include <map>
 #include <list>
+#include <string>
 #pragma once
 
 namespace DEMKA {
@@ -215,26 +216,35 @@ namespace DEMKA {
 		};
 		System::Collections::Generic::List<memclass^> ^InputLists;
 
-				//memclass^ 1mem_obj[] = gcnew memclass[];
-				//main_arr = gcnew array<String^>(9);
-		
-				//list <list<String^>^ > ^ AnotherName = gcnew std::list<list<System::String^>^>(size);
-				//for (int ix = 0; ix < 2; ix++)
-				//	AnotherName->Add(gcnew list <String^>);
-
-		
 		String^ SQLFormatter(){
+			
+			//Дефолт выбор
 			if ((PayRadioButton1->Checked == true) && (MajorRadioButton1->Checked == true))
-				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ПКС';";
+				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ПКС' ORDER BY score DESC;";
 
 			if ((PayRadioButton1->Checked == true) && (MajorRadioButton2->Checked == true))
-				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ИБАС';";
+				return "SELECT * FROM students WHERE form_pay = 'бюджет' AND major='ИБАС' ORDER BY score DESC;";
 
 			if ((PayRadioButton2->Checked == true) && (MajorRadioButton1->Checked == true))
-				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ПКС';";
+				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ПКС' ORDER BY score DESC;";
 
 			if ((PayRadioButton2->Checked == true) && (MajorRadioButton2->Checked == true))
-				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ИБАС';";
+				return "SELECT * FROM students WHERE form_pay = 'договор' AND major='ИБАС' ORDER BY score DESC;";
+
+			//Если какой-либо параметр не из формы оплаты
+			if ((PayRadioButton1->Checked == false) && (PayRadioButton2->Checked == false) && ((MajorRadioButton1->Checked == true)))
+				return "SELECT * FROM students WHERE major='ПКС' ORDER BY score DESC;";
+			if ((PayRadioButton1->Checked == false) && (PayRadioButton2->Checked == false) && ((MajorRadioButton2->Checked == true)))
+				return "SELECT * FROM students WHERE major='ИБАС' ORDER BY score DESC;";
+
+			//Если какой-либо параметр не из специальности
+			if ((MajorRadioButton1->Checked == false) && (MajorRadioButton2->Checked == false) && (PayRadioButton1->Checked == true))
+				return "SELECT * FROM students WHERE form_pay = 'бюджет' ORDER BY score DESC;";
+			if ((MajorRadioButton1->Checked == false) && (MajorRadioButton2->Checked == false) && (PayRadioButton2->Checked == true))
+				return "SELECT * FROM students WHERE form_pay = 'договор' ORDER BY score DESC;";
+
+			//Тут нужно обработать, если совершенно ничего не нажимали, но позже
+
 		}
 		
 	private: void SQLGetter(String^ SQLCommand) {
@@ -252,41 +262,17 @@ namespace DEMKA {
 			memclass ^InputList = gcnew memclass();
 
 			InputList->ID = Int32::Parse(data["ID"]->ToString());
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->ID));
 			InputList->name = data["name"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->name));
 			InputList->score = Double::Parse(data["score"]->ToString());
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->score));
 			InputList->priority = data["priority"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->priority));
 			InputList->form_study = data["form_sudy"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->form_study));
 			InputList->major = data["major"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->major));
 			InputList->original = data["original"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->original));
 			InputList->form_pay = data["form_pay"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->form_pay));
 			InputList->date = data["date"]->ToString();
-			//
-			MessageBox::Show(System::Convert::ToString(InputList->date));
 			InputLists->Add(InputList);
-
-
-			/*for (int cell_index = 0; cell_index < data->FieldCount; cell_index++){
-				MainSQL->Add(data->GetString(cell_index));
-				MessageBox::Show(MainSQL[cell_index]);
-			}
-			*/
 		}
+
 		db->Close();
 	}
 
@@ -297,69 +283,68 @@ namespace DEMKA {
 
 		SQLGetter(SQLFormatter());
 
-		//ПИЛИМ ТАБЛИЦУ В WORD С РЕЙТИНГОМ, МЕНЯЕМ SQL-СТРОКУ В ЗАВИСИМОСТИ ОТ ВЫБРАННЫХ RADIOBUTTON
-		//ЭТО ДЛЯ WORD 
-
 		Object ^ ФорматСтроки = Microsoft::Office::Interop::Word::WdUnits::wdLine;
 		auto t = Type::Missing;
-
 		auto WORD = gcnew Microsoft::Office::Interop::Word::ApplicationClass();
-		//Делаем видимым все происодящее 
 		WORD->Visible = true;
-
 		auto Документ = WORD->Documents->Add(t, t, t, t);
 
+		std::map <int, std::string> TableHeaders;
+		TableHeaders[0] = "№";
+		TableHeaders[1] = "ФИО";
+		TableHeaders[2] = "Средний балл";
+		TableHeaders[3] = "Приоритет";
+		TableHeaders[4] = "Форма обучения";
+		TableHeaders[5] = "Специальность";
+		TableHeaders[6] = "Аттестат";
+		TableHeaders[7] = "Форма оплаты";
+		TableHeaders[8] = "Дата";
 
-		//----------------------- РАБОТА С ТЕКСТОМ ------------------------------//
-		WORD->Selection->ParagraphFormat->Alignment =
-			Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter; //абзац по центру
-		WORD->Selection->Font->Name = ("Times New Roman"); //тип шрифта
-		WORD->Selection->Font->Bold = 1; // жирный шрифт
-		WORD->Selection->Font->Size = 20; // высота шрифта 20
-		WORD->Selection->TypeText("Времена года");
-
+		//Начинаем работу с Word
+		WORD->Selection->ParagraphFormat->Alignment = Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphCenter;
+		WORD->Selection->Font->Name = ("Times New Roman");
+		WORD->Selection->Font->Bold = 1;
+		WORD->Selection->Font->Size = 20;
+		WORD->Selection->TypeText("Рейтинг абитуриентов");
 		WORD->Selection->Font->Size = 12;
 		WORD->Selection->TypeParagraph();
-		WORD->Selection->ParagraphFormat->Alignment =
-			Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
+		WORD->Selection->ParagraphFormat->Alignment = Microsoft::Office::Interop::Word::WdParagraphAlignment::wdAlignParagraphJustify;
 		WORD->Selection->Font->Bold = false;
-		WORD->Selection->TypeText("Основной причиной смены времён года " +
-			"является наклон земной оси по отношению к плоскости эклиптики. " +
-			"Без наклона оси продолжительность дня и ночи в любом месте Земли " +
-			"была бы одинакова, и днём солнце поднималось бы над горизонтом " +
-			"на одну и ту же высоту в течение всего года.");
+		WORD->Selection->Font->Size = 9;
 
-		//----------------------- СОЗДАНИЕ ТАБЛИЦЫ ------------------------------//
+		int linecounter = 0;
+		for each (memclass ^InputList in InputLists)
+			linecounter++;
+		
+		//Создаём таблицу
 		Object ^ ПоказыватьГраницы = Microsoft::Office::Interop::Word::WdDefaultTableBehavior::wdWord9TableBehavior;
 		Object ^ РегулирШирины = Microsoft::Office::Interop::Word::WdAutoFitBehavior::wdAutoFitWindow;
 		Microsoft::Office::Interop::Word::Range ^ wrdRng = WORD->Selection->Range;
-		WORD->ActiveDocument->Tables->Add(wrdRng, 3, 9, ПоказыватьГраницы, РегулирШирины);
+		WORD->ActiveDocument->Tables->Add(wrdRng, linecounter+1, 9, ПоказыватьГраницы, РегулирШирины);
+		
+		//Заполнение заголовков таблицы
+		for (int i = 0; i < 9; i++) {
+			String^ buf = gcnew System::String(TableHeaders[i].c_str());
+			WORD->ActiveDocument->Tables[1]->Cell(1, i + 1)->Range->InsertAfter(buf);
+		}
 		//Заполнение ячеек таблицы
-		int i = 1;
+		int i = 2;
 		for each (memclass ^InputList in InputLists) {
-			WORD->ActiveDocument->Tables[1]->Cell(i, 1)->Range->InsertAfter(System::Convert::ToString(InputList->ID));
+			WORD->ActiveDocument->Tables[1]->Cell(i, 1)->Range->InsertAfter(System::Convert::ToString(i-1));
 			WORD->ActiveDocument->Tables[1]->Cell(i, 2)->Range->InsertAfter(InputList->name);
-			WORD->ActiveDocument->Tables[1]->Cell(i, 3)->Range->InsertAfter(InputList->major);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 3)->Range->InsertAfter(System::Convert::ToString(InputList->score));
+			WORD->ActiveDocument->Tables[1]->Cell(i, 4)->Range->InsertAfter(InputList->priority);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 5)->Range->InsertAfter(InputList->form_study);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 6)->Range->InsertAfter(InputList->major);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 7)->Range->InsertAfter(InputList->original);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 8)->Range->InsertAfter(InputList->form_pay);
+			WORD->ActiveDocument->Tables[1]->Cell(i, 9)->Range->InsertAfter(InputList->date);
 			i++;
 		}
-		
-		/*WORD->ActiveDocument->Tables[1]->Cell(1, 1)->Range->InsertAfter("Времена года");
-		WORD->ActiveDocument->Tables[1]->Cell(1, 2)->Range->InsertAfter("Средняя t, C°");
-		WORD->ActiveDocument->Tables[1]->Cell(2, 1)->Range->InsertAfter("Зима");
-		WORD->ActiveDocument->Tables[1]->Cell(3, 1)->Range->InsertAfter("Весна");
-		WORD->ActiveDocument->Tables[1]->Cell(4, 1)->Range->InsertAfter("Лето");
-		//----------------------- СОХРАНЕНИЕ ОТЧЕТА ------------------------------//
-		//Если формирование отчета проводить в скрытом режиме, то имеет смысл сохранится
-		//Object ^ ИмяФайла = "C:\\документ.doc";
-		//WORD->ActiveDocument->SaveAs(ИмяФайла,
-		//t, t, t, t, t, t, t, t, t, t, t, t, t, t, t);
-		*/
-
 	}
 		
-private: System::Void PrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
-
-	InputLists = gcnew System::Collections::Generic::List<memclass^>();
-}
+	private: System::Void PrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		InputLists = gcnew System::Collections::Generic::List<memclass^>();
+	}
 };
 }
