@@ -9,6 +9,6 @@
   	* ContactsDBChangerForm.h - OK
   	* ParentsDBChangerForm.h - OK
   	
-* Ввести пароль на MainDBChangerForm с чеком по MD5 хешу
+* Ввести пароль на MainDBChangerForm с чеком по MD5 хешу -OK
 * Доделать формирование рейтинга с выборкой по специальности и форме оплаты в Word через RatingForm.h->PrintForm.h - OK
 * Переименовать формы, согласно архитектуре всего этого веселья

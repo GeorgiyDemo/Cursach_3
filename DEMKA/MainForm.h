@@ -1,6 +1,6 @@
 #include "InputForm.h"
 #include "RatingForm.h"
-#include "MainDBChangerForm.h"
+#include "PasswordChecker.h"
 #pragma once
 
 namespace DEMKA {
@@ -160,11 +160,11 @@ namespace DEMKA {
 
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		DEMKA::MainDBChangerForm^MainDBChangerForm_obj = gcnew DEMKA::MainDBChangerForm();
-		this->Hide();
-		MainDBChangerForm_obj->ShowDialog();
-		this->Show();
 
+		DEMKA::PasswordChecker^PasswordChecker_obj = gcnew DEMKA::PasswordChecker();
+		this->Hide();
+		PasswordChecker_obj->ShowDialog();
+		this->Show();
 	}
 };
 }
