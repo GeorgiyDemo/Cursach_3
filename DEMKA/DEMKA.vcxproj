@@ -138,6 +138,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChoicePrintTypeForm.cpp" />
     <ClCompile Include="ContactsDBChangerForm.cpp" />
     <ClCompile Include="DBChangerForm.cpp" />
     <ClCompile Include="FinalPrintForm.cpp" />
@@ -151,6 +152,9 @@
     <ClCompile Include="RatingForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChoicePrintTypeForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ContactsDBChangerForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -186,6 +190,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ChoicePrintTypeForm.resx">
+      <DependentUpon>ChoicePrintTypeForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ContactsDBChangerForm.resx">
       <DependentUpon>ContactsDBChangerForm.h</DependentUpon>
     </EmbeddedResource>

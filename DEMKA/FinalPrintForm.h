@@ -213,14 +213,17 @@ namespace DEMKA {
 	array<String^>^ StudContacts_arr;
 	array<String^>^ ParentsCont_arr;
 
+	public: String^ PublicStudentID;
 	private: void MainInfoGetter() {
+
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		main_arr = gcnew array<String^>(9);
+		String^ SQL_STRING = (PublicStudentID == "0") ? "SELECT * FROM students WHERE ID = (SELECT MAX(ID) FROM students);" : "SELECT * FROM students WHERE ID = " + PublicStudentID + ";";
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
-		cmdSelect->CommandText = "SELECT * FROM students WHERE ID = (SELECT MAX(ID) FROM students);";
+		cmdSelect->CommandText = SQL_STRING;
 		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
 		while (data->Read())
 			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++)
@@ -232,12 +235,14 @@ namespace DEMKA {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		StudContacts_arr = gcnew array<String^>(5);
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		String^ SQL_STRING = (PublicStudentID == "0") ? "SELECT * FROM contacts WHERE student_id = (SELECT MAX(student_id) FROM contacts);" : "SELECT * FROM contacts WHERE student_id = " + PublicStudentID + ";";
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
-		cmdSelect->CommandText = "SELECT * FROM contacts WHERE student_id = (SELECT MAX(student_id) FROM contacts);";
+		cmdSelect->CommandText = SQL_STRING;
 		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
 		while (data->Read())
+
 			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++)
 				StudContacts_arr[cell_index] = data->GetValue(cell_index)->ToString();
 		db->Close();
@@ -247,10 +252,11 @@ namespace DEMKA {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		ParentsCont_arr = gcnew array<String^>(6);
 		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		String^ SQL_STRING = (PublicStudentID == "0") ? "SELECT * FROM parents WHERE student_id = (SELECT MAX(student_id) FROM parents);" : "SELECT * FROM parents WHERE student_id = " + PublicStudentID + ";";
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
-		cmdSelect->CommandText = "SELECT * FROM parents WHERE student_id = (SELECT MAX(student_id) FROM parents);";
+		cmdSelect->CommandText = SQL_STRING;
 		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
 
 		while (data->Read())

@@ -305,6 +305,7 @@ namespace DEMKA {
 			if (MessageBox::Show("Контактные данные родителей успешно записаны!\nХотите сформировать общий отчет?", "Формирование отчета", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
 			{
 				DEMKA::FinalPrintForm^FinalPrintForm_obj = gcnew DEMKA::FinalPrintForm();
+				FinalPrintForm_obj->PublicStudentID = "0";
 				this->Hide();
 				FinalPrintForm_obj->ShowDialog();	
 			}

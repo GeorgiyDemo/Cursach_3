@@ -201,9 +201,6 @@ namespace DEMKA {
 
 				BoolCheckArr[5] = true;
 				msclr::interop::marshal_context oMarshalContext;
-				//////////////////////
-				MessageBox::Show(GridTableRow_array[5]);
-				/////////////////////
 				const char* buf = oMarshalContext.marshal_as<const char*>(GridTableRow_array[5]);
 				if (is_valid_number(buf) == false)
 					BoolCheckArr[5] = false;

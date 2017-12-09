@@ -1,7 +1,7 @@
 #include <cliext/vector>
 #include <string>
 #include <map>
-#include "PrintForm.h"
+#include "ChoicePrintTypeForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -138,6 +138,7 @@ namespace DEMKA {
 
 		}
 #pragma endregion
+	
 	private: DataTable^ FillTableRatingForm() {
 		std::map <int, std::string> rows_formatter;
 		rows_formatter[0] = "№ заявления";
@@ -193,10 +194,15 @@ namespace DEMKA {
 
 	private: System::Void dataGridView1_CellContentClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
 	}
-private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	DEMKA::PrintForm^PrintForm_obj = gcnew DEMKA::PrintForm();
-	PrintForm_obj->ShowDialog();
-	this->Show();
-}
+
+	private: System::Void PrinterButton_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		int index = dataGridView1->CurrentCell->RowIndex;
+		String^ unic_student_id = dataGridView1->Rows[index]->Cells[0]->Value->ToString();
+		DEMKA::ChoicePrintTypeForm^ChoicePrintTypeForm_obj = gcnew DEMKA::ChoicePrintTypeForm();
+		ChoicePrintTypeForm_obj->PublicStudentID = unic_student_id;
+		ChoicePrintTypeForm_obj->ShowDialog();
+		this->Show();
+	}
 };
 }

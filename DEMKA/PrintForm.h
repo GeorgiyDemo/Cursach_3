@@ -44,7 +44,7 @@ namespace DEMKA {
 	private: System::Windows::Forms::GroupBox^  PayPrintBox;
 	private: System::Windows::Forms::RadioButton^  PayRadioButton2;
 
-	private: System::Windows::Forms::RadioButton^  PayRadioButton1;
+
 	protected:
 
 	protected:
@@ -64,6 +64,7 @@ namespace DEMKA {
 
 	private: System::Windows::Forms::Button^  ExitButton;
 	private: System::Windows::Forms::Button^  ReportButton;
+	private: System::Windows::Forms::RadioButton^  PayRadioButton1;
 
 
 	private:
@@ -81,8 +82,8 @@ namespace DEMKA {
 		{
 			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(PrintForm::typeid));
 			this->PayPrintBox = (gcnew System::Windows::Forms::GroupBox());
-			this->PayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->PayRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->PayRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->MajorPrintBox = (gcnew System::Windows::Forms::GroupBox());
 			this->MajorRadioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->MajorRadioButton1 = (gcnew System::Windows::Forms::RadioButton());
@@ -94,14 +95,26 @@ namespace DEMKA {
 			// 
 			// PayPrintBox
 			// 
-			this->PayPrintBox->Controls->Add(this->PayRadioButton2);
 			this->PayPrintBox->Controls->Add(this->PayRadioButton1);
+			this->PayPrintBox->Controls->Add(this->PayRadioButton2);
 			this->PayPrintBox->Location = System::Drawing::Point(5, 12);
 			this->PayPrintBox->Name = L"PayPrintBox";
 			this->PayPrintBox->Size = System::Drawing::Size(182, 107);
 			this->PayPrintBox->TabIndex = 0;
 			this->PayPrintBox->TabStop = false;
 			this->PayPrintBox->Text = L"Фильтр по форме оплаты";
+			// 
+			// PayRadioButton1
+			// 
+			this->PayRadioButton1->AutoSize = true;
+			this->PayRadioButton1->Checked = true;
+			this->PayRadioButton1->Location = System::Drawing::Point(17, 38);
+			this->PayRadioButton1->Name = L"PayRadioButton1";
+			this->PayRadioButton1->Size = System::Drawing::Size(65, 17);
+			this->PayRadioButton1->TabIndex = 4;
+			this->PayRadioButton1->TabStop = true;
+			this->PayRadioButton1->Text = L"Бюджет";
+			this->PayRadioButton1->UseVisualStyleBackColor = true;
 			// 
 			// PayRadioButton2
 			// 
@@ -110,20 +123,8 @@ namespace DEMKA {
 			this->PayRadioButton2->Name = L"PayRadioButton2";
 			this->PayRadioButton2->Size = System::Drawing::Size(69, 17);
 			this->PayRadioButton2->TabIndex = 1;
-			this->PayRadioButton2->TabStop = true;
 			this->PayRadioButton2->Text = L"Договор";
 			this->PayRadioButton2->UseVisualStyleBackColor = true;
-			// 
-			// PayRadioButton1
-			// 
-			this->PayRadioButton1->AutoSize = true;
-			this->PayRadioButton1->Location = System::Drawing::Point(17, 38);
-			this->PayRadioButton1->Name = L"PayRadioButton1";
-			this->PayRadioButton1->Size = System::Drawing::Size(65, 17);
-			this->PayRadioButton1->TabIndex = 0;
-			this->PayRadioButton1->TabStop = true;
-			this->PayRadioButton1->Text = L"Бюджет";
-			this->PayRadioButton1->UseVisualStyleBackColor = true;
 			// 
 			// MajorPrintBox
 			// 
@@ -139,18 +140,18 @@ namespace DEMKA {
 			// MajorRadioButton2
 			// 
 			this->MajorRadioButton2->AutoSize = true;
-			this->MajorRadioButton2->Location = System::Drawing::Point(6, 72);
+			this->MajorRadioButton2->Location = System::Drawing::Point(13, 72);
 			this->MajorRadioButton2->Name = L"MajorRadioButton2";
 			this->MajorRadioButton2->Size = System::Drawing::Size(54, 17);
 			this->MajorRadioButton2->TabIndex = 1;
-			this->MajorRadioButton2->TabStop = true;
 			this->MajorRadioButton2->Text = L"ИБАС";
 			this->MajorRadioButton2->UseVisualStyleBackColor = true;
 			// 
 			// MajorRadioButton1
 			// 
 			this->MajorRadioButton1->AutoSize = true;
-			this->MajorRadioButton1->Location = System::Drawing::Point(6, 38);
+			this->MajorRadioButton1->Checked = true;
+			this->MajorRadioButton1->Location = System::Drawing::Point(13, 38);
 			this->MajorRadioButton1->Name = L"MajorRadioButton1";
 			this->MajorRadioButton1->Size = System::Drawing::Size(47, 17);
 			this->MajorRadioButton1->TabIndex = 0;
@@ -182,7 +183,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(382, 205);
+			this->ClientSize = System::Drawing::Size(380, 205);
 			this->Controls->Add(this->ReportButton);
 			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->PayPrintBox);
@@ -243,7 +244,7 @@ namespace DEMKA {
 			if ((MajorRadioButton1->Checked == false) && (MajorRadioButton2->Checked == false) && (PayRadioButton2->Checked == true))
 				return "SELECT * FROM students WHERE form_pay = 'договор' ORDER BY score DESC;";
 
-			//Тут нужно обработать, если совершенно ничего не нажимали, но позже
+			return "SELECT * FROM students ORDER BY score DESC;";
 
 		}
 		
@@ -345,6 +346,9 @@ namespace DEMKA {
 		
 	private: System::Void PrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		InputLists = gcnew System::Collections::Generic::List<memclass^>();
+		PayRadioButton1->Checked = false;
+		MajorRadioButton1->Checked = false;
+
 	}
 };
 }
