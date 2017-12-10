@@ -160,7 +160,7 @@ namespace DEMKA {
 	}
 
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		GlobalClass::SQLGlobalPatch = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		GlobalClass::SQLGlobalPatch = "Data Source=../database_vs.db";
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 
