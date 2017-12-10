@@ -135,7 +135,6 @@ namespace DEMKA {
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Главная форма АИС";
-			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->ResumeLayout(false);
 
@@ -150,7 +149,7 @@ namespace DEMKA {
 	}
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (MessageBox::Show("Вы действительно хотите выйти из системы?", "Выход из АИС", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
-			this->Close();
+			this->Hide();
 	}
 
 	private: System::Void TopButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -160,9 +159,6 @@ namespace DEMKA {
 		this->Show();
 	}
 
-	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-		GlobalClass::SQLGlobalPatch = "Data Source=../database_vs.db";
-	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		DEMKA::PasswordChecker^PasswordChecker_obj = gcnew DEMKA::PasswordChecker();

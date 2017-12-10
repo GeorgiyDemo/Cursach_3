@@ -238,6 +238,9 @@
     <EmbeddedResource Include="RatingForm.resx">
       <DependentUpon>RatingForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="StafLoginForm.resx">
+      <DependentUpon>StafLoginForm.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Word.8.6.dll">

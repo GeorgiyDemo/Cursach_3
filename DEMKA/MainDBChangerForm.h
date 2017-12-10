@@ -54,6 +54,8 @@ namespace DEMKA {
 
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::Button^  MenuButton;
+	private: System::Windows::Forms::Button^  StaffManagmentButton;
+	private: System::Windows::Forms::GroupBox^  groupBox2;
 
 
 	protected:
@@ -77,7 +79,10 @@ namespace DEMKA {
 			this->StudentsTableButton = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->MenuButton = (gcnew System::Windows::Forms::Button());
+			this->StaffManagmentButton = (gcnew System::Windows::Forms::Button());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->groupBox1->SuspendLayout();
+			this->groupBox2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// ParentsTableButton
@@ -124,7 +129,7 @@ namespace DEMKA {
 			// MenuButton
 			// 
 			this->MenuButton->DialogResult = System::Windows::Forms::DialogResult::Abort;
-			this->MenuButton->Location = System::Drawing::Point(12, 236);
+			this->MenuButton->Location = System::Drawing::Point(12, 339);
 			this->MenuButton->Name = L"MenuButton";
 			this->MenuButton->Size = System::Drawing::Size(89, 33);
 			this->MenuButton->TabIndex = 29;
@@ -132,11 +137,31 @@ namespace DEMKA {
 			this->MenuButton->UseVisualStyleBackColor = true;
 			this->MenuButton->Click += gcnew System::EventHandler(this, &MainDBChangerForm::button1_Click);
 			// 
+			// StaffManagmentButton
+			// 
+			this->StaffManagmentButton->Location = System::Drawing::Point(47, 19);
+			this->StaffManagmentButton->Name = L"StaffManagmentButton";
+			this->StaffManagmentButton->Size = System::Drawing::Size(148, 47);
+			this->StaffManagmentButton->TabIndex = 30;
+			this->StaffManagmentButton->Text = L"Управление пользователями АИС";
+			this->StaffManagmentButton->UseVisualStyleBackColor = true;
+			this->StaffManagmentButton->Click += gcnew System::EventHandler(this, &MainDBChangerForm::StaffManagmentButton_Click);
+			// 
+			// groupBox2
+			// 
+			this->groupBox2->Controls->Add(this->StaffManagmentButton);
+			this->groupBox2->Location = System::Drawing::Point(12, 239);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Size = System::Drawing::Size(240, 81);
+			this->groupBox2->TabIndex = 29;
+			this->groupBox2->TabStop = false;
+			// 
 			// MainDBChangerForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(265, 279);
+			this->ClientSize = System::Drawing::Size(267, 390);
+			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->MenuButton);
 			this->Controls->Add(this->groupBox1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
@@ -144,6 +169,7 @@ namespace DEMKA {
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Выбор таблицы";
 			this->groupBox1->ResumeLayout(false);
+			this->groupBox2->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
@@ -172,5 +198,8 @@ private: System::Void ParentsTableButton_Click(System::Object^  sender, System::
 	ParentsDBChangerForm_obj->ShowDialog();
 	this->Show();
 }
+	private: System::Void StaffManagmentButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		//ТУТ СЧА БУДЕТ ОТКРЫТИЕ ФОРМЫ
+	}
 };
 }

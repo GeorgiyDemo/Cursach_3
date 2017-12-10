@@ -97,11 +97,11 @@ namespace DEMKA {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(36, 33);
+			this->label1->Location = System::Drawing::Point(28, 33);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(91, 13);
+			this->label1->Size = System::Drawing::Size(131, 13);
 			this->label1->TabIndex = 25;
-			this->label1->Text = L"¬ведите пароль:";
+			this->label1->Text = L"¬ведите мастер-пароль:";
 			// 
 			// PasswordChecker
 			// 
