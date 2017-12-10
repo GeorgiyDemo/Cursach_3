@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include "ChoicePrintTypeForm.h"
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -15,6 +16,7 @@ namespace DEMKA {
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
 	using namespace cliext;
+	using namespace Globals;
 	/// <summary>
 	/// Сводка для RatingForm
 	/// </summary>
@@ -153,7 +155,7 @@ namespace DEMKA {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->ConnectionString = GlobalClass::SQLGlobalPatch;
 			db->Open();
 
 			SQLiteCommand ^cmdSelect = db->CreateCommand();

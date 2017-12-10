@@ -2,6 +2,7 @@
 #include <string>
 #include <msclr\marshal_cppstd.h>
 #include "FinalPrintForm.h"
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -14,6 +15,7 @@ namespace DEMKA {
 	using namespace System::Drawing;
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для ParentsContactForm
@@ -224,7 +226,7 @@ namespace DEMKA {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		String^ columnIndex;
 
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
@@ -281,7 +283,7 @@ namespace DEMKA {
 			SQLiteConnection ^db = gcnew SQLiteConnection();
 			try
 			{
-				db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+				db->ConnectionString = GlobalClass::SQLGlobalPatch;
 				db->Open();
 				SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 				cmdInsertValue->CommandText =

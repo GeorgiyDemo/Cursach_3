@@ -165,6 +165,7 @@
     <ClInclude Include="FinalPrintForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="GlobalClass.h" />
     <ClInclude Include="InputForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

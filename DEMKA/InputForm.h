@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <string>
 #include "MoreStudentInfoForm.h"
-
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -16,6 +16,7 @@ namespace DEMKA {
 	using namespace System::Drawing;
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для InputForm
@@ -519,7 +520,7 @@ namespace DEMKA {
 
 				try
 				{
-					db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+					db->ConnectionString = GlobalClass::SQLGlobalPatch;
 
 					db->Open();
 

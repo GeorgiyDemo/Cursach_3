@@ -1,3 +1,4 @@
+#include "GlobalClass.h"
 #include <msclr/marshal.h>
 #include <msclr\marshal_cppstd.h>
 #include <cliext/vector>
@@ -16,6 +17,7 @@ namespace DEMKA {
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
 	using namespace cliext;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для ContactsDBChangerForm
@@ -235,7 +237,7 @@ namespace DEMKA {
 		DataTable ^table;
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
 		cmdSelect->CommandText = "SELECT * FROM contacts;";
@@ -277,7 +279,7 @@ namespace DEMKA {
 		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 		cmdInsertValue->CommandText = "DELETE FROM contacts WHERE ID = " + ID + ";";
@@ -297,7 +299,7 @@ namespace DEMKA {
 	if (valid_checker() == 0) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 
 		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
@@ -323,7 +325,7 @@ namespace DEMKA {
 		if (valid_checker() == 0) {
 
 			SQLiteConnection ^db = gcnew SQLiteConnection();
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->ConnectionString = GlobalClass::SQLGlobalPatch;
 			db->Open();
 			
 			SQLiteCommand ^cmdInsertValue = db->CreateCommand();

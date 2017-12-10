@@ -1,6 +1,7 @@
 #include "InputForm.h"
 #include "RatingForm.h"
 #include "PasswordChecker.h"
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -11,6 +12,7 @@ namespace DEMKA {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для MainForm
@@ -139,6 +141,7 @@ namespace DEMKA {
 
 		}
 #pragma endregion
+	
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		InputForm^InputForm_obj = gcnew InputForm();
 		this->Hide();
@@ -157,7 +160,7 @@ namespace DEMKA {
 	}
 
 	private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
-
+		GlobalClass::SQLGlobalPatch = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
 	}
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
 

@@ -1,3 +1,4 @@
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -10,7 +11,7 @@ namespace DEMKA {
 	using namespace System::Drawing;
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
-
+	using namespace Globals;
 	/// <summary>
 	/// Сводка для FinalPrintForm
 	/// </summary>
@@ -219,7 +220,7 @@ namespace DEMKA {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		main_arr = gcnew array<String^>(9);
 		String^ SQL_STRING = (PublicStudentID == "0") ? "SELECT * FROM students WHERE ID = (SELECT MAX(ID) FROM students);" : "SELECT * FROM students WHERE ID = " + PublicStudentID + ";";
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
@@ -234,7 +235,7 @@ namespace DEMKA {
 	private: void StudentContactsInfoGetter() {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		StudContacts_arr = gcnew array<String^>(5);
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		String^ SQL_STRING = (PublicStudentID == "0") ? "SELECT * FROM contacts WHERE student_id = (SELECT MAX(student_id) FROM contacts);" : "SELECT * FROM contacts WHERE student_id = " + PublicStudentID + ";";
 		db->Open();
 
@@ -251,7 +252,7 @@ namespace DEMKA {
 	private: void ParentsContactsInfoGetter() {
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		ParentsCont_arr = gcnew array<String^>(6);
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		String^ SQL_STRING = (PublicStudentID == "0") ? "SELECT * FROM parents WHERE student_id = (SELECT MAX(student_id) FROM parents);" : "SELECT * FROM parents WHERE student_id = " + PublicStudentID + ";";
 		db->Open();
 

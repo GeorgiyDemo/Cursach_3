@@ -2,6 +2,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -15,6 +16,7 @@ namespace DEMKA {
 	using namespace System::Text;
 	using namespace System::Collections;
 	using namespace cliext;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для PrintForm
@@ -251,7 +253,7 @@ namespace DEMKA {
 	private: void SQLGetter(String^ SQLCommand) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 
 		SQLiteCommand ^cmdSelect = db->CreateCommand();

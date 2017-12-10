@@ -4,6 +4,7 @@
 #include <string>
 #include <cliext/vector>
 #include <regex>
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -17,6 +18,7 @@ namespace DEMKA {
 	using namespace System::Data::SQLite;
 	using namespace System::Text;
 	using namespace cliext;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для ParentsDBChangerForm
@@ -244,7 +246,7 @@ namespace DEMKA {
 			DataTable ^table;
 			SQLiteConnection ^db = gcnew SQLiteConnection();
 
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->ConnectionString = GlobalClass::SQLGlobalPatch;
 			db->Open();
 			SQLiteCommand ^cmdSelect = db->CreateCommand();
 			cmdSelect->CommandText = "SELECT * FROM parents;";
@@ -284,7 +286,7 @@ namespace DEMKA {
 		String^ ID = dataGridView1->Rows[index]->Cells["ID"]->Value->ToString();
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
 		cmdInsertValue->CommandText = "DELETE FROM parents WHERE ID = " + ID + ";";
@@ -303,7 +305,7 @@ namespace DEMKA {
 		if (valid_checker() == 0) {
 
 			SQLiteConnection ^db = gcnew SQLiteConnection();
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->ConnectionString = GlobalClass::SQLGlobalPatch;
 			db->Open();
 
 			SQLiteCommand ^cmdInsertValue = db->CreateCommand();
@@ -329,7 +331,7 @@ namespace DEMKA {
 		if (valid_checker() == 0) {
 
 			SQLiteConnection ^db = gcnew SQLiteConnection();
-			db->ConnectionString = "Data Source=C:/Users/georgiydemo/repos/DEMKA/database_vs.db";
+			db->ConnectionString = GlobalClass::SQLGlobalPatch;
 			db->Open();
 
 			SQLiteCommand ^cmdInsertValue = db->CreateCommand();
