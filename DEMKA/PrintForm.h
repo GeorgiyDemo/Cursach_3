@@ -69,6 +69,12 @@ namespace DEMKA {
 	private: System::Windows::Forms::RadioButton^  PayRadioButton1;
 
 
+
+
+
+
+
+
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
@@ -163,7 +169,7 @@ namespace DEMKA {
 			// 
 			// ExitButton
 			// 
-			this->ExitButton->Location = System::Drawing::Point(12, 143);
+			this->ExitButton->Location = System::Drawing::Point(12, 134);
 			this->ExitButton->Name = L"ExitButton";
 			this->ExitButton->Size = System::Drawing::Size(139, 44);
 			this->ExitButton->TabIndex = 2;
@@ -173,7 +179,7 @@ namespace DEMKA {
 			// 
 			// ReportButton
 			// 
-			this->ReportButton->Location = System::Drawing::Point(212, 143);
+			this->ReportButton->Location = System::Drawing::Point(230, 134);
 			this->ReportButton->Name = L"ReportButton";
 			this->ReportButton->Size = System::Drawing::Size(139, 44);
 			this->ReportButton->TabIndex = 3;
@@ -185,7 +191,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(380, 205);
+			this->ClientSize = System::Drawing::Size(381, 188);
 			this->Controls->Add(this->ReportButton);
 			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->PayPrintBox);
@@ -203,6 +209,7 @@ namespace DEMKA {
 
 		}
 #pragma endregion
+
 
 		public: ref class memclass {
 			public:
@@ -299,7 +306,7 @@ namespace DEMKA {
 		TableHeaders[3] = "Приоритет";
 		TableHeaders[4] = "Форма обучения";
 		TableHeaders[5] = "Специальность";
-		TableHeaders[6] = "Аттестат";
+		TableHeaders[6] = "Тип аттестата";
 		TableHeaders[7] = "Форма оплаты";
 		TableHeaders[8] = "Дата";
 
@@ -350,7 +357,6 @@ namespace DEMKA {
 		InputLists = gcnew System::Collections::Generic::List<memclass^>();
 		PayRadioButton1->Checked = false;
 		MajorRadioButton1->Checked = false;
-
 	}
 };
 }

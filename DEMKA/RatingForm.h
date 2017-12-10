@@ -149,7 +149,7 @@ namespace DEMKA {
 		rows_formatter[3] = "Приоритет";
 		rows_formatter[4] = "Форма обучения";
 		rows_formatter[5] = "Специальность";
-		rows_formatter[6] = "Аттестат";
+		rows_formatter[6] = "Тип аттестата";
 		rows_formatter[7] = "Форма оплаты";
 		rows_formatter[8] = "Дата ";
 

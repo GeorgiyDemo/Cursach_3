@@ -149,7 +149,8 @@ namespace DEMKA {
 		this->Show();
 	}
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		this->Close();
+		if (MessageBox::Show("Вы действительно хотите выйти из системы?", "Выход из АИС", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
+			this->Close();
 	}
 
 	private: System::Void TopButton_Click(System::Object^  sender, System::EventArgs^  e) {

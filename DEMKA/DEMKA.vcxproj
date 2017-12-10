@@ -151,6 +151,7 @@
     <ClCompile Include="PasswordChecker.cpp" />
     <ClCompile Include="PrintForm.cpp" />
     <ClCompile Include="RatingForm.cpp" />
+    <ClCompile Include="StafLoginForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChoicePrintTypeForm.h">
@@ -191,6 +192,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="RatingForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="StafLoginForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>

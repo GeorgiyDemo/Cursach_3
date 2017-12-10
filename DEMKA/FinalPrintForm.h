@@ -53,6 +53,9 @@ namespace DEMKA {
 	private: System::Windows::Forms::CheckBox^  DateCheckBox;
 	private: System::Windows::Forms::Button^  ReportButton;
 	private: System::Windows::Forms::Button^  ExitButton;
+	private: System::Windows::Forms::GroupBox^  FastCheckGroupBox;
+	private: System::Windows::Forms::Button^  NoneCheckButton;
+	private: System::Windows::Forms::Button^  AllCheckButton;
 
 	protected:
 
@@ -80,8 +83,12 @@ namespace DEMKA {
 			this->DateCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->ReportButton = (gcnew System::Windows::Forms::Button());
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
+			this->FastCheckGroupBox = (gcnew System::Windows::Forms::GroupBox());
+			this->NoneCheckButton = (gcnew System::Windows::Forms::Button());
+			this->AllCheckButton = (gcnew System::Windows::Forms::Button());
 			this->MainGroupBox->SuspendLayout();
 			this->OtherGroupBox->SuspendLayout();
+			this->FastCheckGroupBox->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// MainGroupBox
@@ -170,7 +177,7 @@ namespace DEMKA {
 			// 
 			// ReportButton
 			// 
-			this->ReportButton->Location = System::Drawing::Point(247, 138);
+			this->ReportButton->Location = System::Drawing::Point(463, 138);
 			this->ReportButton->Name = L"ReportButton";
 			this->ReportButton->Size = System::Drawing::Size(139, 44);
 			this->ReportButton->TabIndex = 5;
@@ -180,7 +187,7 @@ namespace DEMKA {
 			// 
 			// ExitButton
 			// 
-			this->ExitButton->Location = System::Drawing::Point(47, 138);
+			this->ExitButton->Location = System::Drawing::Point(12, 138);
 			this->ExitButton->Name = L"ExitButton";
 			this->ExitButton->Size = System::Drawing::Size(139, 44);
 			this->ExitButton->TabIndex = 4;
@@ -188,11 +195,43 @@ namespace DEMKA {
 			this->ExitButton->UseVisualStyleBackColor = true;
 			this->ExitButton->Click += gcnew System::EventHandler(this, &FinalPrintForm::ExitButton_Click);
 			// 
+			// FastCheckGroupBox
+			// 
+			this->FastCheckGroupBox->Controls->Add(this->NoneCheckButton);
+			this->FastCheckGroupBox->Controls->Add(this->AllCheckButton);
+			this->FastCheckGroupBox->Location = System::Drawing::Point(438, 12);
+			this->FastCheckGroupBox->Name = L"FastCheckGroupBox";
+			this->FastCheckGroupBox->Size = System::Drawing::Size(176, 120);
+			this->FastCheckGroupBox->TabIndex = 6;
+			this->FastCheckGroupBox->TabStop = false;
+			this->FastCheckGroupBox->Text = L"Быстрый выбор";
+			// 
+			// NoneCheckButton
+			// 
+			this->NoneCheckButton->Location = System::Drawing::Point(7, 68);
+			this->NoneCheckButton->Name = L"NoneCheckButton";
+			this->NoneCheckButton->Size = System::Drawing::Size(157, 35);
+			this->NoneCheckButton->TabIndex = 1;
+			this->NoneCheckButton->Text = L"Сбросить все";
+			this->NoneCheckButton->UseVisualStyleBackColor = true;
+			this->NoneCheckButton->Click += gcnew System::EventHandler(this, &FinalPrintForm::NoneCheckButton_Click);
+			// 
+			// AllCheckButton
+			// 
+			this->AllCheckButton->Location = System::Drawing::Point(7, 27);
+			this->AllCheckButton->Name = L"AllCheckButton";
+			this->AllCheckButton->Size = System::Drawing::Size(157, 35);
+			this->AllCheckButton->TabIndex = 0;
+			this->AllCheckButton->Text = L"Выбрать все";
+			this->AllCheckButton->UseVisualStyleBackColor = true;
+			this->AllCheckButton->Click += gcnew System::EventHandler(this, &FinalPrintForm::AllCheckButton_Click);
+			// 
 			// FinalPrintForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(432, 196);
+			this->ClientSize = System::Drawing::Size(627, 196);
+			this->Controls->Add(this->FastCheckGroupBox);
 			this->Controls->Add(this->ReportButton);
 			this->Controls->Add(this->ExitButton);
 			this->Controls->Add(this->OtherGroupBox);
@@ -201,11 +240,11 @@ namespace DEMKA {
 			this->Name = L"FinalPrintForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Отчет об абитуриенте";
-			this->Load += gcnew System::EventHandler(this, &FinalPrintForm::FinalPrintForm_Load);
 			this->MainGroupBox->ResumeLayout(false);
 			this->MainGroupBox->PerformLayout();
 			this->OtherGroupBox->ResumeLayout(false);
 			this->OtherGroupBox->PerformLayout();
+			this->FastCheckGroupBox->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}
@@ -230,6 +269,24 @@ namespace DEMKA {
 			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++)
 				main_arr[cell_index] = data->GetValue(cell_index)->ToString();
 		db->Close();
+	}
+	
+	private: void AllCheckBoxChecker() {
+		MainInfoCheckBox->Checked = true;
+		StudentContactsCheckBox->Checked = true;
+		ParentsContactsCheckBox->Checked = true;
+		DateCheckBox->Checked = true;
+		TimeCheckBox->Checked = true;
+		WriterCheckBox->Checked = true;
+	}
+
+	private: void NoneCheckBoxChecker() {
+		MainInfoCheckBox->Checked = false;
+		StudentContactsCheckBox->Checked = false;
+		ParentsContactsCheckBox->Checked = false;
+		DateCheckBox->Checked = false;
+		TimeCheckBox->Checked = false;
+		WriterCheckBox->Checked = false;
 	}
 
 	private: void StudentContactsInfoGetter() {
@@ -367,14 +424,21 @@ namespace DEMKA {
 			);
 		}
 	}
+
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
 	}
+
 	private: System::Void ReportButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		WordWorker();
-
 	}
-private: System::Void FinalPrintForm_Load(System::Object^  sender, System::EventArgs^  e) {
-}
+
+	private: System::Void AllCheckButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		AllCheckBoxChecker();
+	}
+
+	private: System::Void NoneCheckButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		NoneCheckBoxChecker();
+	}
 };
 }
