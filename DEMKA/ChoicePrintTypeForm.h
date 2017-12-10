@@ -75,7 +75,7 @@ namespace DEMKA {
 			this->StudentInfoButton->Name = L"StudentInfoButton";
 			this->StudentInfoButton->Size = System::Drawing::Size(148, 49);
 			this->StudentInfoButton->TabIndex = 1;
-			this->StudentInfoButton->Text = L"Информация об абитуриенте";
+			this->StudentInfoButton->Text = L"Отчет об абитуриенте";
 			this->StudentInfoButton->UseVisualStyleBackColor = true;
 			this->StudentInfoButton->Click += gcnew System::EventHandler(this, &ChoicePrintTypeForm::ContactsTableButton_Click);
 			// 
@@ -104,7 +104,7 @@ namespace DEMKA {
 			// 
 			this->groupBox1->Controls->Add(this->StudentInfoButton);
 			this->groupBox1->Controls->Add(this->RatingButton);
-			this->groupBox1->Location = System::Drawing::Point(12, 12);
+			this->groupBox1->Location = System::Drawing::Point(33, 12);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(240, 165);
 			this->groupBox1->TabIndex = 30;
@@ -114,7 +114,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(265, 224);
+			this->ClientSize = System::Drawing::Size(300, 224);
 			this->Controls->Add(this->MenuButton);
 			this->Controls->Add(this->groupBox1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));

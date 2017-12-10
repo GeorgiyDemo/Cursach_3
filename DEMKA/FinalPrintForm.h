@@ -200,7 +200,7 @@ namespace DEMKA {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"FinalPrintForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Мастер печати отчетов";
+			this->Text = L"Отчет об абитуриенте";
 			this->Load += gcnew System::EventHandler(this, &FinalPrintForm::FinalPrintForm_Load);
 			this->MainGroupBox->ResumeLayout(false);
 			this->MainGroupBox->PerformLayout();
