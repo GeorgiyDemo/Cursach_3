@@ -1,3 +1,4 @@
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -7,7 +8,11 @@ namespace DEMKA {
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
+	using namespace System::Data::SQLite;
+	using namespace System::Security::Cryptography;
+	using namespace System::Text;
 	using namespace System::Drawing;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для PasswordStaffForm
@@ -175,10 +180,89 @@ namespace DEMKA {
 
 		}
 #pragma endregion
+
+	private: String^ getMD5String(String^ inputString)
+	{
+		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
+		MD5CryptoServiceProvider^ md5provider = gcnew MD5CryptoServiceProvider();
+		array<Byte>^ byteArrayHash = md5provider->ComputeHash(byteArray);
+		return BitConverter::ToString(byteArrayHash);
+	}
+
+
+	private: bool StaffLoginSQLChecker(String^ login_str, String^ password_str) {
+
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+		String^ BufChecker = "DEMKA";
+		String^ MD5login_str = getMD5String(login_str);
+		String^ MD5password_str = getMD5String(password_str);
+		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='" + MD5login_str + "' AND password ='" + MD5password_str + "';";
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
+		db->Open();
+		SQLiteCommand ^cmdSelect = db->CreateCommand();
+		cmdSelect->CommandText = SQL_STRING;
+		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
+
+		while (data->Read())
+			BufChecker = data->GetValue(0)->ToString();
+		db->Close();
+		if (BufChecker != "DEMKA")
+			return true;
+		return false;
+
+	}
+
+	private: void UpdateStaffPasswordSQL(String^ login_str, String^ password_str) {
+
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+		String^ MD5login_str = getMD5String(login_str);
+		String^ MD5NewPassword_str = getMD5String(password_str);
+		String^ SQL_STRING = "UPDATE staff SET password= '" + MD5NewPassword_str + "' WHERE login = '" + MD5login_str+"';";
+
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
+		db->Open();
+		SQLiteCommand ^cmdInsertValue = db->CreateCommand();
+		cmdInsertValue->CommandText = SQL_STRING;
+		cmdInsertValue->ExecuteNonQuery();
+		db->Close();
+		MessageBox::Show("Успешное обновление пароля пользователя " + login_str + " !");
+
+	}
+
+	private: bool StaffExistLoginSQLChecker(String^ login_str) {
+
+		SQLiteConnection ^db = gcnew SQLiteConnection();
+		String^ MD5login_str = getMD5String(login_str);
+		String^ BufValidationStr = "DEMKA";
+		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='" + MD5login_str + "';";
+
+		db->ConnectionString = GlobalClass::SQLGlobalPatch;
+		db->Open();
+		SQLiteCommand ^cmdSelect = db->CreateCommand();
+		cmdSelect->CommandText = SQL_STRING;
+		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
+
+		while (data->Read())
+			BufValidationStr = data->GetValue(0)->ToString();
+		db->Close();
+
+		if (BufValidationStr != "DEMKA")
+			return true;
+		return false;
+
+	}
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
 	}
 	private: System::Void ChangePasswordButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		if (StaffExistLoginSQLChecker(StaffLoginBox->Text)) {
+			if (StaffLoginSQLChecker(StaffLoginBox->Text, StaffOldPasswordBox->Text))
+				UpdateStaffPasswordSQL(StaffLoginBox->Text, StaffNewPasswordBox->Text);
+			else
+				MessageBox::Show("Старый пароль введен неверно");
+		}
+		else
+			MessageBox::Show("Пользователя " + StaffLoginBox->Text + " не существует!");
 
 	}
 };

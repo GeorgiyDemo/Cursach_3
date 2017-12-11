@@ -159,15 +159,13 @@ namespace DEMKA {
 		return BitConverter::ToString(byteArrayHash);
 	}
 
-	private: bool StaffSQLChecker(String^ login_str, String^ password_str) {
+	private: bool StaffSQLChecker(String^ login_str, String^ password_str){
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
+		String^ BufChecker = "kot";
 		String^ MD5login_str = getMD5String(login_str);
 		String^ MD5password_str = getMD5String(password_str);
-		array<String^>^ validation_arr;
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='"+ MD5login_str+"' AND password ='"+MD5password_str+"';";
-
-		validation_arr = gcnew array<String^>(3);
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
@@ -175,19 +173,16 @@ namespace DEMKA {
 		SQLiteDataReader ^data = cmdSelect->ExecuteReader();
 
 		while (data->Read())
-			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++)
-				validation_arr[cell_index] = data->GetValue(cell_index)->ToString();
+			BufChecker = data->GetValue(0)->ToString();
 		db->Close();
-		MessageBox::Show("validation_arr[1] = " + validation_arr[1]);
-		MessageBox::Show("validation_arr[2] = " + validation_arr[2]);
-		if ((validation_arr[1] != "") && (validation_arr[2] != ""))
+		if (BufChecker != "kot")
 			return true;
 		return false;
 
 	}
 	
 	private: System::Void LoginButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (StaffSQLChecker(LoginBox->Text, PasswordBox->Text) == true) {
+		if ((StaffSQLChecker(LoginBox->Text, PasswordBox->Text)) == true) {
 			MessageBox::Show("Успешная авторизация");
 			MainForm^MainForm_obj = gcnew MainForm();
 			MainForm_obj->ShowDialog();
