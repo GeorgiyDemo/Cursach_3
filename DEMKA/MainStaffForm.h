@@ -1,4 +1,6 @@
 #include "AddNewStaffForm.h"
+#include "RemoveStaffForm.h"
+#include "PasswordStaffForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -76,6 +78,7 @@ namespace DEMKA {
 			this->RemoveStaffButton->TabIndex = 2;
 			this->RemoveStaffButton->Text = L"Удаление пользователя";
 			this->RemoveStaffButton->UseVisualStyleBackColor = true;
+			this->RemoveStaffButton->Click += gcnew System::EventHandler(this, &MainStaffForm::RemoveStaffButton_Click);
 			// 
 			// PasswordStaffButton
 			// 
@@ -85,6 +88,7 @@ namespace DEMKA {
 			this->PasswordStaffButton->TabIndex = 1;
 			this->PasswordStaffButton->Text = L"Смена пароля пользователя";
 			this->PasswordStaffButton->UseVisualStyleBackColor = true;
+			this->PasswordStaffButton->Click += gcnew System::EventHandler(this, &MainStaffForm::PasswordStaffButton_Click);
 			// 
 			// AddNewStaffButton
 			// 
@@ -143,6 +147,18 @@ namespace DEMKA {
 		DEMKA::AddNewStaffForm^AddNewStaffForm_obj = gcnew DEMKA::AddNewStaffForm();
 		this->Hide();
 		AddNewStaffForm_obj->ShowDialog();
+		this->Show();
+	}
+	private: System::Void PasswordStaffButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		DEMKA::PasswordStaffForm^PasswordStaffForm_obj = gcnew DEMKA::PasswordStaffForm();
+		this->Hide();
+		PasswordStaffForm_obj->ShowDialog();
+		this->Show();
+	}
+	private: System::Void RemoveStaffButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		DEMKA::RemoveStaffForm^RemoveStaffForm_obj = gcnew DEMKA::RemoveStaffForm();
+		this->Hide();
+		RemoveStaffForm_obj->ShowDialog();
 		this->Show();
 	}
 };

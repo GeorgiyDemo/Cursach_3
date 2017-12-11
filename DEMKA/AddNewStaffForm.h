@@ -114,6 +114,7 @@ namespace DEMKA {
 			this->NewStaffPasswordBox->Name = L"NewStaffPasswordBox";
 			this->NewStaffPasswordBox->Size = System::Drawing::Size(100, 20);
 			this->NewStaffPasswordBox->TabIndex = 2;
+			this->NewStaffPasswordBox->UseSystemPasswordChar = true;
 			// 
 			// label1
 			// 

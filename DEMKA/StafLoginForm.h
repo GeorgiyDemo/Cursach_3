@@ -89,6 +89,7 @@ namespace DEMKA {
 			this->PasswordBox->Name = L"PasswordBox";
 			this->PasswordBox->Size = System::Drawing::Size(100, 20);
 			this->PasswordBox->TabIndex = 1;
+			this->PasswordBox->UseSystemPasswordChar = true;
 			// 
 			// label1
 			// 
@@ -177,7 +178,8 @@ namespace DEMKA {
 			for (int cell_index = 0; cell_index < data->FieldCount; cell_index++)
 				validation_arr[cell_index] = data->GetValue(cell_index)->ToString();
 		db->Close();
-
+		MessageBox::Show("validation_arr[1] = " + validation_arr[1]);
+		MessageBox::Show("validation_arr[2] = " + validation_arr[2]);
 		if ((validation_arr[1] != "") && (validation_arr[2] != ""))
 			return true;
 		return false;
@@ -185,7 +187,7 @@ namespace DEMKA {
 	}
 	
 	private: System::Void LoginButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (StaffSQLChecker(LoginBox->Text, PasswordBox->Text)) {
+		if (StaffSQLChecker(LoginBox->Text, PasswordBox->Text) == true) {
 			MessageBox::Show("Успешная авторизация");
 			MainForm^MainForm_obj = gcnew MainForm();
 			MainForm_obj->ShowDialog();

@@ -151,8 +151,10 @@
     <ClCompile Include="ParentsContactForm.cpp" />
     <ClCompile Include="ParentsDBChangerForm.cpp" />
     <ClCompile Include="PasswordChecker.cpp" />
+    <ClCompile Include="PasswordStaffForm.cpp" />
     <ClCompile Include="PrintForm.cpp" />
     <ClCompile Include="RatingForm.cpp" />
+    <ClCompile Include="RemoveStaffForm.cpp" />
     <ClCompile Include="StafLoginForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,10 +198,16 @@
     <ClInclude Include="PasswordChecker.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PasswordStaffForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="PrintForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="RatingForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="RemoveStaffForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="StafLoginForm.h">
@@ -246,11 +254,17 @@
     <EmbeddedResource Include="PasswordChecker.resx">
       <DependentUpon>PasswordChecker.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PasswordStaffForm.resx">
+      <DependentUpon>PasswordStaffForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PrintForm.resx">
       <DependentUpon>PrintForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RatingForm.resx">
       <DependentUpon>RatingForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoveStaffForm.resx">
+      <DependentUpon>RemoveStaffForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StafLoginForm.resx">
       <DependentUpon>StafLoginForm.h</DependentUpon>
