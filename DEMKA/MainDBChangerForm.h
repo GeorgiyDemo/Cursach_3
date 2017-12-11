@@ -1,6 +1,7 @@
 #include "DBChangerForm.h"
 #include "ContactsDBChangerForm.h"
 #include "ParentsDBChangerForm.h"
+#include "MainStaffForm.h"
 #pragma once
 
 namespace DEMKA {
@@ -177,29 +178,32 @@ namespace DEMKA {
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
 	}
-private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->Hide();
-}
-private: System::Void StudentsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	DEMKA::DBChangerForm^DBChangerForm_obj = gcnew DEMKA::DBChangerForm();
-	this->Hide();
-	DBChangerForm_obj->ShowDialog();
-	this->Show();
-}
-private: System::Void ContactsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	DEMKA::ContactsDBChangerForm^ContactsDBChangerForm_obj = gcnew DEMKA::ContactsDBChangerForm();
-	this->Hide();
-	ContactsDBChangerForm_obj->ShowDialog();
-	this->Show();
-}
-private: System::Void ParentsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	DEMKA::ParentsDBChangerForm^ParentsDBChangerForm_obj = gcnew DEMKA::ParentsDBChangerForm();
-	this->Hide();
-	ParentsDBChangerForm_obj->ShowDialog();
-	this->Show();
-}
+	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+		this->Hide();
+	}
+	private: System::Void StudentsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		DEMKA::DBChangerForm^DBChangerForm_obj = gcnew DEMKA::DBChangerForm();
+		this->Hide();
+		DBChangerForm_obj->ShowDialog();
+		this->Show();
+	}
+	private: System::Void ContactsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		DEMKA::ContactsDBChangerForm^ContactsDBChangerForm_obj = gcnew DEMKA::ContactsDBChangerForm();
+		this->Hide();
+		ContactsDBChangerForm_obj->ShowDialog();
+		this->Show();
+	}
+	private: System::Void ParentsTableButton_Click(System::Object^  sender, System::EventArgs^  e) {
+		DEMKA::ParentsDBChangerForm^ParentsDBChangerForm_obj = gcnew DEMKA::ParentsDBChangerForm();
+		this->Hide();
+		ParentsDBChangerForm_obj->ShowDialog();
+		this->Show();
+	}
 	private: System::Void StaffManagmentButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		//ÒÓÒ Ñ×À ÁÓÄÅÒ ÎÒÊÐÛÒÈÅ ÔÎÐÌÛ
+		DEMKA::MainStaffForm^MainStaffForm_obj = gcnew DEMKA::MainStaffForm();
+		this->Hide();
+		MainStaffForm_obj->ShowDialog();
+		this->Show();
 	}
 };
 }

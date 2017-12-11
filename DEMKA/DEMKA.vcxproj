@@ -138,6 +138,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddNewStaffForm.cpp" />
     <ClCompile Include="ChoicePrintTypeForm.cpp" />
     <ClCompile Include="ContactsDBChangerForm.cpp" />
     <ClCompile Include="DBChangerForm.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="InputForm.cpp" />
     <ClCompile Include="MainDBChangerForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="MainStaffForm.cpp" />
     <ClCompile Include="MoreStudentInfoForm.cpp" />
     <ClCompile Include="ParentsContactForm.cpp" />
     <ClCompile Include="ParentsDBChangerForm.cpp" />
@@ -154,6 +156,9 @@
     <ClCompile Include="StafLoginForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddNewStaffForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ChoicePrintTypeForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -174,6 +179,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="MainStaffForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MoreStudentInfoForm.h">
@@ -199,6 +207,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AddNewStaffForm.resx">
+      <DependentUpon>AddNewStaffForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChoicePrintTypeForm.resx">
       <DependentUpon>ChoicePrintTypeForm.h</DependentUpon>
     </EmbeddedResource>
@@ -219,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainStaffForm.resx">
+      <DependentUpon>MainStaffForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MoreStudentInfoForm.resx">
       <DependentUpon>MoreStudentInfoForm.h</DependentUpon>
