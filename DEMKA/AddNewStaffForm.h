@@ -153,7 +153,7 @@ namespace DEMKA {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"AddNewStaffForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Добавление нового пользователя";
+			this->Text = L"Добавление пользователя";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
@@ -203,7 +203,7 @@ namespace DEMKA {
 			BufValidationStr = data->GetValue(0)->ToString();
 		db->Close();
 
-		if (BufValidationStr != "DEMKA")
+		if (BufValidationStr == "DEMKA")
 			return true;
 		return false;
 
@@ -225,7 +225,7 @@ namespace DEMKA {
 			BufValidationStr =  data->GetValue(0)->ToString();
 		db->Close();
 
-		if (BufValidationStr  != "DEMKA")
+		if (BufValidationStr  == "DEMKA")
 			return true;
 		return false;
 
