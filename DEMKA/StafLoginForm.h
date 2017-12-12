@@ -162,7 +162,7 @@ namespace DEMKA {
 	private: bool StaffSQLChecker(String^ login_str, String^ password_str){
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ BufChecker = "kot";
+		String^ BufChecker = "DEMKA";
 		String^ MD5login_str = getMD5String(login_str);
 		String^ MD5password_str = getMD5String(password_str);
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='"+ MD5login_str+"' AND password ='"+MD5password_str+"';";
@@ -175,7 +175,7 @@ namespace DEMKA {
 		while (data->Read())
 			BufChecker = data->GetValue(0)->ToString();
 		db->Close();
-		if (BufChecker != "kot")
+		if (BufChecker != "DEMKA")
 			return true;
 		return false;
 

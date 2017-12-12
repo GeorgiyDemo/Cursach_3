@@ -6,7 +6,7 @@
 * MainStaffForm.h - форма выбора действий с пользователями АИС - OK
 * PasswordStaffForm.h - форма смены паролей пользователей АИС - OK
 * AddNewStaffForm.h - форма добавления нового пользователя АИС - OK
-* BufValidationStr в AddNewStaffForm.h - АКТУАЛЬНО;
+* BufValidationStr в AddNewStaffForm.h - OK
 * RemoveStaffForm.h - форма удаления пользователей АИС 
 * В очередной раз передлать все (Лог схема, сх)
 ---------------------------------------------------------------------------

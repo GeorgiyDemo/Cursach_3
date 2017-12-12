@@ -190,7 +190,7 @@ namespace DEMKA {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		String^ MD5password_str = getMD5String(password_str);
-		String^ BufValidationStr;
+		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE password ='" + MD5password_str + "';";
 
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
@@ -203,7 +203,7 @@ namespace DEMKA {
 			BufValidationStr = data->GetValue(0)->ToString();
 		db->Close();
 
-		if (BufValidationStr != "1")
+		if (BufValidationStr != "DEMKA")
 			return true;
 		return false;
 
@@ -212,7 +212,7 @@ namespace DEMKA {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		String^ MD5login_str = getMD5String(login_str);
-		String^ BufValidationStr;
+		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='" + MD5login_str + "';";
 
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
@@ -225,7 +225,7 @@ namespace DEMKA {
 			BufValidationStr =  data->GetValue(0)->ToString();
 		db->Close();
 
-		if (BufValidationStr  != "1")
+		if (BufValidationStr  != "DEMKA")
 			return true;
 		return false;
 
