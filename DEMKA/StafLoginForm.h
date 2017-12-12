@@ -195,6 +195,7 @@ namespace DEMKA {
 
 	private: System::Void StafLoginForm_Load(System::Object^  sender, System::EventArgs^  e){
 		GlobalClass::SQLGlobalPatch = "Data Source=../database_vs.db";
+		GlobalClass::MasterGlobalPassword = "38-8C-ED-64-53-03-36-22-BF-66-DA-11-1F-EF-E5-F3";
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 
 		try

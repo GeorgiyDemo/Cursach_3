@@ -1,4 +1,5 @@
 #include "MainDBChangerForm.h"
+#include "GlobalClass.h"
 #pragma once
 
 namespace DEMKA {
@@ -7,10 +8,11 @@ namespace DEMKA {
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
+	using namespace System::Security::Cryptography;
 	using namespace System::Data;
 	using namespace System::Text;
 	using namespace System::Drawing;
-	using namespace System::Security::Cryptography;
+	using namespace Globals;
 
 	/// <summary>
 	/// Сводка для PasswordChecker
@@ -121,7 +123,7 @@ namespace DEMKA {
 
 		}
 #pragma endregion
-	private: String^ MD5Password = "38-8C-ED-64-53-03-36-22-BF-66-DA-11-1F-EF-E5-F3"; 
+	private: String^ MD5Password = GlobalClass::MasterGlobalPassword;
 	private: String^ getMD5String(String^ inputString)
 		{
 			array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);

@@ -7,7 +7,7 @@ namespace Globals
 	{
 	public: 
 		static String^ SQLGlobalPatch;
-		static String^ MasterGlobalPassword = "MEOW";
+		static String^ MasterGlobalPassword;
 
 	};
 }
