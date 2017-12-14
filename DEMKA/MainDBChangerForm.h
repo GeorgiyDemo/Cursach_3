@@ -126,6 +126,7 @@ namespace DEMKA {
 			this->groupBox1->Size = System::Drawing::Size(240, 218);
 			this->groupBox1->TabIndex = 28;
 			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Действия с таблицами";
 			// 
 			// MenuButton
 			// 
@@ -156,6 +157,7 @@ namespace DEMKA {
 			this->groupBox2->Size = System::Drawing::Size(240, 81);
 			this->groupBox2->TabIndex = 29;
 			this->groupBox2->TabStop = false;
+			this->groupBox2->Text = L"Администрирование";
 			// 
 			// MainDBChangerForm
 			// 
@@ -168,7 +170,7 @@ namespace DEMKA {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MainDBChangerForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Выбор таблицы";
+			this->Text = L"Выбор действий ";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox2->ResumeLayout(false);
 			this->ResumeLayout(false);

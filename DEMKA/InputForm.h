@@ -540,7 +540,7 @@ namespace DEMKA {
 					delete (IDisposable^)db;
 				}
 
-				if (MessageBox::Show("Данные успешно записаны!\nХотите ввести дополнительную информацию об абитуриенте?", "Дополнительная информация", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
+				if (MessageBox::Show("Данные успешно записаны!\nХотите ввести контактные данные абитуриента?", "Ввод контактных данных", System::Windows::Forms::MessageBoxButtons::YesNo) == System::Windows::Forms::DialogResult::Yes)
 				{
 					DEMKA::MoreStudentInfoForm^MoreStudentInfoForm_obj = gcnew DEMKA::MoreStudentInfoForm();
 					this->Hide();
