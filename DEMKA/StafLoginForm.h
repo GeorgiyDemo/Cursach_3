@@ -151,6 +151,11 @@ namespace DEMKA {
 		}
 #pragma endregion
 	
+	private: void EmptyAllTextBox() {
+		LoginBox->Text = "";
+		PasswordBox->Text = "";
+	}
+
 	private: String^ getMD5String(String^ inputString)
 	{
 		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
@@ -188,9 +193,10 @@ namespace DEMKA {
 			MainForm_obj->ShowDialog();
 			this->Close();
 		}
-		else
+		else{
 			MessageBox::Show("Неверный пароль!");
-
+			EmptyAllTextBox();
+		}
 	}
 
 	private: System::Void StafLoginForm_Load(System::Object^  sender, System::EventArgs^  e){

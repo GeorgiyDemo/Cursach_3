@@ -185,6 +185,12 @@ namespace DEMKA {
 		}
 #pragma endregion
 
+	private: void EmptyAllTextBox() {
+		StaffLoginBox->Text = "";
+		StaffPasswordBox->Text = "";
+		MasterPasswordBox->Text = "";
+	}
+
 	private: String^ getMD5String(String^ inputString)
 	{
 		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
@@ -226,7 +232,6 @@ namespace DEMKA {
 		while (data->Read())
 			BufValidationStr = data->GetValue(2)->ToString();
 		db->Close();
-		MessageBox::Show("StaffPasswordSQLChecker BufValidationStr: " + BufValidationStr);
 		if (BufValidationStr != "DEMKA")
 			return true;
 		return false;
@@ -248,7 +253,6 @@ namespace DEMKA {
 		while (data->Read())
 			BufValidationStr = data->GetValue(1)->ToString();
 		db->Close();
-		MessageBox::Show("StaffLoginSQLChecker BufValidationStr: " + BufValidationStr);
 		if (BufValidationStr != "DEMKA")
 			return true;
 		return false;
@@ -264,9 +268,6 @@ namespace DEMKA {
 	}
 
 	private: System::Void StaffRemoveButton_Click(System::Object^  sender, System::EventArgs^  e) {
-		MessageBox::Show("StaffLoginSQLChecker: " + StaffLoginSQLChecker(StaffLoginBox->Text));
-		MessageBox::Show("StaffPasswordSQLChecker: " + StaffPasswordSQLChecker(StaffPasswordBox->Text));
-		MessageBox::Show("MasterPasswordChecker: " + MasterPasswordChecker(MasterPasswordBox->Text));
 		if ((StaffLoginSQLChecker(StaffLoginBox->Text)) && (StaffPasswordSQLChecker(StaffPasswordBox->Text)) && (MasterPasswordChecker(MasterPasswordBox->Text)))
 			RemoveStaffSQL(StaffLoginBox->Text, StaffPasswordBox->Text);
 
@@ -274,6 +275,7 @@ namespace DEMKA {
 			MessageBox::Show("Мастер-пароль введен неверно!");
 		else
 			MessageBox::Show("Внимание!\nДля удаления пользователя из АИС требуется:\n-Имя пользователя\n-Пароль пользователя\n-Мастер-пароль\nЕсли один из этих параметров недоступен, то УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ НЕВОЗМОЖНО");
+		EmptyAllTextBox();
 	}
 };
 }

@@ -161,6 +161,11 @@ namespace DEMKA {
 		}
 #pragma endregion
 
+	private: void EmptyAllTextBox() {
+		NewStaffLoginBox->Text = "";
+		NewStaffPasswordBox->Text = "";
+	}
+
 	private: String^ getMD5String(String^ inputString)
 	{
 		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
@@ -239,6 +244,7 @@ namespace DEMKA {
 			MessageBox::Show("Внимание!\nДанный логин уже используется в системе, добавление невозможно");
 		else if (MessageBox::Show("Внимание!\nДанный пароль уже используется одним или несколькими пользователями АИС\nХотите продолжить?", "Дубликат пароля", MessageBoxButtons::YesNo, MessageBoxIcon::Question) == System::Windows::Forms::DialogResult::Yes)
 				NewStaffAddSQL(NewStaffLoginBox->Text, NewStaffPasswordBox->Text);
+		EmptyAllTextBox();
 	}
 
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {

@@ -181,6 +181,12 @@ namespace DEMKA {
 		}
 #pragma endregion
 
+	private: void EmptyAllTextBox() {
+		StaffLoginBox->Text = "";
+		StaffOldPasswordBox->Text = "";
+		StaffNewPasswordBox->Text = "";
+	}
+
 	private: String^ getMD5String(String^ inputString)
 	{
 		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
@@ -263,7 +269,7 @@ namespace DEMKA {
 		}
 		else
 			MessageBox::Show("Пользователя " + StaffLoginBox->Text + " не существует!");
-
+		EmptyAllTextBox();
 	}
 };
 }
