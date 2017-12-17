@@ -237,6 +237,8 @@ namespace DEMKA {
 	}
 	private: System::Void AddStaffButton_Click(System::Object^  sender, System::EventArgs^  e)
 	{
+		if ((NewStaffLoginBox->Text) == (NewStaffPasswordBox->Text))
+			MessageBox::Show("Внимание!\nЛогин и пароль совпадают\nПо возможности следует не использовать логин в качестве пароля нового пользователя");
 		if ((StaffLoginSQLChecker(NewStaffLoginBox->Text)) && (StaffPasswordSQLChecker(NewStaffPasswordBox->Text)))
 			NewStaffAddSQL(NewStaffLoginBox->Text, NewStaffPasswordBox->Text);
 
