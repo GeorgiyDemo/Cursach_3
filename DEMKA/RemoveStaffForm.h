@@ -9,7 +9,6 @@ namespace DEMKA {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Data::SQLite;
-	using namespace System::Security::Cryptography;
 	using namespace System::Text;
 	using namespace System::Drawing;
 	using namespace Globals;
@@ -191,19 +190,11 @@ namespace DEMKA {
 		MasterPasswordBox->Text = "";
 	}
 
-	private: String^ getMD5String(String^ inputString)
-	{
-		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
-		MD5CryptoServiceProvider^ md5provider = gcnew MD5CryptoServiceProvider();
-		array<Byte>^ byteArrayHash = md5provider->ComputeHash(byteArray);
-		return BitConverter::ToString(byteArrayHash);
-	}
-
 	private: void RemoveStaffSQL(String^ login_str, String^ password_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5login_str = getMD5String(login_str);
-		String^ MD5password_str = getMD5String(password_str);
+		String^ MD5login_str = GlobalClass::getMD5String(login_str);
+		String^ MD5password_str = GlobalClass::getMD5String(password_str);
 		String^ SQL_STRING = "DELETE FROM staff WHERE login = '" + MD5login_str + "' AND password = '"+ MD5password_str+"';";
 
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
@@ -219,7 +210,7 @@ namespace DEMKA {
 	private: bool StaffPasswordSQLChecker(String^ password_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5password_str = getMD5String(password_str);
+		String^ MD5password_str = GlobalClass::getMD5String(password_str);
 		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE password ='" + MD5password_str + "';";
 
@@ -240,7 +231,7 @@ namespace DEMKA {
 	private: bool StaffLoginSQLChecker(String^ login_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5login_str = getMD5String(login_str);
+		String^ MD5login_str = GlobalClass::getMD5String(login_str);
 		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='" + MD5login_str + "';";
 
@@ -260,7 +251,7 @@ namespace DEMKA {
 	}
 
 	private: bool MasterPasswordChecker(String^ master_str) {
-		return (getMD5String(master_str)==GlobalClass::MasterGlobalPassword) ? true : false;
+		return (GlobalClass::getMD5String(master_str)==GlobalClass::MasterGlobalPassword) ? true : false;
 	}
 
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {

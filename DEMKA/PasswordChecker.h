@@ -8,7 +8,6 @@ namespace DEMKA {
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
-	using namespace System::Security::Cryptography;
 	using namespace System::Data;
 	using namespace System::Text;
 	using namespace System::Drawing;
@@ -123,17 +122,8 @@ namespace DEMKA {
 
 		}
 #pragma endregion
-	private: String^ MD5Password = GlobalClass::MasterGlobalPassword;
-	private: String^ getMD5String(String^ inputString)
-		{
-			array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
-			MD5CryptoServiceProvider^ md5provider = gcnew MD5CryptoServiceProvider();
-			array<Byte>^ byteArrayHash = md5provider->ComputeHash(byteArray);
-			return BitConverter::ToString(byteArrayHash);
-		}
-
 	private: bool PasswordValidation(String^ input_str) {
-		if (getMD5String(input_str) == MD5Password)
+		if (GlobalClass::getMD5String(input_str) == GlobalClass::MasterGlobalPassword)
 			return true;
 		return false;
 	}

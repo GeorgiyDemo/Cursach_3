@@ -10,7 +10,6 @@ namespace DEMKA {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Data::SQLite;
-	using namespace System::Security::Cryptography;
 	using namespace System::Text;
 	using namespace System::Drawing;
 	using namespace Globals;
@@ -156,20 +155,12 @@ namespace DEMKA {
 		PasswordBox->Text = "";
 	}
 
-	private: String^ getMD5String(String^ inputString)
-	{
-		array<Byte>^ byteArray = Encoding::ASCII->GetBytes(inputString);
-		MD5CryptoServiceProvider^ md5provider = gcnew MD5CryptoServiceProvider();
-		array<Byte>^ byteArrayHash = md5provider->ComputeHash(byteArray);
-		return BitConverter::ToString(byteArrayHash);
-	}
-
 	private: bool StaffSQLChecker(String^ login_str, String^ password_str){
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		String^ BufChecker = "DEMKA";
-		String^ MD5login_str = getMD5String(login_str);
-		String^ MD5password_str = getMD5String(password_str);
+		String^ MD5login_str = GlobalClass::getMD5String(login_str);
+		String^ MD5password_str = GlobalClass::getMD5String(password_str);
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='"+ MD5login_str+"' AND password ='"+MD5password_str+"';";
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
