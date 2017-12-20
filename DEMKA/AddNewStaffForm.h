@@ -168,8 +168,8 @@ namespace DEMKA {
 	private: void NewStaffAddSQL(String^ login_str, String^ password_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5login_str = GlobalClass::getMD5String(login_str);
-		String^ MD5password_str = GlobalClass::getMD5String(password_str);
+		String^ MD5login_str = GlobalClass::getMD5String(GlobalClass::toBase64(login_str));
+		String^ MD5password_str = GlobalClass::getMD5String(GlobalClass::toBase64(password_str));
 		String^ SQL_STRING = "INSERT INTO staff VALUES(NULL,'" + MD5login_str + "','" + MD5password_str + "');";
 
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
@@ -179,13 +179,14 @@ namespace DEMKA {
 		cmdInsertValue->ExecuteNonQuery();
 		db->Close();
 		MessageBox::Show("Успешное добавление нового пользователя АИС");
+		this->Hide();
 
 	}
 
 	private: bool StaffPasswordSQLChecker(String^ password_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5password_str = GlobalClass::getMD5String(password_str);
+		String^ MD5password_str = GlobalClass::getMD5String(GlobalClass::toBase64(password_str));
 		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE password ='" + MD5password_str + "';";
 
@@ -207,7 +208,7 @@ namespace DEMKA {
 	private: bool StaffLoginSQLChecker(String^ login_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5login_str = GlobalClass::getMD5String(login_str);
+		String^ MD5login_str = GlobalClass::getMD5String(GlobalClass::toBase64(login_str));
 		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='" + MD5login_str + "';";
 

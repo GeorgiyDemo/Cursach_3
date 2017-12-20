@@ -159,9 +159,9 @@ namespace DEMKA {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 		String^ BufChecker = "DEMKA";
-		String^ MD5login_str = GlobalClass::getMD5String(login_str);
-		String^ MD5password_str = GlobalClass::getMD5String(password_str);
-		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='"+ MD5login_str+"' AND password ='"+MD5password_str+"';";
+		String^ MD5Base64login_str = GlobalClass::getMD5String(GlobalClass::toBase64(login_str));
+		String^ MD5Base64password_str = GlobalClass::getMD5String(GlobalClass::toBase64(password_str));
+		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='"+ MD5Base64login_str +"' AND password ='"+ MD5Base64password_str+"';";
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
 		db->Open();
 		SQLiteCommand ^cmdSelect = db->CreateCommand();
@@ -178,6 +178,7 @@ namespace DEMKA {
 	}
 	
 	private: System::Void LoginButton_Click(System::Object^  sender, System::EventArgs^  e) {
+
 		if ((StaffSQLChecker(LoginBox->Text, PasswordBox->Text)) == true) {
 			MessageBox::Show("Успешная авторизация");
 			MainForm^MainForm_obj = gcnew MainForm();
@@ -192,7 +193,7 @@ namespace DEMKA {
 
 	private: System::Void StafLoginForm_Load(System::Object^  sender, System::EventArgs^  e){
 		GlobalClass::SQLGlobalPatch = "Data Source=../database_vs.db";
-		GlobalClass::MasterGlobalPassword = "38-8C-ED-64-53-03-36-22-BF-66-DA-11-1F-EF-E5-F3";
+		GlobalClass::MasterGlobalPassword = "9A-F0-3C-0D-AD-FF-B9-87-82-03-3B-E7-14-CA-95-9B";
 		SQLiteConnection ^db = gcnew SQLiteConnection();
 
 		try
@@ -203,8 +204,8 @@ namespace DEMKA {
 
 			cmdInsertValue->CommandText = "CREATE TABLE IF NOT EXISTS staff" +
 				"(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, login TEXT, password TEXT);" +
-				"INSERT INTO staff(login,password) SELECT '21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3', '21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3'"+
-				"WHERE NOT EXISTS(SELECT 1 FROM staff WHERE login = '21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3'); ";
+				"INSERT INTO staff(login,password) SELECT 'DB-69-FC-03-9D-CB-D2-96-2C-B4-D2-8F-58-91-AA-E1', 'DB-69-FC-03-9D-CB-D2-96-2C-B4-D2-8F-58-91-AA-E1'"+
+				"WHERE NOT EXISTS(SELECT 1 FROM staff WHERE login = 'DB-69-FC-03-9D-CB-D2-96-2C-B4-D2-8F-58-91-AA-E1'); ";
 
 			cmdInsertValue->ExecuteNonQuery();
 			db->Close();

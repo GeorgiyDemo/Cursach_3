@@ -169,7 +169,7 @@ namespace DEMKA {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(292, 173);
+			this->ClientSize = System::Drawing::Size(299, 173);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->StaffRemoveButton);
 			this->Controls->Add(this->ExitButton);
@@ -177,6 +177,7 @@ namespace DEMKA {
 			this->Name = L"RemoveStaffForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Удаление пользователя";
+			this->Load += gcnew System::EventHandler(this, &RemoveStaffForm::RemoveStaffForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
@@ -193,8 +194,8 @@ namespace DEMKA {
 	private: void RemoveStaffSQL(String^ login_str, String^ password_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5login_str = GlobalClass::getMD5String(login_str);
-		String^ MD5password_str = GlobalClass::getMD5String(password_str);
+		String^ MD5login_str = GlobalClass::getMD5String(GlobalClass::toBase64(login_str));
+		String^ MD5password_str = GlobalClass::getMD5String(GlobalClass::toBase64(password_str));
 		String^ SQL_STRING = "DELETE FROM staff WHERE login = '" + MD5login_str + "' AND password = '"+ MD5password_str+"';";
 
 		db->ConnectionString = GlobalClass::SQLGlobalPatch;
@@ -204,13 +205,14 @@ namespace DEMKA {
 		cmdInsertValue->ExecuteNonQuery();
 		db->Close();
 		MessageBox::Show("Успешное удаление пользователя АИС");
+		this->Hide();
 
 	}
 
 	private: bool StaffPasswordSQLChecker(String^ password_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5password_str = GlobalClass::getMD5String(password_str);
+		String^ MD5password_str = GlobalClass::getMD5String(GlobalClass::toBase64(password_str));
 		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE password ='" + MD5password_str + "';";
 
@@ -231,7 +233,7 @@ namespace DEMKA {
 	private: bool StaffLoginSQLChecker(String^ login_str) {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
-		String^ MD5login_str = GlobalClass::getMD5String(login_str);
+		String^ MD5login_str = GlobalClass::getMD5String(GlobalClass::toBase64(login_str));
 		String^ BufValidationStr = "DEMKA";
 		String^ SQL_STRING = "SELECT * FROM staff WHERE login ='" + MD5login_str + "';";
 
@@ -251,7 +253,7 @@ namespace DEMKA {
 	}
 
 	private: bool MasterPasswordChecker(String^ master_str) {
-		return (GlobalClass::getMD5String(master_str)==GlobalClass::MasterGlobalPassword) ? true : false;
+		return (GlobalClass::getMD5String(GlobalClass::toBase64(master_str))==GlobalClass::MasterGlobalPassword) ? true : false;
 	}
 
 	private: System::Void ExitButton_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -261,12 +263,16 @@ namespace DEMKA {
 	private: System::Void StaffRemoveButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		if ((StaffLoginSQLChecker(StaffLoginBox->Text)) && (StaffPasswordSQLChecker(StaffPasswordBox->Text)) && (MasterPasswordChecker(MasterPasswordBox->Text)))
 			RemoveStaffSQL(StaffLoginBox->Text, StaffPasswordBox->Text);
-
+		else if (StaffLoginSQLChecker(StaffLoginBox->Text) == false)
+			MessageBox::Show("Введенного пользователя нет в системе!");
 		else if (MasterPasswordChecker(MasterPasswordBox->Text) == false)
 			MessageBox::Show("Мастер-пароль введен неверно!");
 		else
-			MessageBox::Show("Внимание!\nДля удаления пользователя из АИС требуется:\n-Имя пользователя\n-Пароль пользователя\n-Мастер-пароль\nЕсли один из этих параметров недоступен, то УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ НЕВОЗМОЖНО");
+			MessageBox::Show("Неверный пароль пользователя АИС!");
 		EmptyAllTextBox();
 	}
+private: System::Void RemoveStaffForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	MessageBox::Show("Внимание!\nДля удаления пользователя из АИС требуется:\n-Имя пользователя\n-Пароль пользователя\n-Мастер-пароль\nЕсли один из этих параметров недоступен, то УДАЛЕНИЕ ПОЛЬЗОВАТЕЛЯ НЕВОЗМОЖНО");
+}
 };
 }

@@ -123,7 +123,7 @@ namespace DEMKA {
 		}
 #pragma endregion
 	private: bool PasswordValidation(String^ input_str) {
-		if (GlobalClass::getMD5String(input_str) == GlobalClass::MasterGlobalPassword)
+		if (GlobalClass::getMD5String(GlobalClass::toBase64(input_str)) == GlobalClass::MasterGlobalPassword)
 			return true;
 		return false;
 	}
