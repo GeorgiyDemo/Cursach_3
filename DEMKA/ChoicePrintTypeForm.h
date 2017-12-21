@@ -129,6 +129,7 @@ namespace DEMKA {
 #pragma endregion
 
 	public: String^ PublicStudentID;
+	public: String^ PublicStudentFIO;
 
 	private: System::Void MenuButton_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Hide();
@@ -144,6 +145,8 @@ namespace DEMKA {
 		DEMKA::FinalPrintForm^FinalPrintForm_obj = gcnew DEMKA::FinalPrintForm();
 		FinalPrintForm_obj->PublicStudentID = PublicStudentID;
 		this->Hide();
+		FinalPrintForm_obj->ExitButton->Text = "<=";
+		FinalPrintForm_obj->Text = "Отчет об абитуриенте (" + PublicStudentFIO + ")";
 		FinalPrintForm_obj->ShowDialog();
 	}
 };

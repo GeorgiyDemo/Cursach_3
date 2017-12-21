@@ -1,9 +1,7 @@
 #include <msclr/marshal.h>
 #include <msclr\marshal_cppstd.h>
 #include <algorithm>
-#include <string>
 #include <cliext/vector>
-#include <regex>
 #include "GlobalClass.h"
 #pragma once
 
@@ -164,30 +162,6 @@ namespace DEMKA {
 		String^ changer_fix;
 		array<String^>^ GridTableRow_array;
 
-		private: bool is_valid_number(const std::string& number)
-		{
-			static const std::string AllowedChars = "0123456789";
-			for (auto numberChar = number.begin();
-				numberChar != number.end(); ++numberChar)
-
-				if (AllowedChars.end() == std::find(
-					AllowedChars.begin(), AllowedChars.end(), *numberChar)
-					)
-				{
-					return false;
-				}
-
-			return true;
-		}
-
-	private: bool is_valid_email(const std::string& email)
-	{
-		const std::regex pattern
-		("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-
-		return std::regex_match(email, pattern);
-	}
-
 		private: int valid_checker() {
 
 			array<bool>^ BoolCheckArr;
@@ -205,7 +179,7 @@ namespace DEMKA {
 				BoolCheckArr[3] = true;
 				msclr::interop::marshal_context oMarshalContext;
 				const char* buf = oMarshalContext.marshal_as<const char*>(GridTableRow_array[3]);
-				if (is_valid_email(buf) == false)
+				if (GlobalClass::is_valid_email(buf) == false)
 					BoolCheckArr[3] = false;
 			}
 
@@ -218,7 +192,7 @@ namespace DEMKA {
 				BoolCheckArr[5] = true;
 				msclr::interop::marshal_context oMarshalContext;
 				const char* buf = oMarshalContext.marshal_as<const char*>(GridTableRow_array[5]);
-				if (is_valid_number(buf) == false)
+				if (GlobalClass::is_valid_number(buf) == false)
 					BoolCheckArr[5] = false;
 			}
 

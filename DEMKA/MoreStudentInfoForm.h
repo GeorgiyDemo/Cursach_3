@@ -1,5 +1,3 @@
-#include <regex>
-#include <string>
 #include <msclr\marshal_cppstd.h>
 #include "ParentsContactForm.h"
 #include "GlobalClass.h"
@@ -206,30 +204,6 @@ namespace DEMKA {
 #pragma endregion
 	array<bool>^ valid_array;
 
-	private: bool is_valid_number(const std::string& number)
-	{
-		static const std::string AllowedChars = "0123456789";
-		for (auto numberChar = number.begin();
-			numberChar != number.end(); ++numberChar)
-
-			if (AllowedChars.end() == std::find(
-				AllowedChars.begin(), AllowedChars.end(), *numberChar)
-			)
-			{
-				return false;
-			}
-
-		return true;
-	}
-
-	private: bool is_valid_email(const std::string& email)
-	{
-		const std::regex pattern
-		("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-
-		return std::regex_match(email, pattern);
-	}
-
 	private: int ID_getter() {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
@@ -289,6 +263,7 @@ namespace DEMKA {
 				DEMKA::ParentsContactForm^ParentsContactForm_obj = gcnew DEMKA::ParentsContactForm();
 				this->Hide();
 				ParentsContactForm_obj->Text = this->Text;
+				ParentsContactForm_obj->StudentAdress = AdressBox->Text;
 				ParentsContactForm_obj->ShowDialog();
 			}
 			else
@@ -312,14 +287,14 @@ namespace DEMKA {
 	private: System::Void EmailBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 		System::String^ buf_str = EmailBox->Text;
 		std::string Email_str = msclr::interop::marshal_as<std::string>(buf_str);
-		valid_array[1] = (is_valid_email(Email_str)) ? true : false;
-		EmailBox->ForeColor = is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+		valid_array[1] = (GlobalClass::is_valid_email(Email_str)) ? true : false;
+		EmailBox->ForeColor = GlobalClass::is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 	}
 
 	private: System::Void PhoneBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 		System::String^ buf_str = PhoneBox->Text;
 		std::string Phone_str = msclr::interop::marshal_as<std::string>(buf_str);
-		bool boolflag = is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
+		bool boolflag = GlobalClass::is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
 		valid_array[2] = (boolflag) ? true : false;
 		PhoneBox->ForeColor = (boolflag) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 	}

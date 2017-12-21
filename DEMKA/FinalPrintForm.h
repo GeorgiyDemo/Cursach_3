@@ -52,7 +52,9 @@ namespace DEMKA {
 
 	private: System::Windows::Forms::CheckBox^  DateCheckBox;
 	private: System::Windows::Forms::Button^  ReportButton;
-	private: System::Windows::Forms::Button^  ExitButton;
+	public: System::Windows::Forms::Button^  ExitButton;
+	private:
+
 	private: System::Windows::Forms::GroupBox^  FastCheckGroupBox;
 	private: System::Windows::Forms::Button^  NoneCheckButton;
 	private: System::Windows::Forms::Button^  AllCheckButton;

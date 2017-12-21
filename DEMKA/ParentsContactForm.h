@@ -1,5 +1,3 @@
-#include <regex>
-#include <string>
 #include <msclr\marshal_cppstd.h>
 #include "FinalPrintForm.h"
 #include "GlobalClass.h"
@@ -58,6 +56,8 @@ namespace DEMKA {
 
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::TextBox^  ParentFIOBox;
+	private: System::Windows::Forms::GroupBox^  groupBox2;
+	private: System::Windows::Forms::CheckBox^  AdressBox;
 
 
 
@@ -91,7 +91,10 @@ namespace DEMKA {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->ExitButton = (gcnew System::Windows::Forms::Button());
+			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->AdressBox = (gcnew System::Windows::Forms::CheckBox());
 			this->groupBox1->SuspendLayout();
+			this->groupBox2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -105,7 +108,7 @@ namespace DEMKA {
 			// 
 			// NextButton
 			// 
-			this->NextButton->Location = System::Drawing::Point(173, 180);
+			this->NextButton->Location = System::Drawing::Point(173, 224);
 			this->NextButton->Name = L"NextButton";
 			this->NextButton->Size = System::Drawing::Size(107, 42);
 			this->NextButton->TabIndex = 24;
@@ -193,7 +196,7 @@ namespace DEMKA {
 			// 
 			// ExitButton
 			// 
-			this->ExitButton->Location = System::Drawing::Point(12, 178);
+			this->ExitButton->Location = System::Drawing::Point(12, 222);
 			this->ExitButton->Name = L"ExitButton";
 			this->ExitButton->Size = System::Drawing::Size(109, 44);
 			this->ExitButton->TabIndex = 25;
@@ -201,11 +204,32 @@ namespace DEMKA {
 			this->ExitButton->UseVisualStyleBackColor = true;
 			this->ExitButton->Click += gcnew System::EventHandler(this, &ParentsContactForm::ExitButton_Click);
 			// 
+			// groupBox2
+			// 
+			this->groupBox2->Controls->Add(this->AdressBox);
+			this->groupBox2->Location = System::Drawing::Point(12, 181);
+			this->groupBox2->Name = L"groupBox2";
+			this->groupBox2->Size = System::Drawing::Size(268, 35);
+			this->groupBox2->TabIndex = 26;
+			this->groupBox2->TabStop = false;
+			// 
+			// AdressBox
+			// 
+			this->AdressBox->AutoSize = true;
+			this->AdressBox->Location = System::Drawing::Point(7, 12);
+			this->AdressBox->Name = L"AdressBox";
+			this->AdressBox->Size = System::Drawing::Size(235, 17);
+			this->AdressBox->TabIndex = 0;
+			this->AdressBox->Text = L"Адрес совпадает с адресом абитуриента";
+			this->AdressBox->UseVisualStyleBackColor = true;
+			this->AdressBox->CheckedChanged += gcnew System::EventHandler(this, &ParentsContactForm::AdressBox_CheckedChanged);
+			// 
 			// ParentsContactForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(296, 234);
+			this->ClientSize = System::Drawing::Size(296, 278);
+			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->NextButton);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->ExitButton);
@@ -215,12 +239,15 @@ namespace DEMKA {
 			this->Load += gcnew System::EventHandler(this, &ParentsContactForm::ParentsContactForm_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
+			this->groupBox2->ResumeLayout(false);
+			this->groupBox2->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 
-	array<bool>^ valid_array;
+	public: String^ StudentAdress;
+	private: array<bool>^ valid_array;
 	private: int ID_getter() {
 
 		SQLiteConnection ^db = gcnew SQLiteConnection();
@@ -238,30 +265,6 @@ namespace DEMKA {
 		}
 		db->Close();
 		return System::Convert::ToInt32(columnIndex);
-	}
-
-	private: bool is_valid_number(const std::string& number)
-	{
-		static const std::string AllowedChars = "0123456789";
-		for (auto numberChar = number.begin();
-			numberChar != number.end(); ++numberChar)
-
-			if (AllowedChars.end() == std::find(
-				AllowedChars.begin(), AllowedChars.end(), *numberChar)
-				)
-			{
-				return false;
-			}
-
-		return true;
-	}
-
-	private: bool is_valid_email(const std::string& email)
-	{
-		const std::regex pattern
-		("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-
-		return std::regex_match(email, pattern);
 	}
 
 	private: int valid_checker() {
@@ -346,16 +349,28 @@ private: System::Void ParentFIOBox_TextChanged(System::Object^  sender, System::
 	private: System::Void ParentEmailBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 		System::String^ buf_str = ParentEmailBox->Text;
 		std::string Email_str = msclr::interop::marshal_as<std::string>(buf_str);
-		valid_array[2] = (is_valid_email(Email_str)) ? true : false;
-		ParentEmailBox->ForeColor = is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+		valid_array[2] = (GlobalClass::is_valid_email(Email_str)) ? true : false;
+		ParentEmailBox->ForeColor = GlobalClass::is_valid_email(Email_str) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
 	}
 
 	private: System::Void ParentPhoneBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
 		System::String^ buf_str = ParentPhoneBox->Text;
 		std::string Phone_str = msclr::interop::marshal_as<std::string>(buf_str);
-		bool boolflag = is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
+		bool boolflag = GlobalClass::is_valid_number(Phone_str) && Phone_str.size() == 11 && Phone_str[0] == '7';
 		valid_array[3] = (boolflag) ? true : false;
 		ParentPhoneBox->ForeColor = (boolflag) ? System::Drawing::SystemColors::WindowText : System::Drawing::Color::Red;
+	}
+
+	private: System::Void AdressBox_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+		if (AdressBox->Checked) {
+			ParentAdressBox->Enabled = false;
+			ParentAdressBox->Text = StudentAdress;
+		}
+		else {
+			ParentAdressBox->Enabled = true;
+			ParentAdressBox->Text = "";
+		}
+
 	}
 };
 }

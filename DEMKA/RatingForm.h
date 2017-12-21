@@ -201,8 +201,10 @@ namespace DEMKA {
 
 		int index = dataGridView1->CurrentCell->RowIndex;
 		String^ unic_student_id = dataGridView1->Rows[index]->Cells[0]->Value->ToString();
+		String^ unic_student_fio = dataGridView1->Rows[index]->Cells[1]->Value->ToString();
 		DEMKA::ChoicePrintTypeForm^ChoicePrintTypeForm_obj = gcnew DEMKA::ChoicePrintTypeForm();
 		ChoicePrintTypeForm_obj->PublicStudentID = unic_student_id;
+		ChoicePrintTypeForm_obj->PublicStudentFIO = unic_student_fio;
 		ChoicePrintTypeForm_obj->ShowDialog();
 		this->Show();
 	}
